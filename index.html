@@ -1,205 +1,391 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Renkli Dokunuş - Geri Bildirim</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      --bg-light: #fff6f3;
-      --bg-dark: #2b2b2b;
-      --text-light: #4a4a4a;
-      --text-dark: #f5f5f5;
-      --box-light: #ffffffcc;
-      --box-dark: #3c3c3c;
-      --button-light: #c09f95;
-      --button-dark: #ffb6b6;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Renkli Dokunuş - Randevu & Hizmetler</title>
+<style>
+  /* Temel stil */
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 20px;
+    color: #4a4a4a;
+    background-color: var(--bg);
+    transition: background-color 0.5s, color 0.5s;
+  }
+  h1, h2 {
+    text-align: center;
+    color: var(--primary-color);
+  }
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  input, select, textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+  }
+  button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  button:hover {
+    background: var(--primary-dark);
+  }
+  option[disabled] {
+    color: #999;
+  }
+  /* Fiyat listesi animasyon */
+  .fiyat-listesi {
+    background: var(--price-bg);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 40px;
+    box-shadow: 0 0 10px var(--primary-color-transparent);
+    overflow: hidden;
+    animation: fiyatScroll 40s linear infinite;
+  }
+  .fiyat-listesi h2 {
+    margin-bottom: 15px;
+    font-weight: 700;
+    font-size: 24px;
+  }
+  .fiyat-listesi ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .fiyat-listesi li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--price-border);
+    font-size: 16px;
+  }
+  .fiyat-listesi li:last-child {
+    border-bottom: none;
+  }
+  @keyframes fiyatScroll {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+  }
 
+  /* Tema renkleri */
+  :root {
+    --primary-color: #c09f95;
+    --primary-dark: #b3897f;
+    --primary-color-transparent: rgba(192, 159, 149, 0.3);
+    --bg: #f9f6f3;
+    --price-bg: #fff8f5;
+    --price-border: #e6d6d0;
+  }
+  body.dark {
+    --primary-color: #ffb7b7;
+    --primary-dark: #e99999;
+    --primary-color-transparent: rgba(255, 183, 183, 0.3);
+    --bg: #1e1e1e;
+    --price-bg: #2e2e2e;
+    --price-border: #444444;
+    color: #ddd;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
     body {
-      font-family: 'Arial', sans-serif;
-      margin: 20px;
-      background: var(--bg-light);
-      color: var(--text-light);
-      transition: background 0.3s, color 0.3s;
+      margin: 15px;
+      padding: 15px;
     }
+  }
 
-    body.dark {
-      background: var(--bg-dark);
-      color: var(--text-dark);
-    }
+  /* Dil seçimi ve tema switcher */
+  #dilTemaContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  #dilSelect, #temaSwitch {
+    flex: 1 1 45%;
+    padding: 8px;
+    font-size: 16px;
+  }
 
-    h1, h2 {
-      text-align: center;
-      color: inherit;
-    }
+  /* Geri bildirim form */
+  #feedbackForm {
+    margin-top: 40px;
+    background: var(--price-bg);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px var(--primary-color-transparent);
+  }
+  #feedbackForm label {
+    margin-top: 10px;
+  }
+  #feedbackForm button {
+    background: var(--primary-color);
+  }
+  #feedbackMessage {
+    margin-top: 10px;
+    font-weight: bold;
+    color: var(--primary-dark);
+  }
 
-    select, input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      font-size: 16px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
+  /* Harita */
+  #map {
+    width: 100%;
+    height: 250px;
+    border-radius: 15px;
+    margin-top: 30px;
+    box-shadow: 0 0 10px var(--primary-color-transparent);
+  }
 
-    button {
-      background-color: var(--button-light);
-      color: white;
-      cursor: pointer;
-      transition: 0.3s ease;
-    }
-
-    body.dark button {
-      background-color: var(--button-dark);
-    }
-
-    button:hover {
-      transform: scale(1.02);
-    }
-
-    .box {
-      background: var(--box-light);
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(192, 159, 149, 0.3);
-      margin-bottom: 30px;
-    }
-
-    body.dark .box {
-      background: var(--box-dark);
-    }
-
-    iframe {
-      width: 100%;
-      height: 300px;
-      border: none;
-      border-radius: 15px;
-    }
-
-    .kelebek {
-      position: fixed;
-      bottom: -60px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 40px;
-      animation: ucar 8s linear infinite;
-      transition: filter 0.2s;
-    }
-
-    .kelebek:active {
-      filter: drop-shadow(0 0 15px #f0c);
-    }
-
-    @keyframes ucar {
-      0% { bottom: -60px; transform: translateX(-50%) rotate(0deg); }
-      50% { transform: translateX(-50%) rotate(20deg); }
-      100% { bottom: 100%; transform: translateX(-50%) rotate(0deg); }
-    }
-
-    .controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .controls > * {
-      flex: 1;
-      margin: 0 5px;
-    }
-  </style>
+  /* Kelebek animasyonu */
+  .butterfly {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    pointer-events: none;
+    z-index: 9999;
+    background-image: url('https://em-content.zobj.net/thumbs/240/twitter/322/butterfly_1f98b.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: fly 6s ease-in-out infinite;
+  }
+  @keyframes fly {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(15px, 15px) rotate(20deg); }
+  }
+</style>
 </head>
 <body>
 
-  <!-- Üst Kontroller -->
-  <div class="controls">
-    <!-- Dil Seçimi -->
-    <div>
-      <label for="dilSec">🌐 Dil:</label>
-      <select id="dilSec">
-        <option value="tr">Türkçe</option>
-        <option value="en">English</option>
-      </select>
-    </div>
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/30/audio_237e6168d9.mp3?filename=calm-piano-5703.mp3" type="audio/mpeg">
+  Tarayıcınız audio öğesini desteklemiyor.
+</audio>
 
-    <!-- Tema Butonu -->
-    <div>
-      <label for="temaBtn">🎨 Tema:</label>
-      <button id="temaBtn">Koyu Moda Geç</button>
-    </div>
-  </div>
+<h1>Renkli Dokunuş</h1>
 
-  <h1 id="baslik">Renkli Dokunuş</h1>
+<div id="dilTemaContainer">
+  <select id="dilSelect" aria-label="Dil seçimi">
+    <option value="tr" selected>Türkçe</option>
+    <option value="en">English</option>
+  </select>
+  <select id="temaSwitch" aria-label="Tema seçimi">
+    <option value="light" selected>Açık Tema</option>
+    <option value="dark">Karanlık Tema</option>
+  </select>
+</div>
 
-  <!-- Geri Bildirim Formu -->
-  <div class="box">
-    <h2 id="geribaslik">Geri Bildirim Formu</h2>
-    <form id="feedbackForm">
-      <label for="ad">Ad Soyad</label>
-      <input type="text" id="ad" required />
-      <label for="mesaj">Mesajınız</label>
-      <textarea id="mesaj" rows="4" required></textarea>
-      <button type="submit" id="gonderBtn">Gönder</button>
-    </form>
-    <p id="tesekkur" style="display:none; text-align:center; font-weight:bold; color:green;">🎉 Geri bildiriminiz alındı, teşekkür ederiz!</p>
-  </div>
+<!-- Randevu Formu -->
+<form id="randevuForm">
+  <label for="ad" data-tr="Ad Soyad" data-en="Full Name">Ad Soyad</label>
+  <input type="text" id="ad" placeholder="Adınızı yazınız" required />
 
-  <!-- Harita -->
-  <div class="box">
-    <h2 id="haritaBaslik">Kırklareli Konumu</h2>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11926.447075785507!2d27.212611749999996!3d41.7369996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b2c63db676c26f%3A0x4b5f3d88cc1d685e!2sK%C4%B1rklareli!5e0!3m2!1str!2str!4v1622123123456"></iframe>
-  </div>
+  <label for="hizmet" data-tr="Hizmet Seçimi" data-en="Select Service">Hizmet Seçimi</label>
+  <select id="hizmet" required>
+    <option value="" data-tr="Hizmet Seçin" data-en="Select a Service">Hizmet Seçin</option>
+    <option>Protez Tırnak (Şablon) + Kalıcı Oje</option>
+    <option>Protez Tırnak (Şablon)</option>
+    <option>Protez Tırnak (Tips) + Kalıcı Oje</option>
+    <option>Protez Tırnak (Tips)</option>
+    <option>Jel Güçlendirme + Kalıcı Oje</option>
+    <option>Jel Güçlendirme</option>
+    <option>Kalıcı Oje</option>
+    <option>Manikür</option>
+    <option>Pedikür</option>
+    <option>French / Nail Art</option>
+  </select>
 
-  <!-- Kelebek -->
-  <div class="kelebek" onclick="this.style.filter='drop-shadow(0 0 12px #ff69b4)'">🦋</div>
+  <label for="tarih" data-tr="Tarih" data-en="Date">Tarih</label>
+  <input type="date" id="tarih" required />
 
-  <!-- Script -->
-  <script>
-    const form = document.getElementById("feedbackForm");
-    const tesekkur = document.getElementById("tesekkur");
-    const langSelect = document.getElementById("dilSec");
-    const temaBtn = document.getElementById("temaBtn");
+  <label for="not" data-tr="Ek Not (İsteğe Bağlı)" data-en="Additional Note (Optional)">Ek Not (İsteğe Bağlı)</label>
+  <textarea id="not" rows="3" placeholder="Örn: Nude tonlarda istiyorum"></textarea>
 
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-      form.style.display = "none";
-      tesekkur.style.display = "block";
-    });
+  <button type="submit" data-tr="Randevu Al (WhatsApp)" data-en="Make Appointment (WhatsApp)">Randevu Al (WhatsApp)</button>
+</form>
 
-    langSelect.addEventListener("change", function() {
-      const dil = this.value;
+<!-- Fiyat Listesi -->
+<div class="fiyat-listesi" aria-label="Fiyat Listesi">
+  <h2>💅 <span data-tr="TIRNAK BAKIM" data-en="NAIL CARE">TIRNAK BAKIM</span></h2>
+  <ul>
+    <li><span>Protez Tırnak (Şablon) + Kalıcı Oje</span><span>1000 TL</span></li>
+    <li><span>Protez Tırnak (Şablon)</span><span>900 TL</span></li>
+    <li><span>Protez Tırnak (Tips) + Kalıcı Oje</span><span>800 TL</span></li>
+    <li><span>Protez Tırnak (Tips)</span><span>700 TL</span></li>
+    <li><span>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</span><span>500 TL</span></li>
+    <li><span>Jel Güçlendirme + Kalıcı Oje</span><span>650 TL</span></li>
+    <li><span>Jel Güçlendirme</span><span>500 TL</span></li>
+    <li><span>Kalıcı Oje</span><span>300 TL</span></li>
+    <li><span>Manikür</span><span>300 TL</span></li>
+    <li><span>Manikür + Çıkarma</span><span>400 TL</span></li>
+    <li><span>Pedikür + Kalıcı Oje</span><span>700 TL</span></li>
+    <li><span>Pedikür</span><span>450 TL</span></li>
+    <li><span>Protez / Kalıcı Oje Çıkarma</span><span>200 TL</span></li>
+    <li><span>Tek Tırnak Onarımı</span><span>75 TL</span></li>
+  </ul>
+
+  <h2>💎 <span data-tr="NAILART (Tasarım)" data-en="NAILART (Design)">NAILART (Tasarım)</span></h2>
+  <ul>
+    <li><span>İnci Tozu / Krom Efekt</span><span>100 TL</span></li>
+    <li><span>French</span><span>100 TL</span></li>
+    <li><span>Mini Nail Art</span><span>20 TL</span></li>
+    <li><span>Büyük Charm</span><span>40 TL</span></li>
+    <li><span>Küçük Charm</span><span>20 TL</span></li>
+  </ul>
+</div>
+
+<!-- Geri Bildirim Formu -->
+<div id="feedbackForm">
+  <h2 data-tr="Geri Bildirim" data-en="Feedback">Geri Bildirim</h2>
+  <form id="geriForm">
+    <label for="geriAd" data-tr="Ad Soyad" data-en="Full Name">Ad Soyad</label>
+    <input type="text" id="geriAd" required placeholder="Adınızı yazınız" />
+
+    <label for="geriMesaj" data-tr="Mesajınız" data-en="Your Message">Mesajınız</label>
+    <textarea id="geriMesaj" rows="4" required placeholder="Mesajınızı yazınız"></textarea>
+
+    <button type="submit" data-tr="Gönder" data-en="Send">Gönder</button>
+    <p id="feedbackMessage"></p>
+  </form>
+</div>
+
+<!-- Kırklareli Haritası -->
+<h2 data-tr="Konumumuz" data-en="Our Location" style="margin-top:40px;">Konumumuz</h2>
+<div id="map" aria-label="Kırklareli Haritası"></div>
+
+<!-- Kelebek -->
+<div class="butterfly" id="butterfly"></div>
+
+<script>
+  // --- Tema Yönetimi ---
+  const temaSwitch = document.getElementById("temaSwitch");
+  const body = document.body;
+
+  function setTema(tema) {
+    if (tema === "dark") {
+      body.classList.add("dark");
+    } else {
+      body.classList.remove("dark");
+    }
+    localStorage.setItem("tema", tema);
+  }
+  temaSwitch.addEventListener("change", e => {
+    setTema(e.target.value);
+  });
+
+  // Sayfa açıldığında kayıtlı tema varsa uygula
+  const kayitliTema = localStorage.getItem("tema") || "light";
+  temaSwitch.value = kayitliTema;
+  setTema(kayitliTema);
+
+  // --- Dil Yönetimi ---
+  const dilSelect = document.getElementById("dilSelect");
+  const ceviriElemanlar = document.querySelectorAll("[data-tr]");
+
+  function setDil(dil) {
+    ceviriElemanlar.forEach(el => {
+      const tr = el.getAttribute("data-tr");
+      const en = el.getAttribute("data-en");
       if (dil === "en") {
-        document.getElementById("baslik").textContent = "Colorful Touch";
-        document.getElementById("geribaslik").textContent = "Feedback Form";
-        document.getElementById("gonderBtn").textContent = "Send";
-        document.getElementById("haritaBaslik").textContent = "Kırklareli Location";
-        document.querySelector("label[for='ad']").textContent = "Name Surname";
-        document.querySelector("label[for='mesaj']").textContent = "Your Message";
-        document.getElementById("tesekkur").textContent = "🎉 Your feedback has been received. Thank you!";
-        temaBtn.textContent = document.body.classList.contains('dark') ? "Switch to Light Mode" : "Switch to Dark Mode";
+        if (el.placeholder) {
+          el.placeholder = en;
+        }
+        if (el.tagName === "OPTION") {
+          el.textContent = en;
+        } else {
+          el.textContent = en;
+        }
       } else {
-        document.getElementById("baslik").textContent = "Renkli Dokunuş";
-        document.getElementById("geribaslik").textContent = "Geri Bildirim Formu";
-        document.getElementById("gonderBtn").textContent = "Gönder";
-        document.getElementById("haritaBaslik").textContent = "Kırklareli Konumu";
-        document.querySelector("label[for='ad']").textContent = "Ad Soyad";
-        document.querySelector("label[for='mesaj']").textContent = "Mesajınız";
-        document.getElementById("tesekkur").textContent = "🎉 Geri bildiriminiz alındı, teşekkür ederiz!";
-        temaBtn.textContent = document.body.classList.contains('dark') ? "Açık Moda Geç" : "Koyu Moda Geç";
+        if (el.placeholder) {
+          el.placeholder = tr;
+        }
+        if (el.tagName === "OPTION") {
+          el.textContent = tr;
+        } else {
+          el.textContent = tr;
+        }
       }
     });
+    localStorage.setItem("dil", dil);
+  }
+  dilSelect.addEventListener("change", e => {
+    setDil(e.target.value);
+  });
+  // Sayfa açıldığında kayıtlı dil varsa uygula
+  const kayitliDil = localStorage.getItem("dil") || "tr";
+  dilSelect.value = kayitliDil;
+  setDil(kayitliDil);
 
-    temaBtn.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-      const currentLang = langSelect.value;
-      if (currentLang === "en") {
-        temaBtn.textContent = document.body.classList.contains('dark') ? "Switch to Light Mode" : "Switch to Dark Mode";
-      } else {
-        temaBtn.textContent = document.body.classList.contains('dark') ? "Açık Moda Geç" : "Koyu Moda Geç";
-      }
-    });
-  </script>
-</body>
-</html>
+  // --- Randevu Formu ---
+  document.getElementById("randevuForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const ad = document.getElementById("ad").value.trim();
+    const hizmet = document.getElementById("hizmet").value;
+    const tarih = document.getElementById("tarih").value;
+    const not = document.getElementById("not").value.trim();
+
+    if (!ad || !hizmet || !tarih) {
+      alert(kayitliDil === "tr" ? "Lütfen gerekli alanları doldurun." : "Please fill all required fields.");
+      return;
+    }
+
+    const mesaj = 
+      (kayitliDil === "tr" ? "Merhaba! Randevu talebi:" : "Hello! Appointment request:") +
+      `%0A- ${kayitliDil === "tr" ? "Ad Soyad" : "Full Name"}: ${ad}` +
+      `%0A- ${kayitliDil === "tr" ? "Hizmet" : "Service"}: ${hizmet}` +
+      `%0A- ${kayitliDil === "tr" ? "Tarih" : "Date"}: ${tarih}` +
+      `%0A- ${kayitliDil === "tr" ? "Not" : "Note"}: ${not || (kayitliDil === "tr" ? "Yok" : "None")}`;
+
+    const whatsappURL = `https://wa.me/905551862487?text=${mesaj}`;
+    window.open(whatsappURL, "_blank");
+  });
+
+  // --- Geri Bildirim Formu ---
+  const geriForm = document.getElementById("geriForm");
+  const feedbackMessage = document.getElementById("feedbackMessage");
+
+  geriForm.addEventListener("submit", e => {
+    e.preventDefault();
+    const name = document.getElementById("geriAd").value.trim();
+    const message = document.getElementById("geriMesaj").value.trim();
+    if (!name || !message) {
+      feedbackMessage.textContent = kayitliDil === "tr" ? "Lütfen tüm alanları doldurun." : "Please fill all fields.";
+      feedbackMessage.style.color = "red";
+      return;
+    }
+    // Şimdi sadece uyarı gösteriyoruz, form gönderimi için backend gerek.
+    feedbackMessage.style.color = "green";
+    feedbackMessage.textContent = kayitliDil === "tr" ? "Geri bildiriminiz için teşekkürler!" : "Thank you for your feedback!";
+    geriForm.reset();
+  });
+
+  // --- Google Maps Kırklareli ---
+  function initMap() {
+    const krkl = { lat: 41.7356, lng: 27.2256 };
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 13,
+      center: krkl,
+      styles: [
+        { elementType: 'geometry', stylers: [{color: '#ebe3cd'}]},
+        { elementType: 'labels.text.fill', stylers: [{color: '#523735'}]},
+        { elementType: 'labels.text.stroke', stylers: [{color: '#f5f1e6'}]},
+        { featureType: 'administrative', elementType: 'geometry.stroke', stylers: [{color: '#c9b2a6'}]},
+        { featureType: 'administrative.land_parcel', elementType: 'geometry.stroke', stylers: [{color: '#dcd2be'}]},
+        { featureType: 'administrative.land_parcel', elementType: 'labels.text.fill', stylers: [{color: '#ae9e90'}]},
+        { featureType: 'landscape.natural', elementType: 'geometry', stylers: [{color: '#dfd2ae'}]},
+        { featureType: 'poi', elementType: 'geometry', stylers: [{color: '#dfd2ae'}]},
+        { featureType: 'poi

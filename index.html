@@ -11,7 +11,6 @@
     select, input, textarea, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 10px; border: 1px solid #ddd; font-size: 16px; }
     button { background: #c09f95; color: white; border: none; margin-top: 20px; cursor: pointer; }
     button:hover { background: #b3897f; }
-    option[disabled] { color: #999; }
     .fiyat-listesi {
       background: #fff8f5;
       border-radius: 15px;
@@ -49,7 +48,7 @@
 </audio>
 
 <h1>Renkli Dokunuş</h1>
-<p style="text-align:center;">Uygun Saatleri Görüntüleyin ve Randevu Alın</p>
+<p style="text-align:center;">Randevunuzu Oluşturun</p>
 
 <form id="randevuForm">
   <label for="ad">Ad Soyad</label>
@@ -77,9 +76,6 @@
 
   <label for="tarih">Tarih</label>
   <input type="date" id="tarih" required />
-
-  <label for="saat">Saat</label>
-  <select id="saat" required></select>
 
   <label for="not">Ek Not (İsteğe Bağlı)</label>
   <textarea id="not" rows="3" placeholder="Örn: French istiyorum"></textarea>
@@ -118,38 +114,19 @@
 </div>
 
 <script>
-  const doluSaatler = ["10:00", "13:00", "15:00", "18:00"];
-  const baslangicSaat = 10;
-  const bitisSaat = 22;
-  const saatSelect = document.getElementById("saat");
-
-  function saatleriOlustur() {
-    saatSelect.innerHTML = "";
-    for(let saat = baslangicSaat; saat <= bitisSaat; saat += 2) {
-      const saatStr = (saat < 10 ? "0" + saat : saat) + ":00";
-      const option = document.createElement("option");
-      option.value = saatStr;
-      option.textContent = doluSaatler.includes(saatStr) ? `${saatStr} (DOLU)` : saatStr;
-      option.disabled = doluSaatler.includes(saatStr);
-      saatSelect.appendChild(option);
-    }
-  }
-  saatleriOlustur();
-
   document.getElementById("randevuForm").addEventListener("submit", function(e) {
     e.preventDefault();
     const ad = document.getElementById("ad").value.trim();
     const hizmet = document.getElementById("hizmet").value;
     const tarih = document.getElementById("tarih").value;
-    const saat = document.getElementById("saat").value;
     const not = document.getElementById("not").value.trim();
 
-    if (!ad || !hizmet || !tarih || !saat) {
+    if (!ad || !hizmet || !tarih) {
       alert("Lütfen tüm zorunlu alanları doldurun.");
       return;
     }
 
-    const mesaj = `Merhaba! Randevu talebi:%0A- Ad Soyad: ${ad}%0A- Hizmet: ${hizmet}%0A- Tarih: ${tarih}%0A- Saat: ${saat}%0A- Not: ${not || "Yok"}`;
+    const mesaj = `Merhaba! Randevu talebi:%0A- Ad Soyad: ${ad}%0A- Hizmet: ${hizmet}%0A- Tarih: ${tarih}%0A- Not: ${not || "Yok"}`;
     const whatsappURL = `https://wa.me/905551862487?text=${mesaj}`;
     window.open(whatsappURL, "_blank");
   });

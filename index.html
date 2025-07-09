@@ -5,13 +5,44 @@
   <title>Renkli Dokunuş - Randevu & Fiyatlar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { font-family: Arial, sans-serif; max-width: 700px; margin: 30px auto; background: #f9f6f3; padding: 20px; color: #4a4a4a; }
-    h1, h2 { text-align: center; color: #c09f95; }
-    label { display: block; margin-top: 15px; font-weight: bold; }
-    select, input, textarea, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 10px; border: 1px solid #ddd; font-size: 16px; }
-    button { background: #c09f95; color: white; border: none; margin-top: 20px; cursor: pointer; }
-    button:hover { background: #b3897f; }
-    option[disabled] { color: #999; }
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 30px auto;
+      background: #f9f6f3;
+      padding: 20px;
+      color: #4a4a4a;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #c09f95;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    select, input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+    }
+    button {
+      background: #c09f95;
+      color: white;
+      border: none;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #b3897f;
+    }
+    option[disabled] {
+      color: #999;
+    }
     .fiyat-listesi {
       background: #fff8f5;
       border-radius: 15px;
@@ -48,7 +79,6 @@
   </style>
 </head>
 <body>
-
 <audio id="piyanoSes" autoplay loop>
   <source src="https://cdn.pixabay.com/download/audio/2022/03/30/audio_237e6168d9.mp3?filename=calm-piano-5703.mp3" type="audio/mpeg">
   Tarayıcınız audio elementini desteklemiyor.
@@ -93,10 +123,10 @@
   <textarea id="not" rows="3" placeholder="Örn: French istiyorum"></textarea>
 
   <button type="submit">Randevu Al (WhatsApp)</button>
+
   <div class="message" id="mesajAlani"></div>
 </form>
 
-<!-- Fiyat Listesi -->
 <div class="fiyat-listesi">
   <h2>💅 TIRNAK BAKIM</h2>
   <ul>
@@ -115,7 +145,6 @@
     <li><span>Protez / Kalıcı Oje Çıkarma</span><span>200 TL</span></li>
     <li><span>Tek Tırnak Onarımı</span><span>75 TL</span></li>
   </ul>
-
   <h2>💎 NAILART (Tasarım)</h2>
   <ul>
     <li><span>İnci Tozu / Krom Efekt</span><span>100 TL</span></li>
@@ -127,23 +156,20 @@
 </div>
 
 <script>
-  const baseURL = https://script.google.com/macros/s/AKfycbyQAWGQyWiltmYw-83Iq7Y_C-3UQ_PKYdmoQE8QUMn_e1POvsbJ36CwCpUqdA1sSUuIgg/exec
+  const baseURL = "https://script.google.com/macros/s/AKfycbyQAWGQyWiltmYw-83Iq7Y_C-3UQ_PKYdmoQE8QUMn_e1POvsbJ36CwCpUqdA1sSUuIgg/exec";
   const tarihInput = document.getElementById("tarih");
   const saatSelect = document.getElementById("saat");
   const mesajAlani = document.getElementById("mesajAlani");
 
-  // Bugünden sonrası tarih seçilebilsin
   const bugun = new Date();
   const yyyy = bugun.getFullYear();
   const mm = (bugun.getMonth() + 1).toString().padStart(2, "0");
   const dd = bugun.getDate().toString().padStart(2, "0");
-  tarihInput.min = ${yyyy}-${mm}-${dd};
+  tarihInput.min = `${yyyy}-${mm}-${dd}`;
 
-  // Saat aralığı
   const baslangicSaat = 10;
   const bitisSaat = 22;
 
-  // Tarih seçildiğinde saatleri dinamik yükle
   tarihInput.addEventListener("change", async () => {
     mesajAlani.textContent = "Saatler yükleniyor...";
     saatSelect.innerHTML = "";
@@ -156,16 +182,13 @@
     }
 
     try {
-      // Google Sheet'teki dolu saatleri GET ile çek
       const res = await fetch(baseURL);
       const randevular = await res.json();
 
-      // Seçilen tarih için dolu saatleri filtrele
       const doluSaatler = randevular
         .filter(r => r.tarih === secilenTarih)
         .map(r => r.saat);
 
-      // Tüm saat aralığını oluştur ve doluları disable yap
       for (let saat = baslangicSaat; saat < bitisSaat; saat++) {
         const saatStr = (saat < 10 ? "0" + saat : saat) + ":00";
         const option = document.createElement("option");
@@ -201,17 +224,14 @@
     }
 
     try {
-      // Önce doluluk kontrolü yap (GET)
       const res = await fetch(baseURL);
       const randevular = await res.json();
-
       const doluMu = randevular.some(r => r.tarih === tarih && r.saat === saat);
       if (doluMu) {
         mesajAlani.textContent = "❌ Bu tarih ve saat dolu. Lütfen başka bir zaman seçin.";
         return;
       }
 
-      // Kayıt işlemi (POST)
       const data = { isim: ad, tarih, saat, islem: hizmet + (not ? " - Not: " + not : "") };
       const postRes = await fetch(baseURL, {
         method: "POST",
@@ -223,10 +243,9 @@
         mesajAlani.style.color = "green";
         mesajAlani.textContent = "✅ Randevunuz başarıyla alındı.";
 
-        // WhatsApp yönlendirme
         const tel = "905551862487";
-        const text = Merhaba! Randevum:%0A- Ad Soyad: ${ad}%0A- Hizmet: ${hizmet}%0A- Tarih: ${tarih}%0A- Saat: ${saat}%0A- Not: ${not || "Yok"};
-        const whatsappURL = https://wa.me/${tel}?text=${text};
+        const text = `Merhaba! Randevum:%0A- Ad Soyad: ${ad}%0A- Hizmet: ${hizmet}%0A- Tarih: ${tarih}%0A- Saat: ${saat}%0A- Not: ${not || "Yok"}`;
+        const whatsappURL = `https://wa.me/${tel}?text=${text}`;
         setTimeout(() => window.open(whatsappURL, "_blank"), 1500);
       } else {
         mesajAlani.textContent = "Kayıt sırasında bir hata oluştu. Lütfen tekrar deneyin.";
@@ -237,6 +256,5 @@
     }
   });
 </script>
-
 </body>
 </html>

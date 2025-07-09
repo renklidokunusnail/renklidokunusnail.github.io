@@ -1,199 +1,164 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Renkli Dokunuş - Randevu & Fiyatlar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 700px;
-      margin: 30px auto;
-      background: #f9f6f3;
-      color: #444;
+    body { font-family: Arial, sans-serif; max-width: 700px; margin: 30px auto; background: #f9f6f3; padding: 20px; color: #4a4a4a; }
+    h1, h2 { text-align: center; color: #c09f95; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    select, input, textarea, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 10px; border: 1px solid #ddd; font-size: 16px; }
+    button { background: #c09f95; color: white; border: none; margin-top: 20px; cursor: pointer; }
+    button:hover { background: #b3897f; }
+    option[disabled] { color: #999; }
+    .fiyat-listesi {
+      background: #fff8f5;
+      border-radius: 15px;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      margin-top: 40px;
+      box-shadow: 0 0 10px rgba(192, 159, 149, 0.3);
     }
-    h1, h2 {
-      text-align: center;
-      color: #b36853;
-    }
-    form {
-      background: #fff;
-      padding: 15px 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(179, 104, 83, 0.3);
-      margin-bottom: 30px;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-      color: #8c5c4e;
-    }
-    input, select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border-radius: 6px;
-      border: 1px solid #b36853;
-      font-size: 16px;
-      box-sizing: border-box;
-    }
-    button {
-      margin-top: 20px;
-      background-color: #b36853;
-      color: white;
-      border: none;
-      padding: 12px;
-      width: 100%;
-      font-size: 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #9e5a45;
-    }
-    .price-list {
-      background: #fff;
-      border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 0 12px rgba(179, 104, 83, 0.2);
-    }
-    .price-list h2 {
+    .fiyat-listesi h2 {
       margin-bottom: 15px;
-      color: #b36853;
+      font-weight: 700;
+      font-size: 24px;
     }
-    .price-list ul {
+    .fiyat-listesi ul {
       list-style: none;
       padding: 0;
+      margin: 0;
     }
-    .price-list li {
-      padding: 8px 0;
-      border-bottom: 1px solid #e0d9d5;
-      font-weight: 600;
+    .fiyat-listesi li {
       display: flex;
       justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #e6d6d0;
+      font-size: 16px;
     }
-    .price-list li:last-child {
+    .fiyat-listesi li:last-child {
       border-bottom: none;
-    }
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 14px;
-      color: #999;
-    }
-    .nail-image {
-      display: block;
-      margin: 20px auto;
-      max-width: 120px;
     }
   </style>
 </head>
 <body>
 
-  <h1>Renkli Dokunuş</h1>
-  <h2>Randevu Formu</h2>
+<audio id="piyanoSes" autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/30/audio_237e6168d9.mp3?filename=calm-piano-5703.mp3" type="audio/mpeg">
+  Tarayıcınız audio elementini desteklemiyor.
+</audio>
 
-  <form id="appointmentForm">
-    <label for="name">İsim</label>
-    <input type="text" id="name" name="name" required />
-    <label for="surname">Soyisim</label>
-    <input type="text" id="surname" name="surname" required />
-    <label for="date">Tarih</label>
-    <input type="date" id="date" name="date" required />
-    <label for="time">Saat</label>
-    <input type="time" id="time" name="time" required />
-    <label for="service">Yapılacak İşlem</label>
-    <select id="service" name="service" required>
-      <option value="">Seçiniz</option>
-      <option value="Protez Tırnak (Şablon) + Kalıcı Oje — 1000 TL">Protez Tırnak (Şablon) + Kalıcı Oje — 1000 TL</option>
-      <option value="Protez Tırnak (Şablon) — 900 TL">Protez Tırnak (Şablon) — 900 TL</option>
-      <option value="Protez Tırnak (Tips) + Kalıcı Oje — 800 TL">Protez Tırnak (Tips) + Kalıcı Oje — 800 TL</option>
-      <option value="Protez Tırnak (Tips) — 700 TL">Protez Tırnak (Tips) — 700 TL</option>
-      <option value="Protez Tırnak (Kapsül Sistem) + Kalıcı Oje — 500 TL">Protez Tırnak (Kapsül Sistem) + Kalıcı Oje — 500 TL</option>
-      <option value="Jel Güçlendirme + Kalıcı Oje — 650 TL">Jel Güçlendirme + Kalıcı Oje — 650 TL</option>
-      <option value="Jel Güçlendirme — 500 TL">Jel Güçlendirme — 500 TL</option>
-      <option value="Kalıcı Oje — 300 TL">Kalıcı Oje — 300 TL</option>
-      <option value="Manikür — 300 TL">Manikür — 300 TL</option>
-      <option value="Manikür + Çıkarma — 400 TL">Manikür + Çıkarma — 400 TL</option>
-      <option value="Pedikür + Kalıcı Oje — 700 TL">Pedikür + Kalıcı Oje — 700 TL</option>
-      <option value="Pedikür — 450 TL">Pedikür — 450 TL</option>
-      <option value="Protez / Kalıcı Oje Çıkarma — 200 TL">Protez / Kalıcı Oje Çıkarma — 200 TL</option>
-      <option value="Tek Tırnak Onarımı — 75 TL">Tek Tırnak Onarımı — 75 TL</option>
-      <option value="İnci Tozu / Krom Efekt — 100 TL">İnci Tozu / Krom Efekt — 100 TL</option>
-      <option value="French — 100 TL">French — 100 TL</option>
-      <option value="Mini Nail Art — 20 TL">Mini Nail Art — 20 TL</option>
-      <option value="Büyük Charm — 40 TL">Büyük Charm — 40 TL</option>
-      <option value="Küçük Charm — 20 TL">Küçük Charm — 20 TL</option>
-    </select>
+<h1>Renkli Dokunuş</h1>
+<p style="text-align:center;">Uygun Saatleri Görüntüleyin ve Randevu Alın</p>
 
-    <button type="submit">Randevu Gönder</button>
-  </form>
+<form id="randevuForm">
+  <label for="ad">Ad Soyad</label>
+  <input type="text" id="ad" required />
 
-  <div class="price-list">
-    <h2>Fiyat Listesi</h2>
-    <ul>
-      <li>Protez Tırnak (Şablon) + Kalıcı Oje <span>1000 TL</span></li>
-      <li>Protez Tırnak (Şablon) <span>900 TL</span></li>
-      <li>Protez Tırnak (Tips) + Kalıcı Oje <span>800 TL</span></li>
-      <li>Protez Tırnak (Tips) <span>700 TL</span></li>
-      <li>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje <span>500 TL</span></li>
-      <li>Jel Güçlendirme + Kalıcı Oje <span>650 TL</span></li>
-      <li>Jel Güçlendirme <span>500 TL</span></li>
-      <li>Kalıcı Oje <span>300 TL</span></li>
-      <li>Manikür <span>300 TL</span></li>
-      <li>Manikür + Çıkarma <span>400 TL</span></li>
-      <li>Pedikür + Kalıcı Oje <span>700 TL</span></li>
-      <li>Pedikür <span>450 TL</span></li>
-      <li>Protez / Kalıcı Oje Çıkarma <span>200 TL</span></li>
-      <li>Tek Tırnak Onarımı <span>75 TL</span></li>
-      <li>İnci Tozu / Krom Efekt <span>100 TL</span></li>
-      <li>French <span>100 TL</span></li>
-      <li>Mini Nail Art <span>20 TL</span></li>
-      <li>Büyük Charm <span>40 TL</span></li>
-      <li>Küçük Charm <span>20 TL</span></li>
-    </ul>
-  </div>
+  <label for="hizmet">Hizmet Seçimi</label>
+  <select id="hizmet" required>
+    <option value="">Hizmet Seçin</option>
+    <option>Protez Tırnak (Şablon) + Kalıcı Oje</option>
+    <option>Protez Tırnak (Şablon)</option>
+    <option>Protez Tırnak (Tips) + Kalıcı Oje</option>
+    <option>Protez Tırnak (Tips)</option>
+    <option>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</option>
+    <option>Jel Güçlendirme + Kalıcı Oje</option>
+    <option>Jel Güçlendirme</option>
+    <option>Kalıcı Oje</option>
+    <option>Manikür</option>
+    <option>Manikür + Çıkarma</option>
+    <option>Pedikür + Kalıcı Oje</option>
+    <option>Pedikür</option>
+    <option>Protez / Kalıcı Oje Çıkarma</option>
+    <option>Tek Tırnak Onarımı</option>
+    <option>NAILART (Tasarım)</option>
+  </select>
 
-  <img class="nail-image" src="https://i.imgur.com/6jOqDdq.png" alt="Tırnak Karikatür" />
+  <label for="tarih">Tarih</label>
+  <input type="date" id="tarih" required />
 
-  <footer>
-    &copy; 2025 Renkli Dokunuş - Kırklareli Demirtaş Mah. İncidere Sokak
-  </footer>
+  <label for="saat">Saat</label>
+  <select id="saat" required></select>
 
-  <audio id="backgroundMusic" src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" autoplay loop></audio>
+  <label for="not">Ek Not (İsteğe Bağlı)</label>
+  <textarea id="not" rows="3" placeholder="Örn: French istiyorum"></textarea>
 
-  <script>
-    const form = document.getElementById('appointmentForm');
-    const music = document.getElementById('backgroundMusic');
+  <button type="submit">Randevu Al (WhatsApp)</button>
+</form>
 
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
+<!-- Fiyat Listesi -->
+<div class="fiyat-listesi">
+  <h2>💅 TIRNAK BAKIM</h2>
+  <ul>
+    <li><span>Protez Tırnak (Şablon) + Kalıcı Oje</span><span>1000 TL</span></li>
+    <li><span>Protez Tırnak (Şablon)</span><span>900 TL</span></li>
+    <li><span>Protez Tırnak (Tips) + Kalıcı Oje</span><span>800 TL</span></li>
+    <li><span>Protez Tırnak (Tips)</span><span>700 TL</span></li>
+    <li><span>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</span><span>500 TL</span></li>
+    <li><span>Jel Güçlendirme + Kalıcı Oje</span><span>650 TL</span></li>
+    <li><span>Jel Güçlendirme</span><span>500 TL</span></li>
+    <li><span>Kalıcı Oje</span><span>300 TL</span></li>
+    <li><span>Manikür</span><span>300 TL</span></li>
+    <li><span>Manikür + Çıkarma</span><span>400 TL</span></li>
+    <li><span>Pedikür + Kalıcı Oje</span><span>700 TL</span></li>
+    <li><span>Pedikür</span><span>450 TL</span></li>
+    <li><span>Protez / Kalıcı Oje Çıkarma</span><span>200 TL</span></li>
+    <li><span>Tek Tırnak Onarımı</span><span>75 TL</span></li>
+  </ul>
 
-      const name = form.name.value.trim();
-      const surname = form.surname.value.trim();
-      const date = form.date.value;
-      const time = form.time.value;
-      const service = form.service.value;
+  <h2>💎 NAILART (Tasarım)</h2>
+  <ul>
+    <li><span>İnci Tozu / Krom Efekt</span><span>100 TL</span></li>
+    <li><span>French</span><span>100 TL</span></li>
+    <li><span>Mini Nail Art</span><span>20 TL</span></li>
+    <li><span>Büyük Charm</span><span>40 TL</span></li>
+    <li><span>Küçük Charm</span><span>20 TL</span></li>
+  </ul>
+</div>
 
-      if (!name || !surname || !date || !time || !service) {
-        alert('Lütfen tüm alanları doldurun!');
-        return;
+<script>
+  // Örnek dolu saatler: (Gelecekte dinamik olmalı, şimdilik sabit)
+  const doluSaatler = ["10:00", "13:00", "15:00", "18:00"];
+  const baslangicSaat = 10;
+  const bitisSaat = 22;
+  const saatSelect = document.getElementById("saat");
+
+  function saatleriOlustur() {
+    saatSelect.innerHTML = "";
+    for(let saat = baslangicSaat; saat < bitisSaat; saat++) {
+      const saatStr = (saat < 10 ? "0" + saat : saat) + ":00";
+      const option = document.createElement("option");
+      option.value = saatStr;
+      option.textContent = saatStr;
+      if(doluSaatler.includes(saatStr)) {
+        option.disabled = true;
+        option.textContent += " (DOLU)";
       }
+      saatSelect.appendChild(option);
+    }
+  }
+  saatleriOlustur();
 
-      const message = Merhaba, ben ${name} ${surname}. Randevu almak istiyorum.%0ATarih: ${date}%0ASaat: ${time}%0Aİşlem: ${service};
-      const phoneNumber = "905551862487";
-      const url = https://wa.me/${phoneNumber}?text=${message};
+  document.getElementById("randevuForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const ad = document.getElementById("ad").value.trim();
+    const hizmet = document.getElementById("hizmet").value;
+    const tarih = document.getElementById("tarih").value;
+    const saat = document.getElementById("saat").value;
+    const not = document.getElementById("not").value.trim();
 
-      window.location.href = url;
-    });
+    if(!ad || !hizmet || !tarih || !saat) {
+      alert("Lütfen tüm zorunlu alanları doldurun.");
+      return;
+    }
 
-    music.volume = 0.3;
-  </script>
+    const mesaj = `Merhaba! Randevu talebi:%0A- Ad Soyad: ${ad}%0A- Hizmet: ${hizmet}%0A- Tarih: ${tarih}%0A- Saat: ${saat}%0A- Not: ${not || "Yok"}`;
+    const whatsappURL = `https://wa.me/905551862487?text=${mesaj}`;
+    window.open(whatsappURL, "_blank");
+  });
+</script>
 
 </body>
 </html>

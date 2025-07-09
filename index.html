@@ -51,16 +51,12 @@
 
     .butterfly {
       position: fixed;
-      width: 40px;
-      height: 40px;
-      background-image: url('https://i.imgur.com/E3rjFUV.png');
-      background-size: contain;
-      background-repeat: no-repeat;
-      animation-name: fly;
+      font-size: 30px;
+      user-select: none;
+      pointer-events: none;
       animation-timing-function: linear;
       animation-iteration-count: infinite;
       opacity: 0.8;
-      pointer-events: none;
       z-index: 9999;
     }
 
@@ -173,6 +169,7 @@
   function createButterfly() {
     const butterfly = document.createElement('div');
     butterfly.classList.add('butterfly');
+    butterfly.textContent = '🦋';
     butterfly.style.left = Math.random() * window.innerWidth + 'px';
     butterfly.style.top = Math.random() * window.innerHeight + 'px';
     butterfly.style.animationDuration = (5 + Math.random() * 5) + 's';

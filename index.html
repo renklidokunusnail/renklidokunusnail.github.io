@@ -5,9 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Renkli Dokunuş - Randevu</title>
   <style>
+    /* Arka plan resmi ve stil */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #fff0f5;
+      background: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
       color: #333;
       margin: 0;
       padding: 20px;
@@ -15,13 +17,29 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
+      /* Arka plan üzerine hafif beyaz şeffaf katman */
+      position: relative;
+      z-index: 0;
     }
-    h1 {
-      margin-bottom: 10px;
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(255, 230, 240, 0.8);
+      z-index: -1;
+    }
+    /* Marka başlığı */
+    header {
+      font-size: 3rem;
+      font-weight: 900;
       color: #d6336c;
+      margin-bottom: 20px;
+      font-family: 'Brush Script MT', cursive;
+      text-shadow: 1px 1px 4px #a02a5f88;
+      user-select: none;
     }
     form {
-      background: #ffe6f0;
+      background: #ffe6f0cc; /* biraz saydamlık */
       border: 2px solid #d6336c;
       border-radius: 12px;
       padding: 20px;
@@ -34,6 +52,7 @@
       display: block;
       margin-top: 15px;
       font-weight: 600;
+      color: #800040;
     }
     form input, form select {
       width: 100%;
@@ -44,6 +63,8 @@
       font-size: 15px;
       box-sizing: border-box;
       outline-color: #d6336c;
+      background: #fff0f5;
+      color: #5a1036;
     }
     form button {
       margin-top: 20px;
@@ -60,31 +81,12 @@
     form button:hover {
       background-color: #b02a59;
     }
-    .whatsapp-btn {
-      display: block;
-      margin: 15px auto 0;
-      background-color: #25d366;
-      color: white;
-      text-align: center;
-      padding: 12px 0;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 16px;
-      text-decoration: none;
-      width: 100%;
-      max-width: 320px;
-      box-shadow: 0 2px 5px #1ebc57;
-      transition: background-color 0.3s ease;
-    }
-    .whatsapp-btn:hover {
-      background-color: #1ebc57;
-    }
     .price-list {
       max-width: 400px;
       width: 100%;
       border: 2px solid #d6336c;
       border-radius: 12px;
-      background: #ffe6f0;
+      background: #ffe6f0cc;
       padding: 20px;
       box-sizing: border-box;
       color: #800040;
@@ -112,7 +114,8 @@
 </head>
 <body>
 
-  <h1>Randevu Formu</h1>
+  <header>Renkli Dokunuş Nail</header>
+
   <form id="randevuForm">
     <label for="isim">İsim</label>
     <input type="text" id="isim" name="isim" placeholder="Adınız" required />
@@ -164,17 +167,6 @@
     <button type="submit">Randevu Oluştur</button>
   </form>
 
-  <a 
-    href="#" 
-    id="whatsappLink" 
-    class="whatsapp-btn" 
-    target="_blank" 
-    rel="noopener noreferrer"
-    style="display:none;"
-  >
-    WhatsApp'tan Gönder
-  </a>
-
   <div class="price-list">
     <h2>Hizmet ve Fiyat Listesi</h2>
     <ul>
@@ -201,14 +193,52 @@
   </div>
 
   <script>
-    // Bugünün tarihini al ve tarih inputunun min değerine ata
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('tarih').setAttribute('min', today);
-
     const form = document.getElementById('randevuForm');
-    const whatsappBtn = document.getElementById('whatsappLink');
+    const tarihInput = document.getElementById('tarih');
+    const saatSelect = document.getElementById('saat');
 
-    form.addEventListener('submit', function(e) {
+    const saatler = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
+
+    const doluRandevular = [
+      { tarih: '2025-07-10', saat: '10:00' },
+      { tarih: '2025-07-10', saat: '13:00' }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const today = new Date().toISOString().split('T')[0];
+      tarihInput.min = today;
+      saatleriGuncelle();
+    });
+
+    tarihInput.addEventListener('change', saatleriGuncelle);
+
+    function saatleriGuncelle() {
+      const secilenTarih = tarihInput.value;
+
+      for(let i=0; i<saatSelect.options.length; i++){
+        saatSelect.options[i].disabled = false;
+      }
+
+      if(!secilenTarih) return;
+
+      doluRandevular.forEach(randevu => {
+        if(randevu.tarih === secilenTarih){
+          const index = saatler.indexOf(randevu.saat);
+          if(index !== -1){
+            saatSelect.options[index].disabled = true;
+            if(saatSelect.options[index + 1]) saatSelect.options[index + 1].disabled = true;
+          }
+        }
+      });
+
+      if(saatSelect.value){
+        if(saatSelect.options[saatSelect.selectedIndex].disabled){
+          saatSelect.value = "";
+        }
+      }
+    }
+
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
 
       const isim = form.isim.value.trim();
@@ -222,7 +252,11 @@
         return;
       }
 
-      // WhatsApp mesaj formatı
+      if(saatSelect.options[saatSelect.selectedIndex].disabled){
+        alert('Seçtiğiniz saat dolu veya uygun değil. Lütfen başka bir saat seçin.');
+        return;
+      }
+
       const mesaj = 
         Merhaba,%0A +
         Renkli Dokunuş'tan randevu talebim var.%0A +
@@ -232,18 +266,10 @@
         Saat: ${saat}%0A +
         İşlem: ${islem};
 
-      // WhatsApp numarasını buraya koy (ülke kodlu)
       const whatsappNumara = '905551862487';
-
       const whatsappUrl = https://wa.me/${whatsappNumara}?text=${mesaj};
 
-      // WhatsApp butonunu göster ve linki ata
-      whatsappBtn.href = whatsappUrl;
-      whatsappBtn.style.display = 'block';
-      whatsappBtn.scrollIntoView({behavior: "smooth"});
-
-      // Dilersen formu sıfırlayabilirsin
-      // form.reset();
+      window.open(whatsappUrl, '_blank');
     });
   </script>
 </body>

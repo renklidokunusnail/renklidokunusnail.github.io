@@ -2,16 +2,23 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <title>Renkli Dokunuş - Randevu & Fiyatlar</title>
+  <title>Renkli Dokunuş - Randevu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body { font-family: Arial, sans-serif; max-width: 700px; margin: 30px auto; background: #f9f6f3; padding: 20px; color: #4a4a4a; }
-    h1, h2 { text-align: center; color: #c09f95; }
+    h1 { text-align: center; color: #c09f95; }
     label { display: block; margin-top: 15px; font-weight: bold; }
-    select, input, textarea, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 10px; border: 1px solid #ddd; font-size: 16px; }
-    button { background: #c09f95; color: white; border: none; margin-top: 20px; cursor: pointer; }
+    input, select, textarea, button {
+      width: 100%; padding: 10px; margin-top: 5px; border-radius: 10px;
+      border: 1px solid #ddd; font-size: 16px;
+    }
+    button {
+      background: #c09f95; color: white; border: none; margin-top: 20px; cursor: pointer;
+    }
     button:hover { background: #b3897f; }
-    .message { margin-top: 15px; text-align: center; font-weight: bold; }
+    .message {
+      margin-top: 15px; text-align: center; font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -43,11 +50,6 @@
     <label for="tarih">Tarih</label>
     <input type="date" id="tarih" required />
 
-    <label for="saat">Saat</label>
-    <select id="saat" required>
-      <option value="">Lütfen önce tarih seçin</option>
-    </select>
-
     <label for="not">Ek Not (İsteğe Bağlı)</label>
     <textarea id="not" rows="3" placeholder="Örn: French istiyorum"></textarea>
 
@@ -57,43 +59,12 @@
 
   <script>
     const baseURL = "https://script.google.com/macros/s/AKfycbyQAWGQyWiltmYw-83Iq7Y_C-3UQ_PKYdmoQE8QUMn_e1POvsbJ36CwCpUqdA1sSUuIgg/exec";
-    const uygunSaatler = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00"];
-
     const tarihInput = document.getElementById("tarih");
-    const saatSelect = document.getElementById("saat");
     const mesajAlani = document.getElementById("mesajAlani");
 
     // Minimum tarih bugünden başlasın
     const bugun = new Date();
     tarihInput.min = bugun.toISOString().split("T")[0];
-
-    tarihInput.addEventListener("change", async () => {
-      mesajAlani.textContent = "Saatler yükleniyor...";
-      saatSelect.innerHTML = "";
-
-      const secilenTarih = tarihInput.value;
-      if (!secilenTarih) return;
-
-      try {
-        const res = await fetch(baseURL);
-        const randevular = await res.json();
-        const doluSaatler = randevular.filter(r => r.tarih === secilenTarih).map(r => r.saat);
-
-        uygunSaatler.forEach(saatStr => {
-          if (!doluSaatler.includes(saatStr)) {
-            const option = document.createElement("option");
-            option.value = saatStr;
-            option.textContent = saatStr;
-            saatSelect.appendChild(option);
-          }
-        });
-
-        mesajAlani.textContent = "";
-      } catch (e) {
-        mesajAlani.textContent = "Saatler yüklenirken hata oluştu.";
-        console.error(e);
-      }
-    });
 
     document.getElementById("randevuForm").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -103,37 +74,17 @@
       const ad = document.getElementById("ad").value.trim();
       const hizmet = document.getElementById("hizmet").value;
       const tarih = tarihInput.value;
-      const saat = saatSelect.value;
       const not = document.getElementById("not").value.trim();
 
-      if (!ad || !hizmet || !tarih || !saat) {
+      if (!ad || !hizmet || !tarih) {
         mesajAlani.textContent = "Lütfen tüm zorunlu alanları doldurun.";
         return;
       }
 
       try {
-        const res = await fetch(baseURL);
-        const randevular = await res.json();
-
-        const doluMu = randevular.some(r => r.tarih === tarih && r.saat === saat);
-        if (doluMu) {
-          const bosSaatler = uygunSaatler.filter(s =>
-            !randevular.some(r => r.tarih === tarih && r.saat === s)
-          );
-
-          if (bosSaatler.length > 0) {
-            mesajAlani.innerHTML = `❌ Bu saat dolu.<br>📅 Boş saatler: <strong>${bosSaatler.join(", ")}</strong>`;
-          } else {
-            mesajAlani.textContent = "❌ Bu gün tamamen dolu. Lütfen başka bir tarih seçin.";
-          }
-
-          return;
-        }
-
         const data = {
           isim: ad,
           tarih,
-          saat,
           islem: hizmet + (not ? " - Not: " + not : "")
         };
 
@@ -147,7 +98,7 @@
           mesajAlani.style.color = "green";
           mesajAlani.textContent = "✅ Randevunuz başarıyla alındı.";
           const tel = "905551862487";
-          const text = `Merhaba! Randevum:%0A- Ad Soyad: ${ad}%0A- Hizmet: ${hizmet}%0A- Tarih: ${tarih}%0A- Saat: ${saat}%0A- Not: ${not || "Yok"}`;
+          const text = `Merhaba! Randevum:%0A- Ad Soyad: ${ad}%0A- Hizmet: ${hizmet}%0A- Tarih: ${tarih}%0A- Not: ${not || "Yok"}`;
           const whatsappURL = `https://wa.me/${tel}?text=${text}`;
           setTimeout(() => window.open(whatsappURL, "_blank"), 1500);
         } else {

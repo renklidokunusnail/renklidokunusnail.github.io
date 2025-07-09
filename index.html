@@ -57,7 +57,7 @@
       background-color: #9e5a45;
     }
     .whatsapp-button {
-      display: block;
+      display: none;
       background-color: #25D366;
       color: white;
       text-align: center;
@@ -150,7 +150,7 @@
     <button type="submit">Randevu Gönder</button>
   </form>
 
-  <a id="whatsappLink" href="#" class="whatsapp-button" target="_blank" rel="noopener">WhatsApp ile Gönder</a>
+  <a id="whatsappLink" href="#" class="whatsapp-button">WhatsApp ile Gönder</a>
 
   <div class="price-list">
     <h2>Fiyat Listesi</h2>
@@ -190,6 +190,8 @@
     const whatsappLink = document.getElementById('whatsappLink');
     const music = document.getElementById('backgroundMusic');
 
+    whatsappLink.style.display = "none";
+
     form.addEventListener('submit', function(event) {
       event.preventDefault();
 
@@ -211,8 +213,9 @@
       const url = https://wa.me/${phoneNumber}?text=${encodedMessage};
 
       whatsappLink.href = url;
+      whatsappLink.style.display = "block";
 
-      alert('Randevu talebiniz hazır! Aşağıdaki butona tıklayarak WhatsApp üzerinden gönderebilirsiniz.');
+      alert("Randevu mesajınız hazır! Aşağıdaki butona tıklayın.");
     });
 
     music.volume = 0.3;

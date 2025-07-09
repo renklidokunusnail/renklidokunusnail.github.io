@@ -56,18 +56,6 @@
     button:hover {
       background-color: #9e5a45;
     }
-    .whatsapp-button {
-      display: none;
-      background-color: #25D366;
-      color: white;
-      text-align: center;
-      padding: 12px;
-      border-radius: 8px;
-      font-weight: bold;
-      text-decoration: none;
-      margin-top: 10px;
-      font-size: 18px;
-    }
     .price-list {
       background: #fff;
       border-radius: 8px;
@@ -113,16 +101,12 @@
   <form id="appointmentForm">
     <label for="name">İsim</label>
     <input type="text" id="name" name="name" required />
-
     <label for="surname">Soyisim</label>
     <input type="text" id="surname" name="surname" required />
-
     <label for="date">Tarih</label>
     <input type="date" id="date" name="date" required />
-
     <label for="time">Saat</label>
     <input type="time" id="time" name="time" required />
-
     <label for="service">Yapılacak İşlem</label>
     <select id="service" name="service" required>
       <option value="">Seçiniz</option>
@@ -149,8 +133,6 @@
 
     <button type="submit">Randevu Gönder</button>
   </form>
-
-  <a id="whatsappLink" href="#" class="whatsapp-button">WhatsApp ile Gönder</a>
 
   <div class="price-list">
     <h2>Fiyat Listesi</h2>
@@ -187,10 +169,7 @@
 
   <script>
     const form = document.getElementById('appointmentForm');
-    const whatsappLink = document.getElementById('whatsappLink');
     const music = document.getElementById('backgroundMusic');
-
-    whatsappLink.style.display = "none";
 
     form.addEventListener('submit', function(event) {
       event.preventDefault();
@@ -206,16 +185,11 @@
         return;
       }
 
-      const message = Merhaba, ben ${name} ${surname}. Randevu almak istiyorum.\nTarih: ${date}\nSaat: ${time}\nİşlem: ${service};
-
+      const message = Merhaba, ben ${name} ${surname}. Randevu almak istiyorum.%0ATarih: ${date}%0ASaat: ${time}%0Aİşlem: ${service};
       const phoneNumber = "905551862487";
-      const encodedMessage = encodeURIComponent(message);
-      const url = https://wa.me/${phoneNumber}?text=${encodedMessage};
+      const url = https://wa.me/${phoneNumber}?text=${message};
 
-      whatsappLink.href = url;
-      whatsappLink.style.display = "block";
-
-      alert("Randevu mesajınız hazır! Aşağıdaki butona tıklayın.");
+      window.location.href = url;
     });
 
     music.volume = 0.3;

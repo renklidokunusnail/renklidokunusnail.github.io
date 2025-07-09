@@ -206,20 +206,15 @@
 
       const message = Merhaba, ben ${name} ${surname}. Randevu almak istiyorum.\nTarih: ${date}\nSaat: ${time}\nİşlem: ${service};
 
-      // WhatsApp mesaj linki, ülke kodu ve telefon numarası ekle
-      const phoneNumber = "905551862487"; // +90 555 186 24 87
+      const phoneNumber = "905551862487";
       const encodedMessage = encodeURIComponent(message);
       const url = https://wa.me/${phoneNumber}?text=${encodedMessage};
 
       whatsappLink.href = url;
 
-      // Formu temizle
-      form.reset();
-
-      alert('Randevu talebiniz WhatsApp üzerinden gönderilmeye hazır. "WhatsApp ile Gönder" butonuna tıklayın.');
+      alert('Randevu talebiniz hazır! Aşağıdaki butona tıklayarak WhatsApp üzerinden gönderebilirsiniz.');
     });
 
-    // Piyano müziği otomatik çalıyor, mobil tarayıcılar için kullanıcı etkileşimi gerekebilir
     music.volume = 0.3;
   </script>
 

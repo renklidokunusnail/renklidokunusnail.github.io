@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Renkli Dokunuş - Randevu</title>
   <style>
-    /* Arka plan resmi ve stil */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
@@ -17,7 +16,6 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      /* Arka plan üzerine hafif beyaz şeffaf katman */
       position: relative;
       z-index: 0;
     }
@@ -28,7 +26,6 @@
       background-color: rgba(255, 230, 240, 0.8);
       z-index: -1;
     }
-    /* Marka başlığı */
     header {
       font-size: 3rem;
       font-weight: 900;
@@ -39,7 +36,7 @@
       user-select: none;
     }
     form {
-      background: #ffe6f0cc; /* biraz saydamlık */
+      background: #ffe6f0cc;
       border: 2px solid #d6336c;
       border-radius: 12px;
       padding: 20px;
@@ -269,7 +266,8 @@
       const whatsappNumara = '905551862487';
       const whatsappUrl = https://wa.me/${whatsappNumara}?text=${mesaj};
 
-      window.open(whatsappUrl, '_blank');
+      // Burada yönlendirme window.location.href ile yapılıyor
+      window.location.href = whatsappUrl;
     });
   </script>
 </body>

@@ -5,76 +5,19 @@
   <title>Renkli Dokunuş - Randevu & Fiyatlar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root {
-      --primary-color: #c09f95;
-      --primary-color-transparent: rgba(192, 159, 149, 0.3);
-      --bg-light: #f9f6f3;
-      --text-color: #4a4a4a;
-      --price-bg: #fff8f5;
-      --dark-bg: #222;
-      --dark-text: #eee;
-      --dark-accent: #c09f95;
-    }
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 700px;
-      margin: 30px auto;
-      background: var(--bg-light);
-      padding: 20px;
-      color: var(--text-color);
-      transition: background 0.5s, color 0.5s;
-    }
-    body.dark-theme {
-      background: var(--dark-bg);
-      color: var(--dark-text);
-    }
-    h1, h2 {
-      text-align: center;
-      color: var(--primary-color);
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    select, input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 10px;
-      border: 1px solid #ddd;
-      font-size: 16px;
-      transition: background 0.5s, color 0.5s, border-color 0.5s;
-    }
-    body.dark-theme select, 
-    body.dark-theme input, 
-    body.dark-theme textarea {
-      background: #333;
-      color: var(--dark-text);
-      border-color: var(--dark-accent);
-    }
-    button {
-      background: var(--primary-color);
-      color: white;
-      border: none;
-      margin-top: 20px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background: #b3897f;
-    }
-    option[disabled] {
-      color: #999;
-    }
+    body { font-family: Arial, sans-serif; max-width: 700px; margin: 30px auto; background: #f9f6f3; padding: 20px; color: #4a4a4a; }
+    h1, h2 { text-align: center; color: #c09f95; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    select, input, textarea, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 10px; border: 1px solid #ddd; font-size: 16px; }
+    button { background: #c09f95; color: white; border: none; margin-top: 20px; cursor: pointer; }
+    button:hover { background: #b3897f; }
+    option[disabled] { color: #999; }
     .fiyat-listesi {
-      background: var(--price-bg);
+      background: #fff8f5;
       border-radius: 15px;
       padding: 20px;
       margin-top: 40px;
-      box-shadow: 0 0 10px var(--primary-color-transparent);
-      overflow: visible;
-      /* animation removed */
+      box-shadow: 0 0 10px rgba(192, 159, 149, 0.3);
     }
     .fiyat-listesi h2 {
       margin-bottom: 15px;
@@ -96,80 +39,20 @@
     .fiyat-listesi li:last-child {
       border-bottom: none;
     }
-    /* Dil seçimi */
-    #dilSecimi {
-      margin: 20px 0;
-      font-weight: bold;
-    }
-    /* Geri bildirim bölümü */
-    #geriBildirim {
-      margin-top: 40px;
-      background: var(--price-bg);
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px var(--primary-color-transparent);
-    }
-    #geriBildirim textarea {
-      resize: vertical;
-    }
-    /* Tema değiştir butonu */
-    #temaDegistir {
-      margin-top: 20px;
-      background: var(--primary-color);
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    #temaDegistir:hover {
-      background: #b3897f;
-    }
-    /* Responsive */
-    @media(max-width: 480px) {
-      body {
-        margin: 15px;
-        padding: 15px;
-      }
-      .fiyat-listesi, #geriBildirim {
-        padding: 15px;
-      }
-    }
-    /* Harita */
-    #harita {
-      margin-top: 40px;
-      width: 100%;
-      height: 300px;
-      border-radius: 15px;
-      border: 1px solid var(--primary-color-transparent);
-    }
   </style>
 </head>
 <body>
 
-<audio autoplay loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/30/audio_237e6168d9.mp3?filename=calm-piano-5703.mp3" type="audio/mpeg">
-  Tarayıcınız audio öğesini desteklemiyor.
-</audio>
-
 <h1>Renkli Dokunuş</h1>
+<p style="text-align:center;">Randevu Almak İçin Formu Doldurun</p>
 
-<!-- Dil seçimi -->
-<label for="dilSecimi">Dil / Language</label>
-<select id="dilSecimi">
-  <option value="tr">Türkçe</option>
-  <option value="en">English</option>
-</select>
-
-<!-- Randevu Formu -->
 <form id="randevuForm">
-  <label for="ad" data-tr="Ad Soyad" data-en="Name Surname">Ad Soyad</label>
+  <label for="ad">Ad Soyad</label>
   <input type="text" id="ad" required />
 
-  <label for="hizmet" data-tr="Hizmet Seçimi" data-en="Service Selection">Hizmet Seçimi</label>
+  <label for="hizmet">Hizmet Seçimi</label>
   <select id="hizmet" required>
-    <option value="" data-tr="Hizmet Seçin" data-en="Select Service">Hizmet Seçin</option>
+    <option value="">Hizmet Seçin</option>
     <option>Protez Tırnak (Şablon) + Kalıcı Oje</option>
     <option>Protez Tırnak (Şablon)</option>
     <option>Protez Tırnak (Tips) + Kalıcı Oje</option>
@@ -187,13 +70,13 @@
     <option>NAILART (Tasarım)</option>
   </select>
 
-  <label for="tarih" data-tr="Tarih" data-en="Date">Tarih</label>
-  <input type="date" id="tarih" required />
+  <label for="tarih">Tarih</label>
+  <input type="date" id="tarih" required min="" />
 
-  <label for="not" data-tr="Ek Not (İsteğe Bağlı)" data-en="Additional Note (Optional)">Ek Not (İsteğe Bağlı)</label>
+  <label for="not">Ek Not (İsteğe Bağlı)</label>
   <textarea id="not" rows="3" placeholder="Örn: French istiyorum"></textarea>
 
-  <button type="submit" data-tr="Randevu Al (WhatsApp)" data-en="Book Appointment (WhatsApp)">Randevu Al (WhatsApp)</button>
+  <button type="submit">Randevu Al (WhatsApp)</button>
 </form>
 
 <!-- Fiyat Listesi -->
@@ -226,76 +109,34 @@
   </ul>
 </div>
 
-<!-- Geri Bildirim -->
-<div id="geriBildirim">
-  <h2 data-tr="Geri Bildirim" data-en="Feedback">Geri Bildirim</h2>
-  <textarea id="feedbackText" rows="4" placeholder="Mesajınızı yazın..."></textarea>
-  <button id="sendFeedback" type="button" data-tr="Gönder" data-en="Send">Gönder</button>
-</div>
-
-<!-- Harita -->
-<div id="harita"></div>
-
-<!-- Tema Değiştirici -->
-<button id="temaDegistir">Koyu Tema / Dark Mode</button>
-
 <script>
-  // Dil seçimi işlemi
-  const dilSelect = document.getElementById('dilSecimi');
-  function dilDegistir(dil) {
-    document.querySelectorAll('[data-tr]').forEach(el => {
-      el.textContent = el.getAttribute(`data-${dil}`) || el.textContent;
-    });
-    // Placeholder için özel ayar:
-    if(dil === 'en') {
-      document.getElementById('not').placeholder = "E.g.: I want French";
-      document.getElementById('feedbackText').placeholder = "Write your message...";
-    } else {
-      document.getElementById('not').placeholder = "Örn: French istiyorum";
-      document.getElementById('feedbackText').placeholder = "Mesajınızı yazın...";
-    }
-  }
-  dilSelect.addEventListener('change', e => dilDegistir(e.target.value));
-  dilDegistir('tr'); // default Türkçe
+  // Bugünün tarihini min olarak ayarla
+  const tarihInput = document.getElementById('tarih');
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = (today.getMonth() + 1).toString().padStart(2, '0');
+  const dd = today.getDate().toString().padStart(2, '0');
+  tarihInput.min = `${yyyy}-${mm}-${dd}`;
 
-  // Tema değiştirme
-  const temaBtn = document.getElementById('temaDegistir');
-  temaBtn.addEventListener('click', () => {
-    document.body.classList.toggle('dark-theme');
-  });
-
-  // Randevu formu WhatsApp yönlendirme
-  document.getElementById('randevuForm').addEventListener('submit', e => {
+  document.getElementById('randevuForm').addEventListener('submit', function(e){
     e.preventDefault();
+
     const ad = document.getElementById('ad').value.trim();
     const hizmet = document.getElementById('hizmet').value;
-    const tarih = document.getElementById('tarih').value;
+    const tarih = tarihInput.value;
     const not = document.getElementById('not').value.trim();
 
-    if (!ad || !hizmet || !tarih) {
-      alert(dilSelect.value === 'en' ? "Please fill all required fields." : "Lütfen tüm zorunlu alanları doldurun.");
+    if(!ad || !hizmet || !tarih){
+      alert('Lütfen tüm zorunlu alanları doldurun.');
       return;
     }
 
-    const mesaj = `Merhaba! Randevu talebi:%0A- Ad Soyad: ${ad}%0A- Hizmet: ${hizmet}%0A- Tarih: ${tarih}%0A- Not: ${not || (dilSelect.value === 'en' ? "None" : "Yok")}`;
-    const whatsappURL = `https://wa.me/905551862487?text=${mesaj}`;
-    window.open(whatsappURL, "_blank");
-  });
+    const mesaj = `Merhaba! Randevu talebi:\n- Ad Soyad: ${ad}\n- Hizmet: ${hizmet}\n- Tarih: ${tarih}\n- Not: ${not || "Yok"}`;
+    const whatsappURL = `https://wa.me/905551862487?text=${encodeURIComponent(mesaj)}`;
 
-  // Geri bildirim butonu
-  document.getElementById('sendFeedback').addEventListener('click', () => {
-    const mesaj = document.getElementById('feedbackText').value.trim();
-    if(!mesaj) {
-      alert(dilSelect.value === 'en' ? "Please write a message." : "Lütfen mesaj yazın.");
-      return;
-    }
-    alert(dilSelect.value === 'en' ? "Thank you for your feedback!" : "Geri bildiriminiz için teşekkürler!");
-    document.getElementById('feedbackText').value = "";
-    // Burada istersen mail göndermek için backend ekleyebilirsin.
+    window.open(whatsappURL, '_blank');
   });
+</script>
 
-  // Google Maps iframe (Kırklareli konumu)
-  const harita = document.getElementById('harita');
-  harita.innerHTML = `
-    <iframe
-      src="https://www.google.com/maps/embed?
+</body>
+</html>

@@ -5,256 +5,160 @@
   <title>Renkli Dokunuş - Randevu & Fiyatlar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 700px;
-      margin: 30px auto;
-      background: #f9f6f3;
-      padding: 20px;
-      color: #4a4a4a;
-    }
-    h1, h2 {
-      text-align: center;
-      color: #c09f95;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    select, input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 10px;
-      border: 1px solid #ddd;
-      font-size: 16px;
-    }
-    button {
-      background: #c09f95;
-      color: white;
-      border: none;
-      margin-top: 20px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #b3897f;
-    }
-    option[disabled] {
-      color: #999;
-    }
-    .fiyat-listesi {
-      background: #fff8f5;
-      border-radius: 15px;
-      padding: 20px;
-      margin-top: 40px;
-      box-shadow: 0 0 10px rgba(192, 159, 149, 0.3);
-    }
-    .fiyat-listesi h2 {
-      margin-bottom: 15px;
-      font-weight: 700;
-      font-size: 24px;
-    }
-    .fiyat-listesi ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .fiyat-listesi li {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid #e6d6d0;
-      font-size: 16px;
-    }
-    .fiyat-listesi li:last-child {
-      border-bottom: none;
-    }
-    .message {
-      margin-top: 15px;
-      text-align: center;
-      font-weight: bold;
-      color: red;
-    }
+    body { font-family: Arial, sans-serif; max-width: 700px; margin: 30px auto; background: #f9f6f3; padding: 20px; color: #4a4a4a; }
+    h1, h2 { text-align: center; color: #c09f95; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    select, input, textarea, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 10px; border: 1px solid #ddd; font-size: 16px; }
+    button { background: #c09f95; color: white; border: none; margin-top: 20px; cursor: pointer; }
+    button:hover { background: #b3897f; }
+    .message { margin-top: 15px; text-align: center; font-weight: bold; }
   </style>
 </head>
 <body>
-<audio id="piyanoSes" autoplay loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/30/audio_237e6168d9.mp3?filename=calm-piano-5703.mp3" type="audio/mpeg">
-  Tarayıcınız audio elementini desteklemiyor.
-</audio>
+  <h1>Renkli Dokunuş</h1>
+  <form id="randevuForm">
+    <label for="ad">Ad Soyad</label>
+    <input type="text" id="ad" required />
 
-<h1>Renkli Dokunuş</h1>
-<p style="text-align:center;">Uygun Saatleri Görüntüleyin ve Randevu Alın</p>
+    <label for="hizmet">Hizmet Seçimi</label>
+    <select id="hizmet" required>
+      <option value="">Hizmet Seçin</option>
+      <option>Protez Tırnak (Şablon) + Kalıcı Oje</option>
+      <option>Protez Tırnak (Şablon)</option>
+      <option>Protez Tırnak (Tips) + Kalıcı Oje</option>
+      <option>Protez Tırnak (Tips)</option>
+      <option>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</option>
+      <option>Jel Güçlendirme + Kalıcı Oje</option>
+      <option>Jel Güçlendirme</option>
+      <option>Kalıcı Oje</option>
+      <option>Manikür</option>
+      <option>Manikür + Çıkarma</option>
+      <option>Pedikür + Kalıcı Oje</option>
+      <option>Pedikür</option>
+      <option>Protez / Kalıcı Oje Çıkarma</option>
+      <option>Tek Tırnak Onarımı</option>
+      <option>NAILART (Tasarım)</option>
+    </select>
 
-<form id="randevuForm">
-  <label for="ad">Ad Soyad</label>
-  <input type="text" id="ad" required />
+    <label for="tarih">Tarih</label>
+    <input type="date" id="tarih" required />
 
-  <label for="hizmet">Hizmet Seçimi</label>
-  <select id="hizmet" required>
-    <option value="">Hizmet Seçin</option>
-    <option>Protez Tırnak (Şablon) + Kalıcı Oje</option>
-    <option>Protez Tırnak (Şablon)</option>
-    <option>Protez Tırnak (Tips) + Kalıcı Oje</option>
-    <option>Protez Tırnak (Tips)</option>
-    <option>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</option>
-    <option>Jel Güçlendirme + Kalıcı Oje</option>
-    <option>Jel Güçlendirme</option>
-    <option>Kalıcı Oje</option>
-    <option>Manikür</option>
-    <option>Manikür + Çıkarma</option>
-    <option>Pedikür + Kalıcı Oje</option>
-    <option>Pedikür</option>
-    <option>Protez / Kalıcı Oje Çıkarma</option>
-    <option>Tek Tırnak Onarımı</option>
-    <option>NAILART (Tasarım)</option>
-  </select>
+    <label for="saat">Saat</label>
+    <select id="saat" required>
+      <option value="">Lütfen önce tarih seçin</option>
+    </select>
 
-  <label for="tarih">Tarih</label>
-  <input type="date" id="tarih" required min="" />
+    <label for="not">Ek Not (İsteğe Bağlı)</label>
+    <textarea id="not" rows="3" placeholder="Örn: French istiyorum"></textarea>
 
-  <label for="saat">Saat</label>
-  <select id="saat" required>
-    <option value="">Lütfen önce tarih seçin</option>
-  </select>
+    <button type="submit">Randevu Al (WhatsApp)</button>
+    <div class="message" id="mesajAlani"></div>
+  </form>
 
-  <label for="not">Ek Not (İsteğe Bağlı)</label>
-  <textarea id="not" rows="3" placeholder="Örn: French istiyorum"></textarea>
+  <script>
+    const baseURL = "https://script.google.com/macros/s/AKfycbyQAWGQyWiltmYw-83Iq7Y_C-3UQ_PKYdmoQE8QUMn_e1POvsbJ36CwCpUqdA1sSUuIgg/exec";
+    const uygunSaatler = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00"];
 
-  <button type="submit">Randevu Al (WhatsApp)</button>
+    const tarihInput = document.getElementById("tarih");
+    const saatSelect = document.getElementById("saat");
+    const mesajAlani = document.getElementById("mesajAlani");
 
-  <div class="message" id="mesajAlani"></div>
-</form>
+    // Minimum tarih bugünden başlasın
+    const bugun = new Date();
+    tarihInput.min = bugun.toISOString().split("T")[0];
 
-<div class="fiyat-listesi">
-  <h2>💅 TIRNAK BAKIM</h2>
-  <ul>
-    <li><span>Protez Tırnak (Şablon) + Kalıcı Oje</span><span>1000 TL</span></li>
-    <li><span>Protez Tırnak (Şablon)</span><span>900 TL</span></li>
-    <li><span>Protez Tırnak (Tips) + Kalıcı Oje</span><span>800 TL</span></li>
-    <li><span>Protez Tırnak (Tips)</span><span>700 TL</span></li>
-    <li><span>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</span><span>500 TL</span></li>
-    <li><span>Jel Güçlendirme + Kalıcı Oje</span><span>650 TL</span></li>
-    <li><span>Jel Güçlendirme</span><span>500 TL</span></li>
-    <li><span>Kalıcı Oje</span><span>300 TL</span></li>
-    <li><span>Manikür</span><span>300 TL</span></li>
-    <li><span>Manikür + Çıkarma</span><span>400 TL</span></li>
-    <li><span>Pedikür + Kalıcı Oje</span><span>700 TL</span></li>
-    <li><span>Pedikür</span><span>450 TL</span></li>
-    <li><span>Protez / Kalıcı Oje Çıkarma</span><span>200 TL</span></li>
-    <li><span>Tek Tırnak Onarımı</span><span>75 TL</span></li>
-  </ul>
-  <h2>💎 NAILART (Tasarım)</h2>
-  <ul>
-    <li><span>İnci Tozu / Krom Efekt</span><span>100 TL</span></li>
-    <li><span>French</span><span>100 TL</span></li>
-    <li><span>Mini Nail Art</span><span>20 TL</span></li>
-    <li><span>Büyük Charm</span><span>40 TL</span></li>
-    <li><span>Küçük Charm</span><span>20 TL</span></li>
-  </ul>
-</div>
+    tarihInput.addEventListener("change", async () => {
+      mesajAlani.textContent = "Saatler yükleniyor...";
+      saatSelect.innerHTML = "";
 
-<script>
-  const baseURL = "https://script.google.com/macros/s/AKfycbyQAWGQyWiltmYw-83Iq7Y_C-3UQ_PKYdmoQE8QUMn_e1POvsbJ36CwCpUqdA1sSUuIgg/exec";
-  const tarihInput = document.getElementById("tarih");
-  const saatSelect = document.getElementById("saat");
-  const mesajAlani = document.getElementById("mesajAlani");
+      const secilenTarih = tarihInput.value;
+      if (!secilenTarih) return;
 
-  const bugun = new Date();
-  const yyyy = bugun.getFullYear();
-  const mm = (bugun.getMonth() + 1).toString().padStart(2, "0");
-  const dd = bugun.getDate().toString().padStart(2, "0");
-  tarihInput.min = `${yyyy}-${mm}-${dd}`;
+      try {
+        const res = await fetch(baseURL);
+        const randevular = await res.json();
+        const doluSaatler = randevular.filter(r => r.tarih === secilenTarih).map(r => r.saat);
 
-  const baslangicSaat = 10;
-  const bitisSaat = 22;
+        uygunSaatler.forEach(saatStr => {
+          if (!doluSaatler.includes(saatStr)) {
+            const option = document.createElement("option");
+            option.value = saatStr;
+            option.textContent = saatStr;
+            saatSelect.appendChild(option);
+          }
+        });
 
-  tarihInput.addEventListener("change", async () => {
-    mesajAlani.textContent = "Saatler yükleniyor...";
-    saatSelect.innerHTML = "";
-
-    const secilenTarih = tarihInput.value;
-    if (!secilenTarih) {
-      saatSelect.innerHTML = '<option value="">Lütfen önce tarih seçin</option>';
-      mesajAlani.textContent = "";
-      return;
-    }
-
-    try {
-      const res = await fetch(baseURL);
-      const randevular = await res.json();
-
-      const doluSaatler = randevular
-        .filter(r => r.tarih === secilenTarih)
-        .map(r => r.saat);
-
-      for (let saat = baslangicSaat; saat < bitisSaat; saat++) {
-        const saatStr = (saat < 10 ? "0" + saat : saat) + ":00";
-        const option = document.createElement("option");
-        option.value = saatStr;
-        option.textContent = saatStr;
-        if (doluSaatler.includes(saatStr)) {
-          option.disabled = true;
-          option.textContent += " (DOLU)";
-        }
-        saatSelect.appendChild(option);
+        mesajAlani.textContent = "";
+      } catch (e) {
+        mesajAlani.textContent = "Saatler yüklenirken hata oluştu.";
+        console.error(e);
       }
+    });
+
+    document.getElementById("randevuForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      mesajAlani.style.color = "red";
       mesajAlani.textContent = "";
-    } catch (error) {
-      mesajAlani.textContent = "Saatler yüklenirken hata oluştu.";
-      console.error(error);
-    }
-  });
 
-  document.getElementById("randevuForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    mesajAlani.style.color = "red";
-    mesajAlani.textContent = "";
+      const ad = document.getElementById("ad").value.trim();
+      const hizmet = document.getElementById("hizmet").value;
+      const tarih = tarihInput.value;
+      const saat = saatSelect.value;
+      const not = document.getElementById("not").value.trim();
 
-    const ad = document.getElementById("ad").value.trim();
-    const hizmet = document.getElementById("hizmet").value;
-    const tarih = tarihInput.value;
-    const saat = saatSelect.value;
-    const not = document.getElementById("not").value.trim();
-
-    if (!ad || !hizmet || !tarih || !saat) {
-      mesajAlani.textContent = "Lütfen tüm zorunlu alanları doldurun.";
-      return;
-    }
-
-    try {
-      const res = await fetch(baseURL);
-      const randevular = await res.json();
-      const doluMu = randevular.some(r => r.tarih === tarih && r.saat === saat);
-      if (doluMu) {
-        mesajAlani.textContent = "❌ Bu tarih ve saat dolu. Lütfen başka bir zaman seçin.";
+      if (!ad || !hizmet || !tarih || !saat) {
+        mesajAlani.textContent = "Lütfen tüm zorunlu alanları doldurun.";
         return;
       }
 
-      const data = { isim: ad, tarih, saat, islem: hizmet + (not ? " - Not: " + not : "") };
-      const postRes = await fetch(baseURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
+      try {
+        const res = await fetch(baseURL);
+        const randevular = await res.json();
 
-      if (postRes.ok) {
-        mesajAlani.style.color = "green";
-        mesajAlani.textContent = "✅ Randevunuz başarıyla alındı.";
+        const doluMu = randevular.some(r => r.tarih === tarih && r.saat === saat);
+        if (doluMu) {
+          const bosSaatler = uygunSaatler.filter(s =>
+            !randevular.some(r => r.tarih === tarih && r.saat === s)
+          );
 
-        const tel = "905551862487";
-        const text = `Merhaba! Randevum:%0A- Ad Soyad: ${ad}%0A- Hizmet: ${hizmet}%0A- Tarih: ${tarih}%0A- Saat: ${saat}%0A- Not: ${not || "Yok"}`;
-        const whatsappURL = `https://wa.me/${tel}?text=${text}`;
-        setTimeout(() => window.open(whatsappURL, "_blank"), 1500);
-      } else {
-        mesajAlani.textContent = "Kayıt sırasında bir hata oluştu. Lütfen tekrar deneyin.";
+          if (bosSaatler.length > 0) {
+            mesajAlani.innerHTML = `❌ Bu saat dolu.<br>📅 Boş saatler: <strong>${bosSaatler.join(", ")}</strong>`;
+          } else {
+            mesajAlani.textContent = "❌ Bu gün tamamen dolu. Lütfen başka bir tarih seçin.";
+          }
+
+          return;
+        }
+
+        const data = {
+          isim: ad,
+          tarih,
+          saat,
+          islem: hizmet + (not ? " - Not: " + not : "")
+        };
+
+        const postRes = await fetch(baseURL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        if (postRes.ok) {
+          mesajAlani.style.color = "green";
+          mesajAlani.textContent = "✅ Randevunuz başarıyla alındı.";
+          const tel = "905551862487";
+          const text = `Merhaba! Randevum:%0A- Ad Soyad: ${ad}%0A- Hizmet: ${hizmet}%0A- Tarih: ${tarih}%0A- Saat: ${saat}%0A- Not: ${not || "Yok"}`;
+          const whatsappURL = `https://wa.me/${tel}?text=${text}`;
+          setTimeout(() => window.open(whatsappURL, "_blank"), 1500);
+        } else {
+          mesajAlani.textContent = "Kayıt sırasında hata oluştu. Lütfen tekrar deneyin.";
+        }
+
+      } catch (e) {
+        mesajAlani.textContent = "Sunucuya bağlanılamadı.";
+        console.error(e);
       }
-    } catch (error) {
-      mesajAlani.textContent = "Sunucu ile bağlantı kurulamadı.";
-      console.error(error);
-    }
-  });
-</script>
+    });
+  </script>
 </body>
 </html>

@@ -2,187 +2,204 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <title>Renkli Dokunuş - Randevu & Fiyatlar</title>
+  <title>Renkli Dokunuş - Geri Bildirim</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { font-family: Arial, sans-serif; max-width: 700px; margin: 30px auto; background: #f9f6f3; padding: 20px; color: #4a4a4a; position: relative; overflow-x: hidden; }
-    h1, h2 { text-align: center; color: #c09f95; }
-    label { display: block; margin-top: 15px; font-weight: bold; }
-    select, input, textarea, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 10px; border: 1px solid #ddd; font-size: 16px; }
-    button { background: #c09f95; color: white; border: none; margin-top: 20px; cursor: pointer; }
-    button:hover { background: #b3897f; }
-    option[disabled] { color: #999; }
-    
-    .fiyat-listesi {
-      background: #fff8f5;
-      border-radius: 15px;
+    :root {
+      --bg-light: #fff6f3;
+      --bg-dark: #2b2b2b;
+      --text-light: #4a4a4a;
+      --text-dark: #f5f5f5;
+      --box-light: #ffffffcc;
+      --box-dark: #3c3c3c;
+      --button-light: #c09f95;
+      --button-dark: #ffb6b6;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 20px;
+      background: var(--bg-light);
+      color: var(--text-light);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: inherit;
+    }
+
+    select, input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: var(--button-light);
+      color: white;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    body.dark button {
+      background-color: var(--button-dark);
+    }
+
+    button:hover {
+      transform: scale(1.02);
+    }
+
+    .box {
+      background: var(--box-light);
       padding: 20px;
-      margin-top: 40px;
-      box-shadow: 0 0 10px rgba(192, 159, 149, 0.3);
-      animation: renkdegistir 15s infinite alternate;
-      transition: background-color 1s, color 1s;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(192, 159, 149, 0.3);
+      margin-bottom: 30px;
     }
-    .fiyat-listesi h2 {
-      margin-bottom: 15px;
-      font-weight: 700;
-      font-size: 24px;
+
+    body.dark .box {
+      background: var(--box-dark);
     }
-    .fiyat-listesi ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      border-radius: 15px;
     }
-    .fiyat-listesi li {
+
+    .kelebek {
+      position: fixed;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 40px;
+      animation: ucar 8s linear infinite;
+      transition: filter 0.2s;
+    }
+
+    .kelebek:active {
+      filter: drop-shadow(0 0 15px #f0c);
+    }
+
+    @keyframes ucar {
+      0% { bottom: -60px; transform: translateX(-50%) rotate(0deg); }
+      50% { transform: translateX(-50%) rotate(20deg); }
+      100% { bottom: 100%; transform: translateX(-50%) rotate(0deg); }
+    }
+
+    .controls {
       display: flex;
       justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid #e6d6d0;
-      font-size: 16px;
-    }
-    .fiyat-listesi li:last-child {
-      border-bottom: none;
+      align-items: center;
+      margin-bottom: 20px;
     }
 
-    @keyframes renkdegistir {
-      0% { background-color: #fff8f5; color: #4a4a4a; }
-      50% { background-color: #f0e4e1; color: #6a4a4a; }
-      100% { background-color: #fff8f5; color: #4a4a4a; }
-    }
-
-    .butterfly {
-      position: fixed;
-      font-size: 30px;
-      user-select: none;
-      pointer-events: none;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-      opacity: 0.8;
-      z-index: 9999;
-    }
-
-    @keyframes fly {
-      0% {
-        transform: translateY(0) translateX(0) rotate(0deg);
-        opacity: 0.8;
-      }
-      50% {
-        transform: translateY(-30px) translateX(50px) rotate(20deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(0) translateX(100px) rotate(0deg);
-        opacity: 0.8;
-      }
+    .controls > * {
+      flex: 1;
+      margin: 0 5px;
     }
   </style>
 </head>
 <body>
 
-<audio autoplay loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/30/audio_237e6168d9.mp3?filename=calm-piano-5703.mp3" type="audio/mpeg">
-  Tarayıcınız audio öğesini desteklemiyor.
-</audio>
+  <!-- Üst Kontroller -->
+  <div class="controls">
+    <!-- Dil Seçimi -->
+    <div>
+      <label for="dilSec">🌐 Dil:</label>
+      <select id="dilSec">
+        <option value="tr">Türkçe</option>
+        <option value="en">English</option>
+      </select>
+    </div>
 
-<h1>Renkli Dokunuş</h1>
-<p style="text-align:center;">Uygun Saatleri Görüntüleyin ve Randevu Alın</p>
+    <!-- Tema Butonu -->
+    <div>
+      <label for="temaBtn">🎨 Tema:</label>
+      <button id="temaBtn">Koyu Moda Geç</button>
+    </div>
+  </div>
 
-<form id="randevuForm">
-  <label for="ad">Ad Soyad</label>
-  <input type="text" id="ad" required />
+  <h1 id="baslik">Renkli Dokunuş</h1>
 
-  <label for="hizmet">Hizmet Seçimi</label>
-  <select id="hizmet" required>
-    <option value="">Hizmet Seçin</option>
-    <option>Protez Tırnak (Şablon) + Kalıcı Oje</option>
-    <option>Protez Tırnak (Şablon)</option>
-    <option>Protez Tırnak (Tips) + Kalıcı Oje</option>
-    <option>Protez Tırnak (Tips)</option>
-    <option>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</option>
-    <option>Jel Güçlendirme + Kalıcı Oje</option>
-    <option>Jel Güçlendirme</option>
-    <option>Kalıcı Oje</option>
-    <option>Manikür</option>
-    <option>Manikür + Çıkarma</option>
-    <option>Pedikür + Kalıcı Oje</option>
-    <option>Pedikür</option>
-    <option>Protez / Kalıcı Oje Çıkarma</option>
-    <option>Tek Tırnak Onarımı</option>
-    <option>NAILART (Tasarım)</option>
-  </select>
+  <!-- Geri Bildirim Formu -->
+  <div class="box">
+    <h2 id="geribaslik">Geri Bildirim Formu</h2>
+    <form id="feedbackForm">
+      <label for="ad">Ad Soyad</label>
+      <input type="text" id="ad" required />
+      <label for="mesaj">Mesajınız</label>
+      <textarea id="mesaj" rows="4" required></textarea>
+      <button type="submit" id="gonderBtn">Gönder</button>
+    </form>
+    <p id="tesekkur" style="display:none; text-align:center; font-weight:bold; color:green;">🎉 Geri bildiriminiz alındı, teşekkür ederiz!</p>
+  </div>
 
-  <label for="tarih">Tarih</label>
-  <input type="date" id="tarih" required />
+  <!-- Harita -->
+  <div class="box">
+    <h2 id="haritaBaslik">Kırklareli Konumu</h2>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11926.447075785507!2d27.212611749999996!3d41.7369996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b2c63db676c26f%3A0x4b5f3d88cc1d685e!2sK%C4%B1rklareli!5e0!3m2!1str!2str!4v1622123123456"></iframe>
+  </div>
 
-  <label for="not">Ek Not (İsteğe Bağlı)</label>
-  <textarea id="not" rows="3" placeholder="Örn: French istiyorum"></textarea>
+  <!-- Kelebek -->
+  <div class="kelebek" onclick="this.style.filter='drop-shadow(0 0 12px #ff69b4)'">🦋</div>
 
-  <button type="submit">Randevu Al (WhatsApp)</button>
-</form>
+  <!-- Script -->
+  <script>
+    const form = document.getElementById("feedbackForm");
+    const tesekkur = document.getElementById("tesekkur");
+    const langSelect = document.getElementById("dilSec");
+    const temaBtn = document.getElementById("temaBtn");
 
-<div class="fiyat-listesi">
-  <h2>💅 TIRNAK BAKIM</h2>
-  <ul>
-    <li><span>Protez Tırnak (Şablon) + Kalıcı Oje</span><span>1000 TL</span></li>
-    <li><span>Protez Tırnak (Şablon)</span><span>900 TL</span></li>
-    <li><span>Protez Tırnak (Tips) + Kalıcı Oje</span><span>800 TL</span></li>
-    <li><span>Protez Tırnak (Tips)</span><span>700 TL</span></li>
-    <li><span>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</span><span>500 TL</span></li>
-    <li><span>Jel Güçlendirme + Kalıcı Oje</span><span>650 TL</span></li>
-    <li><span>Jel Güçlendirme</span><span>500 TL</span></li>
-    <li><span>Kalıcı Oje</span><span>300 TL</span></li>
-    <li><span>Manikür</span><span>300 TL</span></li>
-    <li><span>Manikür + Çıkarma</span><span>400 TL</span></li>
-    <li><span>Pedikür + Kalıcı Oje</span><span>700 TL</span></li>
-    <li><span>Pedikür</span><span>450 TL</span></li>
-    <li><span>Protez / Kalıcı Oje Çıkarma</span><span>200 TL</span></li>
-    <li><span>Tek Tırnak Onarımı</span><span>75 TL</span></li>
-  </ul>
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      form.style.display = "none";
+      tesekkur.style.display = "block";
+    });
 
-  <h2>💎 NAILART (Tasarım)</h2>
-  <ul>
-    <li><span>İnci Tozu / Krom Efekt</span><span>100 TL</span></li>
-    <li><span>French</span><span>100 TL</span></li>
-    <li><span>Mini Nail Art</span><span>20 TL</span></li>
-    <li><span>Büyük Charm</span><span>40 TL</span></li>
-    <li><span>Küçük Charm</span><span>20 TL</span></li>
-  </ul>
-</div>
+    langSelect.addEventListener("change", function() {
+      const dil = this.value;
+      if (dil === "en") {
+        document.getElementById("baslik").textContent = "Colorful Touch";
+        document.getElementById("geribaslik").textContent = "Feedback Form";
+        document.getElementById("gonderBtn").textContent = "Send";
+        document.getElementById("haritaBaslik").textContent = "Kırklareli Location";
+        document.querySelector("label[for='ad']").textContent = "Name Surname";
+        document.querySelector("label[for='mesaj']").textContent = "Your Message";
+        document.getElementById("tesekkur").textContent = "🎉 Your feedback has been received. Thank you!";
+        temaBtn.textContent = document.body.classList.contains('dark') ? "Switch to Light Mode" : "Switch to Dark Mode";
+      } else {
+        document.getElementById("baslik").textContent = "Renkli Dokunuş";
+        document.getElementById("geribaslik").textContent = "Geri Bildirim Formu";
+        document.getElementById("gonderBtn").textContent = "Gönder";
+        document.getElementById("haritaBaslik").textContent = "Kırklareli Konumu";
+        document.querySelector("label[for='ad']").textContent = "Ad Soyad";
+        document.querySelector("label[for='mesaj']").textContent = "Mesajınız";
+        document.getElementById("tesekkur").textContent = "🎉 Geri bildiriminiz alındı, teşekkür ederiz!";
+        temaBtn.textContent = document.body.classList.contains('dark') ? "Açık Moda Geç" : "Koyu Moda Geç";
+      }
+    });
 
-<script>
-  document.getElementById("randevuForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const ad = document.getElementById("ad").value.trim();
-    const hizmet = document.getElementById("hizmet").value;
-    const tarih = document.getElementById("tarih").value;
-    const not = document.getElementById("not").value.trim();
-
-    if (!ad || !hizmet || !tarih) {
-      alert("Lütfen tüm zorunlu alanları doldurun.");
-      return;
-    }
-
-    const mesaj = `Merhaba! Randevu talebi:%0A- Ad Soyad: ${ad}%0A- Hizmet: ${hizmet}%0A- Tarih: ${tarih}%0A- Not: ${not || "Yok"}`;
-    const whatsappURL = `https://wa.me/905551862487?text=${mesaj}`;
-    window.open(whatsappURL, "_blank");
-  });
-
-  function createButterfly() {
-    const butterfly = document.createElement('div');
-    butterfly.classList.add('butterfly');
-    butterfly.textContent = '🦋';
-    butterfly.style.left = Math.random() * window.innerWidth + 'px';
-    butterfly.style.top = Math.random() * window.innerHeight + 'px';
-    butterfly.style.animationDuration = (5 + Math.random() * 5) + 's';
-    document.body.appendChild(butterfly);
-    setTimeout(() => {
-      butterfly.remove();
-      createButterfly();
-    }, parseFloat(butterfly.style.animationDuration) * 1000);
-  }
-  for(let i = 0; i < 8; i++) {
-    createButterfly();
-  }
-</script>
-
+    temaBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      const currentLang = langSelect.value;
+      if (currentLang === "en") {
+        temaBtn.textContent = document.body.classList.contains('dark') ? "Switch to Light Mode" : "Switch to Dark Mode";
+      } else {
+        temaBtn.textContent = document.body.classList.contains('dark') ? "Açık Moda Geç" : "Koyu Moda Geç";
+      }
+    });
+  </script>
 </body>
 </html>

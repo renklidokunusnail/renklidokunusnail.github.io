@@ -254,7 +254,7 @@
         return;
       }
 
-      const mesaj = 
+      const mesaj =
         Merhaba,%0A +
         Renkli Dokunuş'tan randevu talebim var.%0A +
         İsim: ${isim}%0A +
@@ -266,7 +266,6 @@
       const whatsappNumara = '905551862487';
       const whatsappUrl = https://wa.me/${whatsappNumara}?text=${mesaj};
 
-      // Burada yönlendirme window.location.href ile yapılıyor
       window.location.href = whatsappUrl;
     });
   </script>

@@ -1,173 +1,150 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Renkli Dokunuş - Randevu & Hizmetler</title>
-<style>
-  /* Temel stil */
-  body {
-    font-family: Arial, sans-serif;
-    max-width: 700px;
-    margin: 30px auto;
-    padding: 20px;
-    color: #4a4a4a;
-    background-color: var(--bg);
-    transition: background-color 0.5s, color 0.5s;
-  }
-  h1, h2 {
-    text-align: center;
-    color: var(--primary-color);
-  }
-  label {
-    display: block;
-    margin-top: 15px;
-    font-weight: bold;
-  }
-  input, select, textarea, button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    font-size: 16px;
-  }
-  button {
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    margin-top: 20px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  button:hover {
-    background: var(--primary-dark);
-  }
-  option[disabled] {
-    color: #999;
-  }
-  /* Fiyat listesi animasyon */
-  .fiyat-listesi {
-    background: var(--price-bg);
-    border-radius: 15px;
-    padding: 20px;
-    margin-top: 40px;
-    box-shadow: 0 0 10px var(--primary-color-transparent);
-    overflow: hidden;
-    animation: fiyatScroll 40s linear infinite;
-  }
-  .fiyat-listesi h2 {
-    margin-bottom: 15px;
-    font-weight: 700;
-    font-size: 24px;
-  }
-  .fiyat-listesi ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .fiyat-listesi li {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--price-border);
-    font-size: 16px;
-  }
-  .fiyat-listesi li:last-child {
-    border-bottom: none;
-  }
-  @keyframes fiyatScroll {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-50%); }
-  }
-
-  /* Tema renkleri */
-  :root {
-    --primary-color: #c09f95;
-    --primary-dark: #b3897f;
-    --primary-color-transparent: rgba(192, 159, 149, 0.3);
-    --bg: #f9f6f3;
-    --price-bg: #fff8f5;
-    --price-border: #e6d6d0;
-  }
-  body.dark {
-    --primary-color: #ffb7b7;
-    --primary-dark: #e99999;
-    --primary-color-transparent: rgba(255, 183, 183, 0.3);
-    --bg: #1e1e1e;
-    --price-bg: #2e2e2e;
-    --price-border: #444444;
-    color: #ddd;
-  }
-
-  /* Responsive */
-  @media (max-width: 600px) {
-    body {
-      margin: 15px;
-      padding: 15px;
+  <meta charset="UTF-8" />
+  <title>Renkli Dokunuş - Randevu & Fiyatlar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --primary-color: #c09f95;
+      --primary-color-transparent: rgba(192, 159, 149, 0.3);
+      --bg-light: #f9f6f3;
+      --text-color: #4a4a4a;
+      --price-bg: #fff8f5;
+      --dark-bg: #222;
+      --dark-text: #eee;
+      --dark-accent: #c09f95;
     }
-  }
-
-  /* Dil seçimi ve tema switcher */
-  #dilTemaContainer {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  #dilSelect, #temaSwitch {
-    flex: 1 1 45%;
-    padding: 8px;
-    font-size: 16px;
-  }
-
-  /* Geri bildirim form */
-  #feedbackForm {
-    margin-top: 40px;
-    background: var(--price-bg);
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px var(--primary-color-transparent);
-  }
-  #feedbackForm label {
-    margin-top: 10px;
-  }
-  #feedbackForm button {
-    background: var(--primary-color);
-  }
-  #feedbackMessage {
-    margin-top: 10px;
-    font-weight: bold;
-    color: var(--primary-dark);
-  }
-
-  /* Harita */
-  #map {
-    width: 100%;
-    height: 250px;
-    border-radius: 15px;
-    margin-top: 30px;
-    box-shadow: 0 0 10px var(--primary-color-transparent);
-  }
-
-  /* Kelebek animasyonu */
-  .butterfly {
-    position: fixed;
-    width: 40px;
-    height: 40px;
-    pointer-events: none;
-    z-index: 9999;
-    background-image: url('https://em-content.zobj.net/thumbs/240/twitter/322/butterfly_1f98b.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    animation: fly 6s ease-in-out infinite;
-  }
-  @keyframes fly {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    50% { transform: translate(15px, 15px) rotate(20deg); }
-  }
-</style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 30px auto;
+      background: var(--bg-light);
+      padding: 20px;
+      color: var(--text-color);
+      transition: background 0.5s, color 0.5s;
+    }
+    body.dark-theme {
+      background: var(--dark-bg);
+      color: var(--dark-text);
+    }
+    h1, h2 {
+      text-align: center;
+      color: var(--primary-color);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    select, input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      transition: background 0.5s, color 0.5s, border-color 0.5s;
+    }
+    body.dark-theme select, 
+    body.dark-theme input, 
+    body.dark-theme textarea {
+      background: #333;
+      color: var(--dark-text);
+      border-color: var(--dark-accent);
+    }
+    button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #b3897f;
+    }
+    option[disabled] {
+      color: #999;
+    }
+    .fiyat-listesi {
+      background: var(--price-bg);
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 40px;
+      box-shadow: 0 0 10px var(--primary-color-transparent);
+      overflow: visible;
+      /* animation removed */
+    }
+    .fiyat-listesi h2 {
+      margin-bottom: 15px;
+      font-weight: 700;
+      font-size: 24px;
+    }
+    .fiyat-listesi ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .fiyat-listesi li {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #e6d6d0;
+      font-size: 16px;
+    }
+    .fiyat-listesi li:last-child {
+      border-bottom: none;
+    }
+    /* Dil seçimi */
+    #dilSecimi {
+      margin: 20px 0;
+      font-weight: bold;
+    }
+    /* Geri bildirim bölümü */
+    #geriBildirim {
+      margin-top: 40px;
+      background: var(--price-bg);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px var(--primary-color-transparent);
+    }
+    #geriBildirim textarea {
+      resize: vertical;
+    }
+    /* Tema değiştir butonu */
+    #temaDegistir {
+      margin-top: 20px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #temaDegistir:hover {
+      background: #b3897f;
+    }
+    /* Responsive */
+    @media(max-width: 480px) {
+      body {
+        margin: 15px;
+        padding: 15px;
+      }
+      .fiyat-listesi, #geriBildirim {
+        padding: 15px;
+      }
+    }
+    /* Harita */
+    #harita {
+      margin-top: 40px;
+      width: 100%;
+      height: 300px;
+      border-radius: 15px;
+      border: 1px solid var(--primary-color-transparent);
+    }
+  </style>
 </head>
 <body>
 
@@ -178,49 +155,50 @@
 
 <h1>Renkli Dokunuş</h1>
 
-<div id="dilTemaContainer">
-  <select id="dilSelect" aria-label="Dil seçimi">
-    <option value="tr" selected>Türkçe</option>
-    <option value="en">English</option>
-  </select>
-  <select id="temaSwitch" aria-label="Tema seçimi">
-    <option value="light" selected>Açık Tema</option>
-    <option value="dark">Karanlık Tema</option>
-  </select>
-</div>
+<!-- Dil seçimi -->
+<label for="dilSecimi">Dil / Language</label>
+<select id="dilSecimi">
+  <option value="tr">Türkçe</option>
+  <option value="en">English</option>
+</select>
 
 <!-- Randevu Formu -->
 <form id="randevuForm">
-  <label for="ad" data-tr="Ad Soyad" data-en="Full Name">Ad Soyad</label>
-  <input type="text" id="ad" placeholder="Adınızı yazınız" required />
+  <label for="ad" data-tr="Ad Soyad" data-en="Name Surname">Ad Soyad</label>
+  <input type="text" id="ad" required />
 
-  <label for="hizmet" data-tr="Hizmet Seçimi" data-en="Select Service">Hizmet Seçimi</label>
+  <label for="hizmet" data-tr="Hizmet Seçimi" data-en="Service Selection">Hizmet Seçimi</label>
   <select id="hizmet" required>
-    <option value="" data-tr="Hizmet Seçin" data-en="Select a Service">Hizmet Seçin</option>
+    <option value="" data-tr="Hizmet Seçin" data-en="Select Service">Hizmet Seçin</option>
     <option>Protez Tırnak (Şablon) + Kalıcı Oje</option>
     <option>Protez Tırnak (Şablon)</option>
     <option>Protez Tırnak (Tips) + Kalıcı Oje</option>
     <option>Protez Tırnak (Tips)</option>
+    <option>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</option>
     <option>Jel Güçlendirme + Kalıcı Oje</option>
     <option>Jel Güçlendirme</option>
     <option>Kalıcı Oje</option>
     <option>Manikür</option>
+    <option>Manikür + Çıkarma</option>
+    <option>Pedikür + Kalıcı Oje</option>
     <option>Pedikür</option>
-    <option>French / Nail Art</option>
+    <option>Protez / Kalıcı Oje Çıkarma</option>
+    <option>Tek Tırnak Onarımı</option>
+    <option>NAILART (Tasarım)</option>
   </select>
 
   <label for="tarih" data-tr="Tarih" data-en="Date">Tarih</label>
   <input type="date" id="tarih" required />
 
   <label for="not" data-tr="Ek Not (İsteğe Bağlı)" data-en="Additional Note (Optional)">Ek Not (İsteğe Bağlı)</label>
-  <textarea id="not" rows="3" placeholder="Örn: Nude tonlarda istiyorum"></textarea>
+  <textarea id="not" rows="3" placeholder="Örn: French istiyorum"></textarea>
 
-  <button type="submit" data-tr="Randevu Al (WhatsApp)" data-en="Make Appointment (WhatsApp)">Randevu Al (WhatsApp)</button>
+  <button type="submit" data-tr="Randevu Al (WhatsApp)" data-en="Book Appointment (WhatsApp)">Randevu Al (WhatsApp)</button>
 </form>
 
 <!-- Fiyat Listesi -->
-<div class="fiyat-listesi" aria-label="Fiyat Listesi">
-  <h2>💅 <span data-tr="TIRNAK BAKIM" data-en="NAIL CARE">TIRNAK BAKIM</span></h2>
+<div class="fiyat-listesi">
+  <h2>💅 TIRNAK BAKIM</h2>
   <ul>
     <li><span>Protez Tırnak (Şablon) + Kalıcı Oje</span><span>1000 TL</span></li>
     <li><span>Protez Tırnak (Şablon)</span><span>900 TL</span></li>
@@ -238,7 +216,7 @@
     <li><span>Tek Tırnak Onarımı</span><span>75 TL</span></li>
   </ul>
 
-  <h2>💎 <span data-tr="NAILART (Tasarım)" data-en="NAILART (Design)">NAILART (Tasarım)</span></h2>
+  <h2>💎 NAILART (Tasarım)</h2>
   <ul>
     <li><span>İnci Tozu / Krom Efekt</span><span>100 TL</span></li>
     <li><span>French</span><span>100 TL</span></li>
@@ -248,144 +226,76 @@
   </ul>
 </div>
 
-<!-- Geri Bildirim Formu -->
-<div id="feedbackForm">
+<!-- Geri Bildirim -->
+<div id="geriBildirim">
   <h2 data-tr="Geri Bildirim" data-en="Feedback">Geri Bildirim</h2>
-  <form id="geriForm">
-    <label for="geriAd" data-tr="Ad Soyad" data-en="Full Name">Ad Soyad</label>
-    <input type="text" id="geriAd" required placeholder="Adınızı yazınız" />
-
-    <label for="geriMesaj" data-tr="Mesajınız" data-en="Your Message">Mesajınız</label>
-    <textarea id="geriMesaj" rows="4" required placeholder="Mesajınızı yazınız"></textarea>
-
-    <button type="submit" data-tr="Gönder" data-en="Send">Gönder</button>
-    <p id="feedbackMessage"></p>
-  </form>
+  <textarea id="feedbackText" rows="4" placeholder="Mesajınızı yazın..."></textarea>
+  <button id="sendFeedback" type="button" data-tr="Gönder" data-en="Send">Gönder</button>
 </div>
 
-<!-- Kırklareli Haritası -->
-<h2 data-tr="Konumumuz" data-en="Our Location" style="margin-top:40px;">Konumumuz</h2>
-<div id="map" aria-label="Kırklareli Haritası"></div>
+<!-- Harita -->
+<div id="harita"></div>
 
-<!-- Kelebek -->
-<div class="butterfly" id="butterfly"></div>
+<!-- Tema Değiştirici -->
+<button id="temaDegistir">Koyu Tema / Dark Mode</button>
 
 <script>
-  // --- Tema Yönetimi ---
-  const temaSwitch = document.getElementById("temaSwitch");
-  const body = document.body;
-
-  function setTema(tema) {
-    if (tema === "dark") {
-      body.classList.add("dark");
-    } else {
-      body.classList.remove("dark");
-    }
-    localStorage.setItem("tema", tema);
-  }
-  temaSwitch.addEventListener("change", e => {
-    setTema(e.target.value);
-  });
-
-  // Sayfa açıldığında kayıtlı tema varsa uygula
-  const kayitliTema = localStorage.getItem("tema") || "light";
-  temaSwitch.value = kayitliTema;
-  setTema(kayitliTema);
-
-  // --- Dil Yönetimi ---
-  const dilSelect = document.getElementById("dilSelect");
-  const ceviriElemanlar = document.querySelectorAll("[data-tr]");
-
-  function setDil(dil) {
-    ceviriElemanlar.forEach(el => {
-      const tr = el.getAttribute("data-tr");
-      const en = el.getAttribute("data-en");
-      if (dil === "en") {
-        if (el.placeholder) {
-          el.placeholder = en;
-        }
-        if (el.tagName === "OPTION") {
-          el.textContent = en;
-        } else {
-          el.textContent = en;
-        }
-      } else {
-        if (el.placeholder) {
-          el.placeholder = tr;
-        }
-        if (el.tagName === "OPTION") {
-          el.textContent = tr;
-        } else {
-          el.textContent = tr;
-        }
-      }
+  // Dil seçimi işlemi
+  const dilSelect = document.getElementById('dilSecimi');
+  function dilDegistir(dil) {
+    document.querySelectorAll('[data-tr]').forEach(el => {
+      el.textContent = el.getAttribute(`data-${dil}`) || el.textContent;
     });
-    localStorage.setItem("dil", dil);
+    // Placeholder için özel ayar:
+    if(dil === 'en') {
+      document.getElementById('not').placeholder = "E.g.: I want French";
+      document.getElementById('feedbackText').placeholder = "Write your message...";
+    } else {
+      document.getElementById('not').placeholder = "Örn: French istiyorum";
+      document.getElementById('feedbackText').placeholder = "Mesajınızı yazın...";
+    }
   }
-  dilSelect.addEventListener("change", e => {
-    setDil(e.target.value);
-  });
-  // Sayfa açıldığında kayıtlı dil varsa uygula
-  const kayitliDil = localStorage.getItem("dil") || "tr";
-  dilSelect.value = kayitliDil;
-  setDil(kayitliDil);
+  dilSelect.addEventListener('change', e => dilDegistir(e.target.value));
+  dilDegistir('tr'); // default Türkçe
 
-  // --- Randevu Formu ---
-  document.getElementById("randevuForm").addEventListener("submit", function(e) {
+  // Tema değiştirme
+  const temaBtn = document.getElementById('temaDegistir');
+  temaBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-theme');
+  });
+
+  // Randevu formu WhatsApp yönlendirme
+  document.getElementById('randevuForm').addEventListener('submit', e => {
     e.preventDefault();
-    const ad = document.getElementById("ad").value.trim();
-    const hizmet = document.getElementById("hizmet").value;
-    const tarih = document.getElementById("tarih").value;
-    const not = document.getElementById("not").value.trim();
+    const ad = document.getElementById('ad').value.trim();
+    const hizmet = document.getElementById('hizmet').value;
+    const tarih = document.getElementById('tarih').value;
+    const not = document.getElementById('not').value.trim();
 
     if (!ad || !hizmet || !tarih) {
-      alert(kayitliDil === "tr" ? "Lütfen gerekli alanları doldurun." : "Please fill all required fields.");
+      alert(dilSelect.value === 'en' ? "Please fill all required fields." : "Lütfen tüm zorunlu alanları doldurun.");
       return;
     }
 
-    const mesaj = 
-      (kayitliDil === "tr" ? "Merhaba! Randevu talebi:" : "Hello! Appointment request:") +
-      `%0A- ${kayitliDil === "tr" ? "Ad Soyad" : "Full Name"}: ${ad}` +
-      `%0A- ${kayitliDil === "tr" ? "Hizmet" : "Service"}: ${hizmet}` +
-      `%0A- ${kayitliDil === "tr" ? "Tarih" : "Date"}: ${tarih}` +
-      `%0A- ${kayitliDil === "tr" ? "Not" : "Note"}: ${not || (kayitliDil === "tr" ? "Yok" : "None")}`;
-
+    const mesaj = `Merhaba! Randevu talebi:%0A- Ad Soyad: ${ad}%0A- Hizmet: ${hizmet}%0A- Tarih: ${tarih}%0A- Not: ${not || (dilSelect.value === 'en' ? "None" : "Yok")}`;
     const whatsappURL = `https://wa.me/905551862487?text=${mesaj}`;
     window.open(whatsappURL, "_blank");
   });
 
-  // --- Geri Bildirim Formu ---
-  const geriForm = document.getElementById("geriForm");
-  const feedbackMessage = document.getElementById("feedbackMessage");
-
-  geriForm.addEventListener("submit", e => {
-    e.preventDefault();
-    const name = document.getElementById("geriAd").value.trim();
-    const message = document.getElementById("geriMesaj").value.trim();
-    if (!name || !message) {
-      feedbackMessage.textContent = kayitliDil === "tr" ? "Lütfen tüm alanları doldurun." : "Please fill all fields.";
-      feedbackMessage.style.color = "red";
+  // Geri bildirim butonu
+  document.getElementById('sendFeedback').addEventListener('click', () => {
+    const mesaj = document.getElementById('feedbackText').value.trim();
+    if(!mesaj) {
+      alert(dilSelect.value === 'en' ? "Please write a message." : "Lütfen mesaj yazın.");
       return;
     }
-    // Şimdi sadece uyarı gösteriyoruz, form gönderimi için backend gerek.
-    feedbackMessage.style.color = "green";
-    feedbackMessage.textContent = kayitliDil === "tr" ? "Geri bildiriminiz için teşekkürler!" : "Thank you for your feedback!";
-    geriForm.reset();
+    alert(dilSelect.value === 'en' ? "Thank you for your feedback!" : "Geri bildiriminiz için teşekkürler!");
+    document.getElementById('feedbackText').value = "";
+    // Burada istersen mail göndermek için backend ekleyebilirsin.
   });
 
-  // --- Google Maps Kırklareli ---
-  function initMap() {
-    const krkl = { lat: 41.7356, lng: 27.2256 };
-    const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 13,
-      center: krkl,
-      styles: [
-        { elementType: 'geometry', stylers: [{color: '#ebe3cd'}]},
-        { elementType: 'labels.text.fill', stylers: [{color: '#523735'}]},
-        { elementType: 'labels.text.stroke', stylers: [{color: '#f5f1e6'}]},
-        { featureType: 'administrative', elementType: 'geometry.stroke', stylers: [{color: '#c9b2a6'}]},
-        { featureType: 'administrative.land_parcel', elementType: 'geometry.stroke', stylers: [{color: '#dcd2be'}]},
-        { featureType: 'administrative.land_parcel', elementType: 'labels.text.fill', stylers: [{color: '#ae9e90'}]},
-        { featureType: 'landscape.natural', elementType: 'geometry', stylers: [{color: '#dfd2ae'}]},
-        { featureType: 'poi', elementType: 'geometry', stylers: [{color: '#dfd2ae'}]},
-        { featureType: 'poi
+  // Google Maps iframe (Kırklareli konumu)
+  const harita = document.getElementById('harita');
+  harita.innerHTML = `
+    <iframe
+      src="https://www.google.com/maps/embed?

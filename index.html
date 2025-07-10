@@ -1,199 +1,125 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Renkli Dokunuş - Randevu & Kampanyalar</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>Renkli Dokunuş</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     :root {
-      --renk-acik-arka: #f9f6f3;
-      --renk-acik-yazi: #4a4a4a;
-      --renk-acik-accent: #c09f95;
-      --renk-koyu-arka: #222;
-      --renk-koyu-yazi: #ddd;
-      --renk-koyu-accent: #d9a9a0;
+      --acik-bg: #f9f6f3;
+      --acik-color: #4a4a4a;
+      --accent: #c09f95;
+      --koyu-bg: #1d1d1d;
+      --koyu-color: #eee;
+      --koyu-accent: #d8a79f;
     }
-
     body {
+      margin: 0; padding: 20px;
       font-family: Arial, sans-serif;
-      max-width: 700px;
-      margin: 0 auto;
-      background: var(--renk-acik-arka);
-      padding: 20px;
-      color: var(--renk-acik-yazi);
-      transition: background 0.3s, color 0.3s;
+      background: var(--acik-bg);
+      color: var(--acik-color);
+      transition: 0.3s;
     }
-
     body.koyu {
-      background: var(--renk-koyu-arka);
-      color: var(--renk-koyu-yazi);
+      background: var(--koyu-bg);
+      color: var(--koyu-color);
     }
-
-    h1, h2 {
-      text-align: center;
-      color: var(--renk-acik-accent);
-      transition: color 0.3s;
-    }
-
-    body.koyu h1, body.koyu h2 {
-      color: var(--renk-koyu-accent);
-    }
-
-    nav {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
+    h1, h2 { text-align: center; color: var(--accent); }
+    body.koyu h1, body.koyu h2 { color: var(--koyu-accent); }
+    nav { text-align: center; margin-bottom: 20px; }
     nav a {
       margin: 0 10px;
-      color: var(--renk-acik-accent);
       text-decoration: none;
       font-weight: bold;
-      transition: color 0.3s;
-      cursor: pointer;
+      color: var(--accent);
     }
+    body.koyu nav a { color: var(--koyu-accent); }
 
-    body.koyu nav a {
-      color: var(--renk-koyu-accent);
+    .ayarlar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
     }
-
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-
     select, input, textarea, button {
       width: 100%;
       padding: 10px;
-      margin-top: 5px;
+      margin-top: 10px;
       border-radius: 10px;
-      border: 1px solid #ddd;
-      font-size: 16px;
+      border: 1px solid #ccc;
       box-sizing: border-box;
-      background: white;
-      color: black;
-      transition: background 0.3s, color 0.3s;
+      font-size: 16px;
     }
-
-    body.koyu select, body.koyu input, body.koyu textarea, body.koyu button {
-      background: #333;
-      color: var(--renk-koyu-yazi);
-      border: 1px solid #555;
-    }
-
     button {
-      background: var(--renk-acik-accent);
+      background: var(--accent);
       color: white;
       border: none;
-      margin-top: 20px;
       cursor: pointer;
-      transition: background 0.3s;
     }
-
     button:hover {
-      background: #b3897f;
+      opacity: 0.9;
     }
-
-    .fiyat-listesi, .kampanyalar {
-      background: #fff8f5;
-      border-radius: 15px;
-      padding: 20px;
+    section {
       margin-top: 40px;
-      box-shadow: 0 0 10px rgba(192, 159, 149, 0.3);
-      transition: background 0.3s, color 0.3s;
     }
-
-    body.koyu .fiyat-listesi, body.koyu .kampanyalar {
-      background: #2c2c2c;
-      color: var(--renk-koyu-yazi);
-      box-shadow: none;
-    }
-
     ul {
       list-style: none;
       padding: 0;
-      margin: 0;
     }
-
     li {
-      display: flex;
-      justify-content: space-between;
       padding: 8px 0;
-      border-bottom: 1px solid #e6d6d0;
-      font-size: 16px;
-    }
-
-    body.koyu li {
-      border-bottom: 1px solid #444;
-    }
-
-    li:last-child {
-      border-bottom: none;
-    }
-
-    /* Dil ve Tema Seçim Butonları */
-    .settings {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 20px;
-      gap: 10px;
-      flex-wrap: wrap;
+      border-bottom: 1px solid #ddd;
     }
-
-    .settings select {
-      width: 48%;
-      min-width: 150px;
+    .kutu {
+      background: #fff8f5;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(192, 159, 149, 0.3);
     }
-
-    /* Başarılı randevu mesajı */
-    #successMessage {
-      background-color: #d4edda;
-      border: 1px solid #c3e6cb;
-      color: #155724;
-      padding: 15px;
-      margin-top: 20px;
-      border-radius: 8px;
+    body.koyu .kutu {
+      background: #2a2a2a;
+    }
+    #msg {
       display: none;
-      text-align: center;
-      font-weight: bold;
+      margin-top: 15px;
+      padding: 10px;
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      border-radius: 5px;
     }
-
   </style>
 </head>
 <body>
 
-<!-- Dil ve Tema Seçim -->
-<div class="settings">
-  <select id="dilSecimi" aria-label="Dil Seçimi">
-    <option value="tr" selected>Türkçe</option>
+<div class="ayarlar">
+  <select id="dil">
+    <option value="tr">Türkçe</option>
     <option value="en">English</option>
   </select>
-
-  <select id="temaSecimi" aria-label="Tema Seçimi">
-    <option value="acik" selected>Açık Tema</option>
+  <select id="tema">
+    <option value="acik">Açık Tema</option>
     <option value="koyu">Koyu Tema</option>
   </select>
 </div>
 
-<!-- Menü -->
 <nav>
-  <a href="#randevu" id="menuRandevu">📅 Randevu Al</a>
-  <a href="#fiyatlar" id="menuFiyatlar">💅 Fiyatlar</a>
-  <a href="#kampanyalar" id="menuKampanyalar">🏷️ Kampanyalar</a>
+  <a href="#randevu">📅 Randevu</a>
+  <a href="#fiyatlar">💅 Fiyatlar</a>
+  <a href="#kampanya">🏷️ Kampanya</a>
 </nav>
 
 <h1 id="baslik">Renkli Dokunuş</h1>
 <p id="slogan" style="text-align:center;">Güzelliğinize Renkli Dokunuş</p>
 
 <!-- Randevu Formu -->
-<section id="randevu">
-  <form id="randevuForm" novalidate>
-    <label for="ad" id="labelAd">Ad Soyad</label>
-    <input type="text" id="ad" required aria-required="true" />
-
-    <label for="hizmet" id="labelHizmet">Hizmet Seçimi</label>
-    <select id="hizmet" required aria-required="true">
+<section id="randevu" class="kutu">
+  <form id="rform">
+    <label id="lAd">Ad Soyad</label>
+    <input id="ad" required>
+    <label id="lHizmet">Hizmet Seçimi</label>
+    <select id="hizmet" required>
       <option value="">Hizmet Seçin</option>
       <option>Protez Tırnak (Şablon) + Kalıcı Oje</option>
       <option>Protez Tırnak (Şablon)</option>
@@ -209,24 +135,24 @@
       <option>Pedikür</option>
       <option>Protez / Kalıcı Oje Çıkarma</option>
       <option>Tek Tırnak Onarımı</option>
-      <option>NAILART (Tasarım)</option>
+      <option>İnci Tozu / Krom Efekt</option>
+      <option>French</option>
+      <option>Mini Nail Art</option>
+      <option>Büyük Charm</option>
+      <option>Küçük Charm</option>
     </select>
-
-    <label for="tarih" id="labelTarih">Tarih</label>
-    <input type="date" id="tarih" required aria-required="true" />
-
-    <label for="not" id="labelNot">Ek Not (İsteğe Bağlı)</label>
-    <textarea id="not" rows="3" placeholder="Örn: Nude tonları tercih ederim."></textarea>
-
-    <button type="submit" id="btnRandevu">Randevu Al (WhatsApp)</button>
+    <label id="lTarih">Tarih</label>
+    <input type="date" id="tarih" required>
+    <label id="lNot">Ek Not</label>
+    <textarea id="not" rows="3"></textarea>
+    <button type="submit" id="btnSubmit">Randevu Al</button>
   </form>
-
-  <div id="successMessage"></div>
+  <div id="msg"></div>
 </section>
 
-<!-- Fiyat Listesi -->
-<section id="fiyatlar" class="fiyat-listesi">
-  <h2>💅 Tırnak Bakım Fiyatları</h2>
+<!-- Fiyatlar -->
+<section id="fiyatlar" class="kutu">
+  <h2>💅 Fiyat Listesi</h2>
   <ul>
     <li><span>Protez Tırnak (Şablon) + Kalıcı Oje</span><span>1000 TL</span></li>
     <li><span>Protez Tırnak (Şablon)</span><span>900 TL</span></li>
@@ -243,148 +169,76 @@
     <li><span>Protez / Kalıcı Oje Çıkarma</span><span>200 TL</span></li>
     <li><span>Tek Tırnak Onarımı</span><span>75 TL</span></li>
   </ul>
-
-  <h2>💎 NailArt Tasarım</h2>
-  <ul>
-    <li><span>İnci Tozu / Krom Efekt</span><span>100 TL</span></li>
-    <li><span>French</span><span>100 TL</span></li>
-    <li><span>Mini Nail Art</span><span>20 TL</span></li>
-    <li><span>Büyük Charm</span><span>40 TL</span></li>
-    <li><span>Küçük Charm</span><span>20 TL</span></li>
-  </ul>
 </section>
 
-<!-- Kampanyalar -->
-<section id="kampanyalar" class="kampanyalar">
+<!-- Kampanya -->
+<section id="kampanya" class="kutu">
   <h2>🎉 Temmuz Kampanyaları</h2>
   <ul>
-    <li>💅 Kalıcı Oje + Manikür Paketi — <strong>450 TL</strong></li>
-    <li>🌸 2 Arkadaşla Gelen Herkese %10 İndirim</li>
-    <li>🎁 İlk Randevuya Mini Nail Art Hediye</li>
-    <li>🦋 French Uygulamasında %20 İndirim</li>
+    <li><span>Kalıcı Oje + Manikür</span><span>450 TL</span></li>
+    <li><span>2 Arkadaşla Gelenlere</span><span>%10 İndirim</span></li>
+    <li><span>İlk Randevuya</span><span>Mini Nail Art Hediye</span></li>
+    <li><span>French Uygulaması</span><span>%20 İndirim</span></li>
   </ul>
 </section>
 
 <script>
-  const telNumarasi = "905551862487";
-
-  // Dil metinleri
+  const tel = "905551862487";
   const diller = {
     tr: {
-      menuRandevu: "📅 Randevu Al",
-      menuFiyatlar: "💅 Fiyatlar",
-      menuKampanyalar: "🏷️ Kampanyalar",
-      baslik: "Renkli Dokunuş",
-      slogan: "Güzelliğinize Renkli Dokunuş",
-      labelAd: "Ad Soyad",
-      labelHizmet: "Hizmet Seçimi",
-      hizmetSecin: "Hizmet Seçin",
-      labelTarih: "Tarih",
-      labelNot: "Ek Not (İsteğe Bağlı)",
-      btnRandevu: "Randevu Al (WhatsApp)",
-      alertBosAlan: "Lütfen tüm zorunlu alanları doldurun.",
-      successMesajlar: [
-        "Randevunuz başarıyla alındı, teşekkürler! 🦋",
-        "Güzel günlerde kullanın! 💅",
-        "Sizi ağırlamak için sabırsızlanıyoruz! 🌸",
-        "Mutlu günler dileriz! 😊",
-        "Güzelliğinize renk katmaya devam! 🎉"
-      ]
+      ad: "Ad Soyad", hizmet: "Hizmet Seçimi", sec: "Hizmet Seçin", tarih: "Tarih", not: "Ek Not",
+      btn: "Randevu Al", aler: "Lütfen tüm alanları doldurun", suc: "🎉 Randevunuz başarıyla alındı!"
     },
     en: {
-      menuRandevu: "📅 Book Appointment",
-      menuFiyatlar: "💅 Prices",
-      menuKampanyalar: "🏷️ Promotions",
-      baslik: "Colorful Touch",
-      slogan: "Add Color to Your Beauty",
-      labelAd: "Full Name",
-      labelHizmet: "Service Selection",
-      hizmetSecin: "Select a Service",
-      labelTarih: "Date",
-      labelNot: "Additional Note (Optional)",
-      btnRandevu: "Book Now (WhatsApp)",
-      alertBosAlan: "Please fill all required fields.",
-      successMesajlar: [
-        "Your appointment is successfully booked, thanks! 🦋",
-        "Enjoy your day! 💅",
-        "We look forward to welcoming you! 🌸",
-        "Wishing you happy days! 😊",
-        "Keep adding color to your beauty! 🎉"
-      ]
+      ad: "Full Name", hizmet: "Service", sec: "Select Service", tarih: "Date", not: "Note",
+      btn: "Book Now", aler: "Please fill all required fields", suc: "🎉 Appointment booked successfully!"
     }
   };
 
-  // Elementler
-  const dilSecimi = document.getElementById("dilSecimi");
-  const temaSecimi = document.getElementById("temaSecimi");
+  const dsel = document.getElementById('dil'),
+        tsel = document.getElementById('tema'),
+        form = document.getElementById('rform'),
+        msg = document.getElementById('msg');
 
-  const menuRandevu = document.getElementById("menuRandevu");
-  const menuFiyatlar = document.getElementById("menuFiyatlar");
-  const menuKampanyalar = document.getElementById("menuKampanyalar");
-  const baslik = document.getElementById("baslik");
-  const slogan = document.getElementById("slogan");
-  const labelAd = document.getElementById("labelAd");
-  const labelHizmet = document.getElementById("labelHizmet");
-  const hizmetSelect = document.getElementById("hizmet");
-  const labelTarih = document.getElementById("labelTarih");
-  const labelNot = document.getElementById("labelNot");
-  const btnRandevu = document.getElementById("btnRandevu");
-  const successMessage = document.getElementById("successMessage");
-
-  // Dil değişimi fonksiyonu
-  function dilDegistir(dil) {
-    const metinler = diller[dil];
-
-    menuRandevu.textContent = metinler.menuRandevu;
-    menuFiyatlar.textContent = metinler.menuFiyatlar;
-    menuKampanyalar.textContent = metinler.menuKampanyalar;
-    baslik.textContent = metinler.baslik;
-    slogan.textContent = metinler.slogan;
-    labelAd.textContent = metinler.labelAd;
-    labelHizmet.textContent = metinler.labelHizmet;
-    labelTarih.textContent = metinler.labelTarih;
-    labelNot.textContent = metinler.labelNot;
-    btnRandevu.textContent = metinler.btnRandevu;
-
-    // Hizmet seçeneğinin ilk seçeneğini değiştir
-    hizmetSelect.options[0].text = metinler.hizmetSecin;
-
-    // Başarılı mesaj gizle
-    successMessage.style.display = "none";
+  function degistirDil() {
+    const d = dsel.value;
+    document.getElementById('lAd').textContent = diller[d].ad;
+    document.getElementById('lHizmet').textContent = diller[d].hizmet;
+    document.getElementById('hizmet').options[0].text = diller[d].sec;
+    document.getElementById('lTarih').textContent = diller[d].tarih;
+    document.getElementById('lNot').textContent = diller[d].not;
+    document.getElementById('btnSubmit').textContent = diller[d].btn;
   }
 
-  // Tema değişimi fonksiyonu
-  function temaDegistir(tema) {
-    if (tema === "koyu") {
-      document.body.classList.add("koyu");
-    } else {
-      document.body.classList.remove("koyu");
-    }
+  function degistirTema() {
+    document.body.className = tsel.value === "koyu" ? "koyu" : "";
   }
 
-  // Sayfa yüklendiğinde ayarları uygula
-  window.addEventListener("DOMContentLoaded", () => {
-    dilDegistir(dilSecimi.value);
-    temaDegistir(temaSecimi.value);
-  });
+  dsel.onchange = degistirDil;
+  tsel.onchange = degistirTema;
+  window.onload = () => { degistirDil(); degistirTema(); };
 
-  // Dil seçimi event
-  dilSecimi.addEventListener("change", e => {
-    dilDegistir(e.target.value);
-  });
-
-  // Tema seçimi event
-  temaSecimi.addEventListener("change", e => {
-    temaDegistir(e.target.value);
-  });
-
-  // Randevu formu submit
-  document.getElementById("randevuForm").addEventListener("submit", e => {
+  form.onsubmit = e => {
     e.preventDefault();
+    const d = dsel.value;
+    const ad = document.getElementById('ad').value.trim();
+    const hizmet = document.getElementById('hizmet').value;
+    const tarih = document.getElementById('tarih').value;
+    const not = document.getElementById('not').value.trim();
 
-    const ad = document.getElementById("ad").value.trim();
-    const hizmet = hizmetSelect.value;
-    const tarih = document.getElementById("tarih").value;
-    const not = document.getElementById("not").value.trim();
+    if (!ad || !hizmet || !tarih) {
+      alert(diller[d].aler);
+      return;
+    }
 
-    const dil
+    const mesaj = `${diller[d].ad}: ${ad}\n${diller[d].hizmet}: ${hizmet}\n${diller[d].tarih}: ${tarih}\n${diller[d].not}: ${not || "-"}`;
+    window.open(`https://wa.me/${tel}?text=${encodeURIComponent(mesaj)}`, "_blank");
+    msg.textContent = diller[d].suc;
+    msg.style.display = 'block';
+    setTimeout(() => msg.style.display = 'none', 4000);
+    form.reset();
+  };
+</script>
+
+</body>
+  </html>

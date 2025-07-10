@@ -6,54 +6,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      --renk-acik-bg: #f9f6f3;
-      --renk-acik-text: #4a4a4a;
+      --renk-acik-arka: #f9f6f3;
+      --renk-acik-yazi: #4a4a4a;
       --renk-acik-accent: #c09f95;
-
-      --renk-koyu-bg: #1e1e1e;
-      --renk-koyu-text: #ddd;
-      --renk-koyu-accent: #c09f95;
+      --renk-koyu-arka: #222;
+      --renk-koyu-yazi: #ddd;
+      --renk-koyu-accent: #d9a9a0;
     }
+
     body {
       font-family: Arial, sans-serif;
       max-width: 700px;
       margin: 0 auto;
+      background: var(--renk-acik-arka);
       padding: 20px;
-      background: var(--renk-acik-bg);
-      color: var(--renk-acik-text);
-      transition: background-color 0.5s, color 0.5s;
+      color: var(--renk-acik-yazi);
+      transition: background 0.3s, color 0.3s;
     }
+
     body.koyu {
-      background: var(--renk-koyu-bg);
-      color: var(--renk-koyu-text);
+      background: var(--renk-koyu-arka);
+      color: var(--renk-koyu-yazi);
     }
+
     h1, h2 {
       text-align: center;
       color: var(--renk-acik-accent);
-      transition: color 0.5s;
+      transition: color 0.3s;
     }
+
     body.koyu h1, body.koyu h2 {
       color: var(--renk-koyu-accent);
     }
+
     nav {
       text-align: center;
       margin-bottom: 20px;
     }
+
     nav a {
       margin: 0 10px;
       color: var(--renk-acik-accent);
       text-decoration: none;
       font-weight: bold;
-      transition: color 0.5s;
+      transition: color 0.3s;
     }
+
     body.koyu nav a {
       color: var(--renk-koyu-accent);
     }
+
     label {
       display: block;
       margin-top: 15px;
       font-weight: bold;
     }
+
     select, input, textarea, button {
       width: 100%;
       padding: 10px;
@@ -62,101 +70,98 @@
       border: 1px solid #ddd;
       font-size: 16px;
       box-sizing: border-box;
-      transition: background-color 0.5s, color 0.5s;
+      background: white;
+      color: black;
+      transition: background 0.3s, color 0.3s;
     }
-    body.koyu select, body.koyu input, body.koyu textarea {
-      background-color: #333;
-      color: #eee;
+
+    body.koyu select, body.koyu input, body.koyu textarea, body.koyu button {
+      background: #333;
+      color: var(--renk-koyu-yazi);
       border: 1px solid #555;
     }
+
     button {
       background: var(--renk-acik-accent);
       color: white;
       border: none;
       margin-top: 20px;
       cursor: pointer;
-      transition: background-color 0.5s;
+      transition: background 0.3s;
     }
+
     button:hover {
       background: #b3897f;
     }
-    body.koyu button {
-      background: var(--renk-koyu-accent);
-    }
-    body.koyu button:hover {
-      background: #a37670;
-    }
+
     .fiyat-listesi, .kampanyalar {
       background: #fff8f5;
       border-radius: 15px;
       padding: 20px;
       margin-top: 40px;
       box-shadow: 0 0 10px rgba(192, 159, 149, 0.3);
-      transition: background-color 0.5s, color 0.5s;
+      transition: background 0.3s, color 0.3s;
     }
+
     body.koyu .fiyat-listesi, body.koyu .kampanyalar {
-      background: #2a2a2a;
-      color: #ddd;
-      box-shadow: 0 0 15px rgba(192, 159, 149, 0.6);
+      background: #2c2c2c;
+      color: var(--renk-koyu-yazi);
+      box-shadow: none;
     }
+
     ul {
       list-style: none;
       padding: 0;
       margin: 0;
     }
+
     li {
       display: flex;
       justify-content: space-between;
       padding: 8px 0;
       border-bottom: 1px solid #e6d6d0;
       font-size: 16px;
-      transition: border-color 0.5s;
     }
+
     body.koyu li {
-      border-color: #444;
+      border-bottom: 1px solid #444;
     }
+
     li:last-child {
       border-bottom: none;
     }
-    /* Dil ve Tema Seçim kutuları */
-    #secenekler {
+
+    /* Dil ve Tema Seçim Butonları */
+    .settings {
       display: flex;
-      justify-content: center;
-      gap: 20px;
+      justify-content: space-between;
       margin-bottom: 20px;
-      flex-wrap: wrap;
+      gap: 10px;
     }
-    #secenekler select {
-      width: auto;
-      min-width: 150px;
+
+    .settings select {
+      width: 48%;
     }
-    /* Güzel söz mesaj kutusu */
-    #guzelSozMesaji {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: var(--renk-acik-accent);
-      color: white;
-      padding: 15px 25px;
-      border-radius: 25px;
-      font-size: 18px;
-      box-shadow: 0 0 15px rgba(192, 159, 149, 0.7);
-      z-index: 9999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 1s ease;
+
+    /* Başarılı randevu mesajı */
+    #successMessage {
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 8px;
+      display: none;
+      text-align: center;
+      font-weight: bold;
     }
-    body.koyu #guzelSozMesaji {
-      background-color: var(--renk-koyu-accent);
-      box-shadow: 0 0 15px rgba(192, 159, 149, 0.9);
-    }
+
   </style>
 </head>
 <body>
 
-<!-- Dil ve Tema Seçimi -->
-<div id="secenekler">
+<!-- Dil ve Tema Seçim -->
+<div class="settings">
   <select id="dilSecimi" aria-label="Dil Seçimi">
     <option value="tr">Türkçe</option>
     <option value="en">English</option>
@@ -170,23 +175,23 @@
 
 <!-- Menü -->
 <nav>
-  <a href="#randevu" data-tr="Randevu Al" data-en="Book Appointment">📅 Randevu Al</a>
-  <a href="#fiyatlar" data-tr="Fiyatlar" data-en="Prices">💅 Fiyatlar</a>
-  <a href="#kampanyalar" data-tr="Kampanyalar" data-en="Promotions">🏷️ Kampanyalar</a>
+  <a href="#randevu" id="menuRandevu">📅 Randevu Al</a>
+  <a href="#fiyatlar" id="menuFiyatlar">💅 Fiyatlar</a>
+  <a href="#kampanyalar" id="menuKampanyalar">🏷️ Kampanyalar</a>
 </nav>
 
-<h1 data-tr="Renkli Dokunuş" data-en="Colorful Touch">Renkli Dokunuş</h1>
-<p style="text-align:center;" data-tr="Güzelliğinize Renkli Dokunuş" data-en="Add Colorful Touch to Your Beauty">Güzelliğinize Renkli Dokunuş</p>
+<h1 id="baslik">Renkli Dokunuş</h1>
+<p id="slogan" style="text-align:center;">Güzelliğinize Renkli Dokunuş</p>
 
 <!-- Randevu Formu -->
 <section id="randevu">
-  <form id="randevuForm">
-    <label for="ad" data-tr="Ad Soyad" data-en="Full Name">Ad Soyad</label>
-    <input type="text" id="ad" required />
+  <form id="randevuForm" novalidate>
+    <label for="ad" id="labelAd">Ad Soyad</label>
+    <input type="text" id="ad" required aria-required="true" />
 
-    <label for="hizmet" data-tr="Hizmet Seçimi" data-en="Service Selection">Hizmet Seçimi</label>
-    <select id="hizmet" required>
-      <option value="" data-tr="Hizmet Seçin" data-en="Select Service">Hizmet Seçin</option>
+    <label for="hizmet" id="labelHizmet">Hizmet Seçimi</label>
+    <select id="hizmet" required aria-required="true">
+      <option value="">{{hizmetSecin}}</option>
       <option>Protez Tırnak (Şablon) + Kalıcı Oje</option>
       <option>Protez Tırnak (Şablon)</option>
       <option>Protez Tırnak (Tips) + Kalıcı Oje</option>
@@ -204,122 +209,117 @@
       <option>NAILART (Tasarım)</option>
     </select>
 
-    <label for="tarih" data-tr="Tarih" data-en="Date">Tarih</label>
-    <input type="date" id="tarih" required />
+    <label for="tarih" id="labelTarih">Tarih</label>
+    <input type="date" id="tarih" required aria-required="true" />
 
-    <label for="not" data-tr="Ek Not (İsteğe Bağlı)" data-en="Additional Note (Optional)">Ek Not (İsteğe Bağlı)</label>
-    <textarea id="not" rows="3" placeholder="Örn: French istiyorum" data-tr-placeholder="Örn: French istiyorum" data-en-placeholder="E.g.: I want French style"></textarea>
+    <label for="not" id="labelNot">Ek Not (İsteğe Bağlı)</label>
+    <textarea id="not" rows="3" placeholder="Örn: Nude tonları tercih ederim."></textarea>
 
-    <button type="submit" data-tr="Randevu Al (WhatsApp)" data-en="Book Appointment (WhatsApp)">Randevu Al (WhatsApp)</button>
+    <button type="submit" id="btnRandevu">Randevu Al (WhatsApp)</button>
   </form>
+
+  <div id="successMessage"></div>
 </section>
 
 <!-- Fiyat Listesi -->
 <section id="fiyatlar" class="fiyat-listesi">
-  <h2 data-tr="Tırnak Bakım Fiyatları" data-en="Nail Care Prices">💅 Tırnak Bakım Fiyatları</h2>
+  <h2>💅 Tırnak Bakım Fiyatları</h2>
   <ul>
-    <li><span data-tr="Protez Tırnak (Şablon) + Kalıcı Oje" data-en="Acrylic Nails (Template) + Permanent Polish">Protez Tırnak (Şablon) + Kalıcı Oje</span><span>1000 TL</span></li>
-    <li><span data-tr="Protez Tırnak (Şablon)" data-en="Acrylic Nails (Template)">Protez Tırnak (Şablon)</span><span>900 TL</span></li>
-    <li><span data-tr="Protez Tırnak (Tips) + Kalıcı Oje" data-en="Acrylic Nails (Tips) + Permanent Polish">Protez Tırnak (Tips) + Kalıcı Oje</span><span>800 TL</span></li>
-    <li><span data-tr="Protez Tırnak (Tips)" data-en="Acrylic Nails (Tips)">Protez Tırnak (Tips)</span><span>700 TL</span></li>
-    <li><span data-tr="Protez Tırnak (Kapsül Sistem) + Kalıcı Oje" data-en="Acrylic Nails (Capsule System) + Permanent Polish">Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</span><span>500 TL</span></li>
-    <li><span data-tr="Jel Güçlendirme + Kalıcı Oje" data-en="Gel Strengthening + Permanent Polish">Jel Güçlendirme + Kalıcı Oje</span><span>650 TL</span></li>
-    <li><span data-tr="Jel Güçlendirme" data-en="Gel Strengthening">Jel Güçlendirme</span><span>500 TL</span></li>
-    <li><span data-tr="Kalıcı Oje" data-en="Permanent Polish">Kalıcı Oje</span><span>300 TL</span></li>
-    <li><span data-tr="Manikür" data-en="Manicure">Manikür</span><span>300 TL</span></li>
-    <li><span data-tr="Manikür + Çıkarma" data-en="Manicure + Removal">Manikür + Çıkarma</span><span>400 TL</span></li>
-    <li><span data-tr="Pedikür + Kalıcı Oje" data-en="Pedicure + Permanent Polish">Pedikür + Kalıcı Oje</span><span>700 TL</span></li>
-    <li><span data-tr="Pedikür" data-en="Pedicure">Pedikür</span><span>450 TL</span></li>
-    <li><span data-tr="Protez / Kalıcı Oje Çıkarma" data-en="Acrylic / Permanent Polish Removal">Protez / Kalıcı Oje Çıkarma</span><span>200 TL</span></li>
-    <li><span data-tr="Tek Tırnak Onarımı" data-en="Single Nail Repair">Tek Tırnak Onarımı</span><span>75 TL</span></li>
+    <li><span>Protez Tırnak (Şablon) + Kalıcı Oje</span><span>1000 TL</span></li>
+    <li><span>Protez Tırnak (Şablon)</span><span>900 TL</span></li>
+    <li><span>Protez Tırnak (Tips) + Kalıcı Oje</span><span>800 TL</span></li>
+    <li><span>Protez Tırnak (Tips)</span><span>700 TL</span></li>
+    <li><span>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</span><span>500 TL</span></li>
+    <li><span>Jel Güçlendirme + Kalıcı Oje</span><span>650 TL</span></li>
+    <li><span>Jel Güçlendirme</span><span>500 TL</span></li>
+    <li><span>Kalıcı Oje</span><span>300 TL</span></li>
+    <li><span>Manikür</span><span>300 TL</span></li>
+    <li><span>Manikür + Çıkarma</span><span>400 TL</span></li>
+    <li><span>Pedikür + Kalıcı Oje</span><span>700 TL</span></li>
+    <li><span>Pedikür</span><span>450 TL</span></li>
+    <li><span>Protez / Kalıcı Oje Çıkarma</span><span>200 TL</span></li>
+    <li><span>Tek Tırnak Onarımı</span><span>75 TL</span></li>
   </ul>
 
-  <h2 data-tr="NailArt Tasarım" data-en="NailArt Design">💎 NailArt Tasarım</h2>
+  <h2>💎 NailArt Tasarım</h2>
   <ul>
-    <li><span data-tr="İnci Tozu / Krom Efekt" data-en="Pearl Powder / Chrome Effect">İnci Tozu / Krom Efekt</span><span>100 TL</span></li>
-    <li><span data-tr="French" data-en="French">French</span><span>100 TL</span></li>
-    <li><span data-tr="Mini Nail Art" data-en="Mini Nail Art">Mini Nail Art</span><span>20 TL</span></li>
-    <li><span data-tr="Büyük Charm" data-en="Big Charm">Büyük Charm</span><span>40 TL</span></li>
-    <li><span data-tr="Küçük Charm" data-en="Small Charm">Küçük Charm</span><span>20 TL</span></li>
+    <li><span>İnci Tozu / Krom Efekt</span><span>100 TL</span></li>
+    <li><span>French</span><span>100 TL</span></li>
+    <li><span>Mini Nail Art</span><span>20 TL</span></li>
+    <li><span>Büyük Charm</span><span>40 TL</span></li>
+    <li><span>Küçük Charm</span><span>20 TL</span></li>
   </ul>
 </section>
 
 <!-- Kampanyalar -->
 <section id="kampanyalar" class="kampanyalar">
-  <h2 data-tr="Temmuz Kampanyaları" data-en="July Promotions">🎉 Temmuz Kampanyaları</h2>
+  <h2>🎉 Temmuz Kampanyaları</h2>
   <ul>
-    <li data-tr="Kalıcı Oje + Manikür Paketi — 450 TL" data-en="Permanent Polish + Manicure Package — 450 TL">💅 Kalıcı Oje + Manikür Paketi — <strong>450 TL</strong></li>
-    <li data-tr="2 Arkadaşla Gelen Herkese %10 İndirim" data-en="10% Discount for Groups of 3">🌸 2 Arkadaşla Gelen Herkese %10 İndirim</li>
-    <li data-tr="İlk Randevuya Mini Nail Art Hediye" data-en="Mini Nail Art Gift on First Appointment">🎁 İlk Randevuya Mini Nail Art Hediye</li>
-    <li data-tr="French Uygulamasında %20 İndirim" data-en="20% Off on French Application">🦋 French Uygulamasında %20 İndirim</li>
+    <li>💅 Kalıcı Oje + Manikür Paketi — <strong>450 TL</strong></li>
+    <li>🌸 2 Arkadaşla Gelen Herkese %10 İndirim</li>
+    <li>🎁 İlk Randevuya Mini Nail Art Hediye</li>
+    <li>🦋 French Uygulamasında %20 İndirim</li>
   </ul>
 </section>
 
-<!-- Güzel Söz Mesajı -->
-<div id="guzelSozMesaji"></div>
-
-<!-- JavaScript -->
 <script>
-  // Dil ve Tema seçim işlemleri
+  // Telefon numarası
+  const telNumarasi = "905551862487";
+
+  // Dil metinleri
+  const diller = {
+    tr: {
+      menuRandevu: "📅 Randevu Al",
+      menuFiyatlar: "💅 Fiyatlar",
+      menuKampanyalar: "🏷️ Kampanyalar",
+      baslik: "Renkli Dokunuş",
+      slogan: "Güzelliğinize Renkli Dokunuş",
+      labelAd: "Ad Soyad",
+      labelHizmet: "Hizmet Seçimi",
+      hizmetSecin: "Hizmet Seçin",
+      labelTarih: "Tarih",
+      labelNot: "Ek Not (İsteğe Bağlı)",
+      btnRandevu: "Randevu Al (WhatsApp)",
+      alertBosAlan: "Lütfen tüm zorunlu alanları doldurun.",
+      successMesajlar: [
+        "Randevunuz başarıyla alındı, teşekkürler! 🦋",
+        "Güzel günlerde kullanın! 💅",
+        "Sizi ağırlamak için sabırsızlanıyoruz! 🌸",
+        "Mutlu günler dileriz! 😊",
+        "Güzelliğinize renk katmaya devam! 🎉"
+      ]
+    },
+    en: {
+      menuRandevu: "📅 Book Appointment",
+      menuFiyatlar: "💅 Prices",
+      menuKampanyalar: "🏷️ Promotions",
+      baslik: "Colorful Touch",
+      slogan: "Add Color to Your Beauty",
+      labelAd: "Full Name",
+      labelHizmet: "Service Selection",
+      hizmetSecin: "Select a Service",
+      labelTarih: "Date",
+      labelNot: "Additional Note (Optional)",
+      btnRandevu: "Book Now (WhatsApp)",
+      alertBosAlan: "Please fill all required fields.",
+      successMesajlar: [
+        "Your appointment is successfully booked, thanks! 🦋",
+        "Enjoy your day! 💅",
+        "We look forward to welcoming you! 🌸",
+        "Wishing you happy days! 😊",
+        "Keep adding color to your beauty! 🎉"
+      ]
+    }
+  };
+
+  // Dil ve tema seçimi elementleri
   const dilSecimi = document.getElementById("dilSecimi");
   const temaSecimi = document.getElementById("temaSecimi");
-  const guzelsSozMesaji = document.getElementById("guzelSozMesaji");
 
-  // Dil değiştir fonksiyonu
-  function dilDegistir(dil) {
-    // Tüm öğeleri al
-    document.querySelectorAll("[data-tr]").forEach(el => {
-      const tr = el.getAttribute("data-tr");
-      const en = el.getAttribute("data-en");
-      if(dil === "en" && en) el.textContent = en;
-      else el.textContent = tr;
-    });
-    // Placeholderları değiştir
-    document.querySelectorAll("[data-tr-placeholder]").forEach(el => {
-      const trPH = el.getAttribute("data-tr-placeholder");
-      const enPH = el.getAttribute("data-en-placeholder");
-      if(dil === "en" && enPH) el.placeholder = enPH;
-      else el.placeholder = trPH;
-    });
-  }
-
-  // Tema değiştirme fonksiyonu
-  function temaDegistir(tema) {
-    if(tema === "koyu") document.body.classList.add("koyu");
-    else document.body.classList.remove("koyu");
-  }
-
-  // Sayfa yüklendiğinde varsayılan ayarları uygula
-  window.addEventListener("DOMContentLoaded", () => {
-    // Dil ve tema seçimlerini sakla veya default
-    const kayitliDil = localStorage.getItem("dil") || "tr";
-    const kayitliTema = localStorage.getItem("tema") || "acik";
-
-    dilSecimi.value = kayitliDil;
-    temaSecimi.value = kayitliTema;
-
-    dilDegistir(kayitliDil);
-    temaDegistir(kayitliTema);
-  });
-
-  // Dil seçimi değiştiğinde
-  dilSecimi.addEventListener("change", e => {
-    const secilenDil = e.target.value;
-    dilDegistir(secilenDil);
-    localStorage.setItem("dil", secilenDil);
-  });
-
-  // Tema seçimi değiştiğinde
-  temaSecimi.addEventListener("change", e => {
-    const secilenTema = e.target.value;
-    temaDegistir(secilenTema);
-    localStorage.setItem("tema", secilenTema);
-  });
-
-  // Güzel sözlerden örnekler
-  const guzelSozler = {
-    tr: [
-      "Güzellik seninle başlar! 💖",
-      "Bugün de harikasın! 🌸",
-      "Sen, ışık saçan bir yıldızsın! ✨",
-      "Mutlu günler seni bekliyor!
+  // Metin elementleri
+  const menuRandevu = document.getElementById("menuRandevu");
+  const menuFiyatlar = document.getElementById("menuFiyatlar");
+  const menuKampanyalar = document.getElementById("menuKampanyalar");
+  const baslik = document.getElementById("baslik");
+  const slogan = document.getElementById("slogan");
+  const labelAd = document

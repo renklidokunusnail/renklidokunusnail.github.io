@@ -2,86 +2,121 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <title>Renkli Dokunuş - Randevu & Fiyatlar</title>
+  <title>Renkli Dokunuş - Randevu & Kampanyalar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { font-family: Arial, sans-serif; max-width: 700px; margin: 30px auto; background: #f9f6f3; padding: 20px; color: #4a4a4a; }
-    h1, h2 { text-align: center; color: #c09f95; }
-    label { display: block; margin-top: 15px; font-weight: bold; }
-    select, input, textarea, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 10px; border: 1px solid #ddd; font-size: 16px; }
-    button { background: #c09f95; color: white; border: none; margin-top: 20px; cursor: pointer; }
-    button:hover { background: #b3897f; }
-    option[disabled] { color: #999; }
-    .fiyat-listesi {
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 0 auto;
+      background: #f9f6f3;
+      padding: 20px;
+      color: #4a4a4a;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #c09f95;
+    }
+    nav {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    nav a {
+      margin: 0 10px;
+      color: #c09f95;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    select, input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+    }
+    button {
+      background: #c09f95;
+      color: white;
+      border: none;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #b3897f;
+    }
+    .fiyat-listesi, .kampanyalar {
       background: #fff8f5;
       border-radius: 15px;
       padding: 20px;
       margin-top: 40px;
       box-shadow: 0 0 10px rgba(192, 159, 149, 0.3);
     }
-    .fiyat-listesi h2 {
-      margin-bottom: 15px;
-      font-weight: 700;
-      font-size: 24px;
-    }
-    .fiyat-listesi ul {
+    ul {
       list-style: none;
       padding: 0;
       margin: 0;
     }
-    .fiyat-listesi li {
+    li {
       display: flex;
       justify-content: space-between;
       padding: 8px 0;
       border-bottom: 1px solid #e6d6d0;
       font-size: 16px;
     }
-    .fiyat-listesi li:last-child {
+    li:last-child {
       border-bottom: none;
     }
   </style>
 </head>
 <body>
 
+<!-- Menü -->
+<nav>
+  <a href="#randevu">📅 Randevu Al</a>
+  <a href="#fiyatlar">💅 Fiyatlar</a>
+  <a href="#kampanyalar">🏷️ Kampanyalar</a>
+</nav>
+
 <h1>Renkli Dokunuş</h1>
-<p style="text-align:center;">Randevu Almak İçin Formu Doldurun</p>
+<p style="text-align:center;">Güzelliğinize Renkli Dokunuş</p>
 
-<form id="randevuForm">
-  <label for="ad">Ad Soyad</label>
-  <input type="text" id="ad" required />
+<!-- Randevu Formu -->
+<section id="randevu">
+  <form id="randevuForm">
+    <label for="ad">Ad Soyad</label>
+    <input type="text" id="ad" required />
 
-  <label for="hizmet">Hizmet Seçimi</label>
-  <select id="hizmet" required>
-    <option value="">Hizmet Seçin</option>
-    <option>Protez Tırnak (Şablon) + Kalıcı Oje</option>
-    <option>Protez Tırnak (Şablon)</option>
-    <option>Protez Tırnak (Tips) + Kalıcı Oje</option>
-    <option>Protez Tırnak (Tips)</option>
-    <option>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</option>
-    <option>Jel Güçlendirme + Kalıcı Oje</option>
-    <option>Jel Güçlendirme</option>
-    <option>Kalıcı Oje</option>
-    <option>Manikür</option>
-    <option>Manikür + Çıkarma</option>
-    <option>Pedikür + Kalıcı Oje</option>
-    <option>Pedikür</option>
-    <option>Protez / Kalıcı Oje Çıkarma</option>
-    <option>Tek Tırnak Onarımı</option>
-    <option>NAILART (Tasarım)</option>
-  </select>
+    <label for="hizmet">Hizmet Seçimi</label>
+    <select id="hizmet" required>
+      <option value="">Hizmet Seçin</option>
+      <option>Protez Tırnak (Şablon) + Kalıcı Oje</option>
+      <option>Kalıcı Oje</option>
+      <option>Jel Güçlendirme</option>
+      <option>Manikür</option>
+    </select>
 
-  <label for="tarih">Tarih</label>
-  <input type="date" id="tarih" required min="" />
+    <label for="tarih">Tarih</label>
+    <input type="date" id="tarih" required />
 
-  <label for="not">Ek Not (İsteğe Bağlı)</label>
-  <textarea id="not" rows="3" placeholder="Örn: French istiyorum"></textarea>
+    <label for="not">Ek Not (İsteğe Bağlı)</label>
+    <textarea id="not" rows="3" placeholder="Örn: Nude tonları tercih ederim."></textarea>
 
-  <button type="submit">Randevu Al (WhatsApp)</button>
-</form>
+    <button type="submit">Randevu Al (WhatsApp)</button>
+  </form>
+</section>
 
 <!-- Fiyat Listesi -->
-<div class="fiyat-listesi">
-  <h2>💅 TIRNAK BAKIM</h2>
+<section id="fiyatlar" class="fiyat-listesi">
+  <h2>💅 Tırnak Bakım Fiyatları</h2>
   <ul>
     <li><span>Protez Tırnak (Şablon) + Kalıcı Oje</span><span>1000 TL</span></li>
     <li><span>Protez Tırnak (Şablon)</span><span>900 TL</span></li>
@@ -99,7 +134,7 @@
     <li><span>Tek Tırnak Onarımı</span><span>75 TL</span></li>
   </ul>
 
-  <h2>💎 NAILART (Tasarım)</h2>
+  <h2>💎 NailArt Tasarım</h2>
   <ul>
     <li><span>İnci Tozu / Krom Efekt</span><span>100 TL</span></li>
     <li><span>French</span><span>100 TL</span></li>
@@ -107,34 +142,36 @@
     <li><span>Büyük Charm</span><span>40 TL</span></li>
     <li><span>Küçük Charm</span><span>20 TL</span></li>
   </ul>
-</div>
+</section>
 
+<!-- Kampanyalar -->
+<section id="kampanyalar" class="kampanyalar">
+  <h2>🎉 Temmuz Kampanyaları</h2>
+  <ul>
+    <li>💅 Kalıcı Oje + Manikür Paketi — <strong>450 TL</strong></li>
+    <li>🌸 2 Arkadaşla Gelen Herkese %10 İndirim</li>
+    <li>🎁 İlk Randevuya Mini Nail Art Hediye</li>
+    <li>🦋 French Uygulamasında %20 İndirim</li>
+  </ul>
+</section>
+
+<!-- WhatsApp yönlendirme -->
 <script>
-  // Bugünün tarihini min olarak ayarla
-  const tarihInput = document.getElementById('tarih');
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  const mm = (today.getMonth() + 1).toString().padStart(2, '0');
-  const dd = today.getDate().toString().padStart(2, '0');
-  tarihInput.min = `${yyyy}-${mm}-${dd}`;
-
-  document.getElementById('randevuForm').addEventListener('submit', function(e){
+  document.getElementById("randevuForm").addEventListener("submit", function(e) {
     e.preventDefault();
+    const ad = document.getElementById("ad").value.trim();
+    const hizmet = document.getElementById("hizmet").value;
+    const tarih = document.getElementById("tarih").value;
+    const not = document.getElementById("not").value.trim();
 
-    const ad = document.getElementById('ad').value.trim();
-    const hizmet = document.getElementById('hizmet').value;
-    const tarih = tarihInput.value;
-    const not = document.getElementById('not').value.trim();
-
-    if(!ad || !hizmet || !tarih){
-      alert('Lütfen tüm zorunlu alanları doldurun.');
+    if (!ad || !hizmet || !tarih) {
+      alert("Lütfen tüm zorunlu alanları doldurun.");
       return;
     }
 
-    const mesaj = `Merhaba! Randevu talebi:\n- Ad Soyad: ${ad}\n- Hizmet: ${hizmet}\n- Tarih: ${tarih}\n- Not: ${not || "Yok"}`;
-    const whatsappURL = `https://wa.me/905551862487?text=${encodeURIComponent(mesaj)}`;
-
-    window.open(whatsappURL, '_blank');
+    const mesaj = `Merhaba! Randevu talebi:%0A- Ad Soyad: ${ad}%0A- Hizmet: ${hizmet}%0A- Tarih: ${tarih}%0A- Not: ${not || "Yok"}`;
+    const whatsappURL = `https://wa.me/905551862487?text=${mesaj}`;
+    window.open(whatsappURL, "_blank");
   });
 </script>
 

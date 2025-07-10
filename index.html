@@ -50,6 +50,7 @@
       text-decoration: none;
       font-weight: bold;
       transition: color 0.3s;
+      cursor: pointer;
     }
 
     body.koyu nav a {
@@ -137,10 +138,12 @@
       justify-content: space-between;
       margin-bottom: 20px;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
     .settings select {
       width: 48%;
+      min-width: 150px;
     }
 
     /* Başarılı randevu mesajı */
@@ -163,12 +166,12 @@
 <!-- Dil ve Tema Seçim -->
 <div class="settings">
   <select id="dilSecimi" aria-label="Dil Seçimi">
-    <option value="tr">Türkçe</option>
+    <option value="tr" selected>Türkçe</option>
     <option value="en">English</option>
   </select>
 
   <select id="temaSecimi" aria-label="Tema Seçimi">
-    <option value="acik">Açık Tema</option>
+    <option value="acik" selected>Açık Tema</option>
     <option value="koyu">Koyu Tema</option>
   </select>
 </div>
@@ -191,7 +194,7 @@
 
     <label for="hizmet" id="labelHizmet">Hizmet Seçimi</label>
     <select id="hizmet" required aria-required="true">
-      <option value="">{{hizmetSecin}}</option>
+      <option value="">Hizmet Seçin</option>
       <option>Protez Tırnak (Şablon) + Kalıcı Oje</option>
       <option>Protez Tırnak (Şablon)</option>
       <option>Protez Tırnak (Tips) + Kalıcı Oje</option>
@@ -263,7 +266,6 @@
 </section>
 
 <script>
-  // Telefon numarası
   const telNumarasi = "905551862487";
 
   // Dil metinleri
@@ -312,14 +314,77 @@
     }
   };
 
-  // Dil ve tema seçimi elementleri
+  // Elementler
   const dilSecimi = document.getElementById("dilSecimi");
   const temaSecimi = document.getElementById("temaSecimi");
 
-  // Metin elementleri
   const menuRandevu = document.getElementById("menuRandevu");
   const menuFiyatlar = document.getElementById("menuFiyatlar");
   const menuKampanyalar = document.getElementById("menuKampanyalar");
   const baslik = document.getElementById("baslik");
   const slogan = document.getElementById("slogan");
-  const labelAd = document
+  const labelAd = document.getElementById("labelAd");
+  const labelHizmet = document.getElementById("labelHizmet");
+  const hizmetSelect = document.getElementById("hizmet");
+  const labelTarih = document.getElementById("labelTarih");
+  const labelNot = document.getElementById("labelNot");
+  const btnRandevu = document.getElementById("btnRandevu");
+  const successMessage = document.getElementById("successMessage");
+
+  // Dil değişimi fonksiyonu
+  function dilDegistir(dil) {
+    const metinler = diller[dil];
+
+    menuRandevu.textContent = metinler.menuRandevu;
+    menuFiyatlar.textContent = metinler.menuFiyatlar;
+    menuKampanyalar.textContent = metinler.menuKampanyalar;
+    baslik.textContent = metinler.baslik;
+    slogan.textContent = metinler.slogan;
+    labelAd.textContent = metinler.labelAd;
+    labelHizmet.textContent = metinler.labelHizmet;
+    labelTarih.textContent = metinler.labelTarih;
+    labelNot.textContent = metinler.labelNot;
+    btnRandevu.textContent = metinler.btnRandevu;
+
+    // Hizmet seçeneğinin ilk seçeneğini değiştir
+    hizmetSelect.options[0].text = metinler.hizmetSecin;
+
+    // Başarılı mesaj gizle
+    successMessage.style.display = "none";
+  }
+
+  // Tema değişimi fonksiyonu
+  function temaDegistir(tema) {
+    if (tema === "koyu") {
+      document.body.classList.add("koyu");
+    } else {
+      document.body.classList.remove("koyu");
+    }
+  }
+
+  // Sayfa yüklendiğinde ayarları uygula
+  window.addEventListener("DOMContentLoaded", () => {
+    dilDegistir(dilSecimi.value);
+    temaDegistir(temaSecimi.value);
+  });
+
+  // Dil seçimi event
+  dilSecimi.addEventListener("change", e => {
+    dilDegistir(e.target.value);
+  });
+
+  // Tema seçimi event
+  temaSecimi.addEventListener("change", e => {
+    temaDegistir(e.target.value);
+  });
+
+  // Randevu formu submit
+  document.getElementById("randevuForm").addEventListener("submit", e => {
+    e.preventDefault();
+
+    const ad = document.getElementById("ad").value.trim();
+    const hizmet = hizmetSelect.value;
+    const tarih = document.getElementById("tarih").value;
+    const not = document.getElementById("not").value.trim();
+
+    const dil

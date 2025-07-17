@@ -161,11 +161,11 @@
   </div>
 
   <div class="ayarlar">
-    <select id="dil">
+    <select id="dil" aria-label="Dil seçimi">
       <option value="tr">Türkçe</option>
       <option value="en">English</option>
     </select>
-    <select id="tema">
+    <select id="tema" aria-label="Tema seçimi">
       <option value="acik">Açık Tema</option>
       <option value="koyu">Koyu Tema</option>
     </select>
@@ -180,158 +180,115 @@
   <p style="text-align:center;">Güzelliğinize Renkli Dokunuş</p>
 
   <!-- Randevu Formu -->
-  <section id="randevu" class="kutu">
-    <form id="rform">
-      <label id="lAd">Ad Soyad</label>
-      <input id="ad" required />
-      <label id="lHizmet">Hizmet Seçimi</label>
-      <select id="hizmet" required>
-        <option value="">Hizmet Seçin</option>
-        <option>Protez Tırnak (Şablon) + Kalıcı Oje</option>
-        <option>Protez Tırnak (Şablon)</option>
-        <option>Protez Tırnak (Tips) + Kalıcı Oje</option>
-        <option>Protez Tırnak (Tips)</option>
-        <option>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</option>
-        <option>Jel Güçlendirme + Kalıcı Oje</option>
-        <option>Jel Güçlendirme</option>
-        <option>Kalıcı Oje</option>
-        <option>Islak Manikür</option>
-        <option>Kuru Manikür + Çıkarma</option>
-        <option>Kuru Pedikür + Kalıcı Oje</option>
-        <option>Islak Pedikür</option>
-        <option>Protez / Kalıcı Oje Çıkarma</option>
-        <option>Tek Tırnak Onarımı</option>
-        <option>İnci Tozu / Krom Efekt</option>
-        <option>French</option>
-        <option>Mini Nail Art</option>
-        <option>Büyük Charm</option>
-        <option>Küçük Charm</option>
+  <section id="randevu" class="kutu" aria-label="Randevu formu">
+    <form id="rform" novalidate>
+      <label for="ad" id="lAd">Ad Soyad</label>
+      <input id="ad" name="ad" required autocomplete="name" />
+      <label for="hizmet" id="lHizmet">Hizmet Seçimi</label>
+      <select id="hizmet" name="hizmet" required aria-required="true">
+        <!-- Seçenekler JS ile yüklenecek -->
       </select>
-      <label id="lTarih">Tarih</label>
-      <input type="date" id="tarih" required />
-      <label id="lNot">Ek Not</label>
-      <textarea id="not" rows="3"></textarea>
+      <label for="tarih" id="lTarih">Tarih</label>
+      <input type="date" id="tarih" name="tarih" required />
+      <label for="not" id="lNot">Ek Not</label>
+      <textarea id="not" name="not" rows="3"></textarea>
       <button type="submit" id="btnSubmit">Randevu Al</button>
     </form>
-    <div id="msg"></div>
+    <div id="msg" role="alert"></div>
   </section>
 
   <!-- Fiyatlar -->
-  <section id="fiyatlar" class="kutu">
+  <section id="fiyatlar" class="kutu" aria-label="Fiyat listesi">
     <h2>💅 Fiyat Listesi</h2>
-    <ul>
-      <li><span>Protez Tırnak (Şablon) + Kalıcı Oje</span><span>1000 TL</span></li>
-      <li><span>Protez Tırnak (Şablon)</span><span>900 TL</span></li>
-      <li><span>Protez Tırnak (Tips) + Kalıcı Oje</span><span>650 TL</span></li>
-      <li><span>Protez Tırnak (Tips)</span><span>600 TL</span></li>
-      <li><span>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</span><span>500 TL</span></li>
-      <li><span>Jel Güçlendirme + Kalıcı Oje</span><span>550 TL</span></li>
-      <li><span>Jel Güçlendirme</span><span>500 TL</span></li>
-      <li><span>Kalıcı Oje</span><span>250 TL</span></li>
-      <li><span>Islak Manikür</span><span>250 TL</span></li>
-      <li><span>Kuru Manikür + Çıkarma</span><span>350 TL</span></li>
-      <li><span>Kuru Pedikür + Kalıcı Oje</span><span>500 TL</span></li>
-      <li><span>Islak Pedikür</span><span>400 TL</span></li>
-      <li><span>Protez / Kalıcı Oje Çıkarma</span><span>200 TL</span></li>
-      <li><span>Tek Tırnak Onarımı</span><span>75 TL</span></li>
-      <li><span>İnci Tozu / Krom Efekt</span><span>100 TL</span></li>
-      <li><span>French</span><span>100 TL</span></li>
-      <li><span>Mini Nail Art</span><span>20 TL</span></li>
-      <li><span>Büyük Charm</span><span>40 TL</span></li>
-      <li><span>Küçük Charm</span><span>20 TL</span></li>
+    <ul id="fiyatListesi">
+      <!-- Fiyatlar JS ile yüklenecek -->
     </ul>
   </section>
 
   <script>
     const tel = "905551862487";
+
     const diller = {
       tr: {
-        ad: "Ad Soyad",
-        hizmet: "Hizmet Seçimi",
-        sec: "Hizmet Seçin",
-        tarih: "Tarih",
-        not: "Ek Not",
-        btn: "Randevu Al",
-        aler: "Lütfen tüm alanları doldurun",
-        suc: "🎉 Randevunuz başarıyla alındı!",
+        labels: {
+          ad: "Ad Soyad",
+          hizmet: "Hizmet Seçimi",
+          tarih: "Tarih",
+          not: "Ek Not",
+          btn: "Randevu Al",
+          hizmetSecin: "Hizmet Seçin",
+          reklamText: "Kampanyalardan haberdar olmak için bizi Instagram'da takip edin: ",
+          reklamLinkText: "@renklidokunusnail",
+          randevuBasarili: "🎉 Randevunuz başarıyla alındı!",
+          tumAlanlarDolu: "Lütfen tüm alanları doldurun",
+          fiyatBaslik: "💅 Fiyat Listesi",
+        },
+        hizmetler: [
+          "Protez Tırnak (Şablon) + Kalıcı Oje",
+          "Protez Tırnak (Şablon)",
+          "Protez Tırnak (Tips) + Kalıcı Oje",
+          "Protez Tırnak (Tips)",
+          "Protez Tırnak (Kapsül Sistem) + Kalıcı Oje",
+          "Jel Güçlendirme + Kalıcı Oje",
+          "Jel Güçlendirme",
+          "Kalıcı Oje",
+          "Islak Manikür",
+          "Kuru Manikür + Çıkarma",
+          "Kuru Pedikür + Kalıcı Oje",
+          "Islak Pedikür",
+          "Protez / Kalıcı Oje Çıkarma",
+          "Tek Tırnak Onarımı",
+          "İnci Tozu / Krom Efekt",
+          "French",
+          "Mini Nail Art",
+          "Büyük Charm",
+          "Küçük Charm"
+        ],
+        fiyatlar: [
+          ["Protez Tırnak (Şablon) + Kalıcı Oje", "1000 TL"],
+          ["Protez Tırnak (Şablon)", "900 TL"],
+          ["Protez Tırnak (Tips) + Kalıcı Oje", "650 TL"],
+          ["Protez Tırnak (Tips)", "600 TL"],
+          ["Protez Tırnak (Kapsül Sistem) + Kalıcı Oje", "500 TL"],
+          ["Jel Güçlendirme + Kalıcı Oje", "550 TL"],
+          ["Jel Güçlendirme", "500 TL"],
+          ["Kalıcı Oje", "250 TL"],
+          ["Islak Manikür", "250 TL"],
+          ["Kuru Manikür + Çıkarma", "350 TL"],
+          ["Kuru Pedikür + Kalıcı Oje", "500 TL"],
+          ["Islak Pedikür", "400 TL"],
+          ["Protez / Kalıcı Oje Çıkarma", "200 TL"],
+          ["Tek Tırnak Onarımı", "75 TL"],
+          ["İnci Tozu / Krom Efekt", "100 TL"],
+          ["French", "100 TL"],
+          ["Mini Nail Art", "20 TL"],
+          ["Büyük Charm", "40 TL"],
+          ["Küçük Charm", "20 TL"]
+        ]
       },
       en: {
-        ad: "Full Name",
-        hizmet: "Service",
-        sec: "Select Service",
-        tarih: "Date",
-        not: "Note",
-        btn: "Book Now",
-        aler: "Please fill all required fields",
-        suc: "🎉 Appointment booked successfully!",
-      },
-    };
-
-    const dsel = document.getElementById("dil"),
-      tsel = document.getElementById("tema"),
-      form = document.getElementById("rform"),
-      msg = document.getElementById("msg");
-
-    function degistirDil() {
-      const d = dsel.value;
-      document.getElementById("lAd").textContent = diller[d].ad;
-      document.getElementById("lHizmet").textContent = diller[d].hizmet;
-      document.getElementById("hizmet").options[0].text = diller[d].sec;
-      document.getElementById("lTarih").textContent = diller[d].tarih;
-      document.getElementById("lNot").textContent = diller[d].not;
-      document.getElementById("btnSubmit").textContent = diller[d].btn;
-    }
-
-    function degistirTema() {
-      document.body.className = tsel.value === "koyu" ? "koyu" : "";
-    }
-
-    dsel.onchange = degistirDil;
-    tsel.onchange = degistirTema;
-    window.onload = () => {
-      degistirDil();
-      degistirTema();
-    };
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const ad = document.getElementById("ad").value.trim();
-      const hizmet = document.getElementById("hizmet").value.trim();
-      const tarih = document.getElementById("tarih").value.trim();
-      const not = document.getElementById("not").value.trim();
-
-      if (!ad || !hizmet || !tarih) {
-        alert(diller[dsel.value].aler);
-        return;
-      }
-
-      // Mesaj metni (dil seçeneğine göre)
-      let mesaj = "";
-      if (dsel.value === "tr") {
-        mesaj =
-          `Merhaba,%0ARandevu talebi:%0AAd Soyad: ${encodeURIComponent(ad)}%0AHizmet: ${encodeURIComponent(hizmet)}%0ATarih: ${encodeURIComponent(tarih)}%0ANot: ${encodeURIComponent(not)}`;
-      } else {
-        mesaj =
-          `Hello,%0AAppointment request:%0AName: ${encodeURIComponent(ad)}%0AService: ${encodeURIComponent(hizmet)}%0ADate: ${encodeURIComponent(tarih)}%0ANote: ${encodeURIComponent(not)}`;
-      }
-
-      // Telefon numarasını uluslararası formata çevir (başında 90 yoksa ekle)
-      const telNo = tel.startsWith("90") ? tel : "90" + tel.replace(/^0+/, "");
-
-      // WhatsApp URL oluştur
-      const url = `https://wa.me/${telNo}?text=${mesaj}`;
-
-      // Başarı mesajını göster
-      msg.style.display = "block";
-      msg.textContent = diller[dsel.value].suc;
-
-      // Formu temizle
-      form.reset();
-
-      // WhatsApp linkini yeni sekmede aç
-      window.open(url, "_blank");
-    });
-  </script>
-</body>
-</html>
+        labels: {
+          ad: "Full Name",
+          hizmet: "Service",
+          tarih: "Date",
+          not: "Note",
+          btn: "Book Now",
+          hizmetSecin: "Select Service",
+          reklamText: "Follow us on Instagram for campaign updates: ",
+          reklamLinkText: "@renklidokunusnail",
+          randevuBasarili: "🎉 Appointment booked successfully!",
+          tumAlanlarDolu: "Please fill all required fields",
+          fiyatBaslik: "💅 Price List",
+        },
+        hizmetler: [
+          "Acrylic Nails (Form) + Gel Polish",
+          "Acrylic Nails (Form)",
+          "Acrylic Nails (Tips) + Gel Polish",
+          "Acrylic Nails (Tips)",
+          "Acrylic Nails (Capsule System) + Gel Polish",
+          "Gel Strengthening + Gel Polish",
+          "Gel Strengthening",
+          "Gel Polish",
+          "Wet Manicure",
+          "Dry Manicure + Removal",
+          "Dry Pedicure + Gel

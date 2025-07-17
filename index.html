@@ -197,6 +197,24 @@
       cursor: pointer;
       transition: transform 5s cubic-bezier(0.33, 1, 0.68, 1);
     }
+    /* Dilim etiketleri */
+    #cark .dilim {
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0% 100%;
+      text-align: right;
+      padding-right: 15px;
+      box-sizing: border-box;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 1px 1px 2px #0008;
+      user-select: none;
+      pointer-events: none;
+      font-size: 20px;
+    }
     #ok {
       position: absolute;
       top: 50%;
@@ -229,6 +247,9 @@
       font-weight: 700;
       font-size: 18px;
       min-height: 40px;
+      min-width: 280px;
+      margin-left: auto;
+      margin-right: auto;
     }
     #kapatBtn {
       position: absolute;
@@ -344,10 +365,10 @@
     <div id="carkContainer">
       <button id="kapatBtn" aria-label="Çarkı kapat">&times;</button>
       <h2 id="carkBaslik">İndirim Çarkını Döndür!</h2>
-      <div id="cark"></div>
+      <div id="cark" aria-label="İndirim Çarkı" role="img"></div>
       <div id="ok"></div>
       <button id="spinBtn">Çarkı Döndür</button>
-      <div id="kazancMesaji"></div>
+      <div id="kazancMesaji" role="alert" aria-live="polite"></div>
     </div>
   </div>
 
@@ -375,48 +396,4 @@
         tarih: "Date",
         not: "Note",
         btn: "Book Now",
-        aler: "Please fill all required fields",
-        suc: "🎉 Appointment booked successfully!",
-        carkBaslik: "Spin the Discount Wheel!",
-        spinBtn: "Spin the Wheel",
-        kazandiniz: "Congratulations! You won %s discount!",
-        carkKapat: "Close the Wheel",
-      },
-    };
-
-    const dsel = document.getElementById("dil"),
-      tsel = document.getElementById("tema"),
-      form = document.getElementById("rform"),
-      msg = document.getElementById("msg");
-
-    // İndirim çarkı elemanları
-    const carkModal = document.getElementById("carkModal");
-    const cark = document.getElementById("cark");
-    const spinBtn = document.getElementById("spinBtn");
-    const kazancMesaji = document.getElementById("kazancMesaji");
-    const kapatBtn = document.getElementById("kapatBtn");
-    const carkBaslik = document.getElementById("carkBaslik");
-    const ok = document.getElementById("ok");
-
-    // Çark dil & tema uyumu fonksiyonu
-    function carkDilTemaGuncelle() {
-      const d = dsel.value;
-      carkBaslik.textContent = diller[d].carkBaslik;
-      spinBtn.textContent = diller[d].spinBtn;
-      kapatBtn.setAttribute("aria-label", diller[d].carkKapat);
-      kazancMesaji.textContent = "";
-      kazancMesaji.style.color = dsel.value === "tr" ? "#155724" : "#155724";
-    }
-
-    // İndirim oranları ve açı aralıkları (6 dilim)
-    // Burada oranlar %5, %10, %15, %20, %25, %30 olarak belirlenmiştir.
-    const dilimler = [
-      {label: "%5", angleStart: 0, angleEnd: 60, discount: 5},
-      {label: "%10", angleStart: 60, angleEnd: 120, discount: 10},
-      {label: "%15", angleStart: 120, angleEnd: 180, discount: 15},
-      {label: "%20", angleStart: 180, angleEnd: 240, discount: 20},
-      {label: "%25", angleStart: 240, angleEnd: 300, discount: 25},
-      {label: "%30", angleStart: 300, angleEnd: 360, discount: 30},
-    ];
-
-    // Çark dönüş açısı ve indirim tutarı global değişken
+        aler: "Please fill all required

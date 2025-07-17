@@ -20,10 +20,12 @@
       background: var(--acik-bg);
       color: var(--acik-color);
       transition: 0.3s;
+      animation: bgcolorchange 30s ease-in-out infinite alternate;
     }
     body.koyu {
       background: var(--koyu-bg);
       color: var(--koyu-color);
+      animation: none;
     }
     h1,
     h2 {
@@ -51,6 +53,7 @@
       display: flex;
       gap: 10px;
       margin-bottom: 20px;
+      justify-content: center;
     }
     select,
     input,
@@ -69,12 +72,17 @@
       color: white;
       border: none;
       cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
     }
     button:hover {
-      opacity: 0.9;
+      background-color: #a7746a;
     }
     section {
       margin-top: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
     ul {
       list-style: none;
@@ -85,6 +93,7 @@
       display: flex;
       justify-content: space-between;
       border-bottom: 1px solid #ddd;
+      font-weight: 500;
     }
     .kutu {
       background: #fff8f5;
@@ -103,6 +112,7 @@
       color: #155724;
       border: 1px solid #c3e6cb;
       border-radius: 5px;
+      text-align: center;
     }
 
     /* Kayan yazı container */
@@ -117,6 +127,9 @@
       border-radius: 10px;
       margin-bottom: 20px;
       position: relative;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     /* Kayan yazı içeriği */
@@ -134,13 +147,28 @@
         transform: translateX(-100%);
       }
     }
+
+    #reklam a {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    /* Arka plan yumuşak geçiş animasyonu (nude tonları) */
+    @keyframes bgcolorchange {
+      0%   { background-color: #f9f6f3; }
+      25%  { background-color: #f3e8e0; }
+      50%  { background-color: #e8dad4; }
+      75%  { background-color: #f3e8e0; }
+      100% { background-color: #f9f6f3; }
+    }
   </style>
 </head>
 <body>
   <!-- Kayan reklam -->
   <div id="reklam" aria-label="Reklamlar">
     <span>
-      Bizi Instagram'da takip edin: <a href="https://www.instagram.com/renklidokunusnail" target="_blank" rel="noopener" style="color:#fff; text-decoration: underline;">@renklidokunusnail</a>
+      Kampanyalardan haberdar olmak için bizi Instagram'da takip edin: 
+      <a href="https://www.instagram.com/renklidokunusnail" target="_blank" rel="noopener">@renklidokunusnail</a>
     </span>
   </div>
 
@@ -158,7 +186,6 @@
   <nav>
     <a href="#randevu">📅 Randevu</a>
     <a href="#fiyatlar">💅 Fiyatlar</a>
-    <a href="#kampanya">🏷️ Kampanya</a>
   </nav>
 
   <h1>Renkli Dokunuş</h1>
@@ -180,10 +207,10 @@
         <option>Jel Güçlendirme + Kalıcı Oje</option>
         <option>Jel Güçlendirme</option>
         <option>Kalıcı Oje</option>
-        <option>Manikür</option>
-        <option>Manikür + Çıkarma</option>
-        <option>Pedikür + Kalıcı Oje</option>
-        <option>Pedikür</option>
+        <option>Islak Manikür</option>
+        <option>Kuru Manikür + Çıkarma</option>
+        <option>Kuru Pedikür + Kalıcı Oje</option>
+        <option>Islak Pedikür</option>
         <option>Protez / Kalıcı Oje Çıkarma</option>
         <option>Tek Tırnak Onarımı</option>
         <option>İnci Tozu / Krom Efekt</option>
@@ -219,17 +246,11 @@
       <li><span>Islak Pedikür</span><span>400 TL</span></li>
       <li><span>Protez / Kalıcı Oje Çıkarma</span><span>200 TL</span></li>
       <li><span>Tek Tırnak Onarımı</span><span>75 TL</span></li>
-    </ul>
-  </section>
-
-  <!-- Kampanya -->
-  <section id="kampanya" class="kutu">
-    <h2>🎉 Temmuz Kampanyaları</h2>
-    <ul>
-      <li><span>Kalıcı Oje + Manikür</span><span>450 TL</span></li>
-      <li><span>2 Arkadaşla Gelenlere</span><span>%10 İndirim</span></li>
-      <li><span>İlk Randevuya</span><span>Mini Nail Art Hediye</span></li>
-      <li><span>French Uygulaması</span><span>%20 İndirim</span></li>
+      <li><span>İnci Tozu / Krom Efekt</span><span>100 TL</span></li>
+      <li><span>French</span><span>100 TL</span></li>
+      <li><span>Mini Nail Art</span><span>20 TL</span></li>
+      <li><span>Büyük Charm</span><span>40 TL</span></li>
+      <li><span>Küçük Charm</span><span>20 TL</span></li>
     </ul>
   </section>
 
@@ -268,36 +289,4 @@
       document.getElementById("lAd").textContent = diller[d].ad;
       document.getElementById("lHizmet").textContent = diller[d].hizmet;
       document.getElementById("hizmet").options[0].text = diller[d].sec;
-      document.getElementById("lTarih").textContent = diller[d].tarih;
-      document.getElementById("lNot").textContent = diller[d].not;
-      document.getElementById("btnSubmit").textContent = diller[d].btn;
-    }
-
-    function degistirTema() {
-      document.body.className = tsel.value === "koyu" ? "koyu" : "";
-    }
-
-    dsel.onchange = degistirDil;
-    tsel.onchange = degistirTema;
-    window.onload = () => {
-      degistirDil();
-      degistirTema();
-    };
-
-    form.onsubmit = (e) => {
-      e.preventDefault();
-      const d = dsel.value;
-      const ad = document.getElementById("ad").value.trim();
-      const hizmet = document.getElementById("hizmet").value;
-      const tarih = document.getElementById("tarih").value;
-      const not = document.getElementById("not").value.trim();
-
-      if (!ad || !hizmet || !tarih) {
-        alert(diller[d].aler);
-        return;
-      }
-
-      const mesaj = `${diller[d].ad}: ${ad}\n${diller[d].hizmet}: ${hizmet}\n${diller[d].tarih}: ${tarih}\n${diller[d].not}: ${
-        not || "-"
-      }`;
-      const waURL = `https://wa
+      document

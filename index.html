@@ -155,9 +155,11 @@
       justify-content: center;
       align-items: center;
       z-index: 9999;
+      transition: opacity 0.3s ease;
     }
     #carkModal.kapatildi {
       display: none;
+      opacity: 0;
     }
     #carkContainer {
       background: var(--acik-bg);
@@ -197,8 +199,7 @@
       cursor: pointer;
       transition: transform 5s cubic-bezier(0.33, 1, 0.68, 1);
     }
-    /* Dilim etiketleri */
-    #cark .dilim {
+    .dilim {
       position: absolute;
       width: 130px;
       height: 130px;
@@ -206,14 +207,14 @@
       left: 50%;
       transform-origin: 0% 100%;
       text-align: right;
-      padding-right: 15px;
+      padding-right: 10px;
       box-sizing: border-box;
       font-weight: bold;
       color: #fff;
       text-shadow: 1px 1px 2px #0008;
+      font-size: 20px;
       user-select: none;
       pointer-events: none;
-      font-size: 20px;
     }
     #ok {
       position: absolute;
@@ -231,7 +232,7 @@
       background: var(--accent);
       color: white;
       border: none;
-      padding: 12px 25px;
+      padding: 12px 30px;
       border-radius: 30px;
       font-weight: bold;
       cursor: pointer;
@@ -239,17 +240,19 @@
       user-select: none;
       transition: background-color 0.3s;
     }
-    #spinBtn:hover {
+    #spinBtn:hover:not(:disabled) {
       background: #a0706a;
+    }
+    #spinBtn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
     #kazancMesaji {
       margin-top: 20px;
       font-weight: 700;
       font-size: 18px;
       min-height: 40px;
-      min-width: 280px;
-      margin-left: auto;
-      margin-right: auto;
+      color: #155724;
     }
     #kapatBtn {
       position: absolute;
@@ -365,35 +368,91 @@
     <div id="carkContainer">
       <button id="kapatBtn" aria-label="Çarkı kapat">&times;</button>
       <h2 id="carkBaslik">İndirim Çarkını Döndür!</h2>
-      <div id="cark" aria-label="İndirim Çarkı" role="img"></div>
-      <div id="ok"></div>
+      <div id="cark" aria-label="İndirim çarkı"></div>
+      <div id="ok" aria-hidden="true"></div>
       <button id="spinBtn">Çarkı Döndür</button>
-      <div id="kazancMesaji" role="alert" aria-live="polite"></div>
+      <div id="kazancMesaji" aria-live="polite"></div>
     </div>
   </div>
 
   <script>
-    const tel = "905551862487";
-    const diller = {
+    // Dil ve tema seçim elemanları
+    const dsel = document.getElementById("dil");
+    const tsel = document.getElementById("tema");
+
+    // Tema değişimi
+    tsel.addEventListener("change", () => {
+      if (tsel.value === "koyu") {
+        document.body.classList.add("koyu");
+      } else {
+        document.body.classList.remove("koyu");
+      }
+      carkDilTemaGuncelle();
+    });
+
+    // Dil değişimi (form etiketleri, çark metinleri)
+    const labels = {
+      lAd: document.getElementById("lAd"),
+      lHizmet: document.getElementById("lHizmet"),
+      lTarih: document.getElementById("lTarih"),
+      lNot: document.getElementById("lNot"),
+      btnSubmit: document.getElementById("btnSubmit"),
+    };
+
+    const dillerForm = {
       tr: {
         ad: "Ad Soyad",
         hizmet: "Hizmet Seçimi",
-        sec: "Hizmet Seçin",
         tarih: "Tarih",
         not: "Ek Not",
         btn: "Randevu Al",
-        aler: "Lütfen tüm alanları doldurun",
-        suc: "🎉 Randevunuz başarıyla alındı!",
-        carkBaslik: "İndirim Çarkını Döndür!",
-        spinBtn: "Çarkı Döndür",
-        kazandiniz: "Tebrikler! %s indirim kazandınız!",
-        carkKapat: "Çarkı Kapat",
       },
       en: {
         ad: "Full Name",
         hizmet: "Service",
-        sec: "Select Service",
         tarih: "Date",
         not: "Note",
         btn: "Book Now",
-        aler: "Please fill all required
+      },
+    };
+
+    function formDilGuncelle() {
+      const d = dsel.value;
+      labels.lAd.textContent = dillerForm[d].ad;
+      labels.lHizmet.textContent = dillerForm[d].hizmet;
+      labels.lTarih.textContent = dillerForm[d].tarih;
+      labels.lNot.textContent = dillerForm[d].not;
+      labels.btnSubmit.textContent = dillerForm[d].btn;
+      carkDilTemaGuncelle();
+    }
+
+    dsel.addEventListener("change", formDilGuncelle);
+
+    // Başlangıçta çalıştır
+    formDilGuncelle();
+
+    /* --- İndirim Çarkı --- */
+    // İndirim çarkı dil metinleri
+    const dillerCark = {
+      tr: {
+        carkBaslik: "İndirim Çarkını Döndür!",
+        spinBtn: "Çarkı Döndür",
+        kazandiniz: "🎉 Tebrikler! %s indirim kazandınız!",
+        carkKapat: "Çarkı Kapat",
+        zatenDonuldu: "Çarkı zaten döndürdünüz!",
+      },
+      en: {
+        carkBaslik: "Spin the Discount Wheel!",
+        spinBtn: "Spin the Wheel",
+        kazandiniz: "🎉 Congratulations! You won %s discount!",
+        carkKapat: "Close the Wheel",
+        zatenDonuldu: "You have already spun the wheel!",
+      },
+    };
+
+    const carkModal = document.getElementById("carkModal");
+    const cark = document.getElementById("cark");
+    const spinBtn = document.getElementById("spinBtn");
+    const kazancMesaji = document.getElementById("kazancMesaji");
+    const kapatBtn = document.getElementById("kapatBtn");
+    const carkBaslik = document.getElementById("

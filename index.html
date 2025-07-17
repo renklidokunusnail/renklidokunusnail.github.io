@@ -24,26 +24,16 @@
       background: var(--koyu-bg);
       color: var(--koyu-color);
     }
-    h1, h2 {
-      text-align: center;
-      color: var(--accent);
-    }
-    body.koyu h1, body.koyu h2 {
-      color: var(--koyu-accent);
-    }
-    nav {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+    h1, h2 { text-align: center; color: var(--accent); }
+    body.koyu h1, body.koyu h2 { color: var(--koyu-accent); }
+    nav { text-align: center; margin-bottom: 20px; }
     nav a {
       margin: 0 10px;
       text-decoration: none;
       font-weight: bold;
       color: var(--accent);
     }
-    body.koyu nav a {
-      color: var(--koyu-accent);
-    }
+    body.koyu nav a { color: var(--koyu-accent); }
     .ayarlar {
       display: flex;
       gap: 10px;
@@ -98,9 +88,47 @@
       border: 1px solid #c3e6cb;
       border-radius: 5px;
     }
+    /* Instagram Reklam Banner */
+    #insta-banner {
+      background: #e1306c;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      user-select: none;
+      transition: background-color 0.3s;
+      text-decoration: none;
+    }
+    #insta-banner:hover {
+      background-color: #bf2a63;
+    }
+    #insta-banner svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
+
+<!-- Instagram Reklam Banner -->
+<a id="insta-banner" href="https://www.instagram.com/renklidokunusnail/" target="_blank" rel="noopener noreferrer" aria-label="Instagram sayfamız">
+  🎉 Yeni Gelen Kampanyalar için Bizi Instagram'dan Takip Edin!
+  <svg aria-hidden="true" viewBox="0 0 24 24" >
+    <path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5a4.25 4.25 0 004.25-4.25v-8.5A4.25 4.25 0 0016.25 3.5h-8.5zm4.25 3.25a5.5 5.5 0 110 11 5.5 5.5 0 010-11zm0 1.5a4 4 0 100 8 4 4 0 000-8zm5.75-.75a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0z"/>
+  </svg>
+</a>
 
 <div class="ayarlar">
   <select id="dil">
@@ -195,40 +223,28 @@
   const tel = "905551862487";
   const diller = {
     tr: {
-      ad: "Ad Soyad",
-      hizmet: "Hizmet Seçimi",
-      sec: "Hizmet Seçin",
-      tarih: "Tarih",
-      not: "Ek Not",
-      btn: "Randevu Al",
-      aler: "Lütfen tüm alanları doldurun",
-      suc: "🎉 Randevunuz başarıyla alındı!"
+      ad: "Ad Soyad", hizmet: "Hizmet Seçimi", sec: "Hizmet Seçin", tarih: "Tarih", not: "Ek Not",
+      btn: "Randevu Al", aler: "Lütfen tüm alanları doldurun", suc: "🎉 Randevunuz başarıyla alındı!"
     },
     en: {
-      ad: "Full Name",
-      hizmet: "Service",
-      sec: "Select Service",
-      tarih: "Date",
-      not: "Note",
-      btn: "Book Now",
-      aler: "Please fill all required fields",
-      suc: "🎉 Appointment booked successfully!"
+      ad: "Full Name", hizmet: "Service", sec: "Select Service", tarih: "Date", not: "Note",
+      btn: "Book Now", aler: "Please fill all required fields", suc: "🎉 Appointment booked successfully!"
     }
   };
 
-  const dsel = document.getElementById("dil"),
-    tsel = document.getElementById("tema"),
-    form = document.getElementById("rform"),
-    msg = document.getElementById("msg");
+  const dsel = document.getElementById('dil'),
+        tsel = document.getElementById('tema'),
+        form = document.getElementById('rform'),
+        msg = document.getElementById('msg');
 
   function degistirDil() {
     const d = dsel.value;
-    document.getElementById("lAd").textContent = diller[d].ad;
-    document.getElementById("lHizmet").textContent = diller[d].hizmet;
-    document.getElementById("hizmet").options[0].text = diller[d].sec;
-    document.getElementById("lTarih").textContent = diller[d].tarih;
-    document.getElementById("lNot").textContent = diller[d].not;
-    document.getElementById("btnSubmit").textContent = diller[d].btn;
+    document.getElementById('lAd').textContent = diller[d].ad;
+    document.getElementById('lHizmet').textContent = diller[d].hizmet;
+    document.getElementById('hizmet').options[0].text = diller[d].sec;
+    document.getElementById('lTarih').textContent = diller[d].tarih;
+    document.getElementById('lNot').textContent = diller[d].not;
+    document.getElementById('btnSubmit').textContent = diller[d].btn;
   }
 
   function degistirTema() {
@@ -237,18 +253,15 @@
 
   dsel.onchange = degistirDil;
   tsel.onchange = degistirTema;
-  window.onload = () => {
-    degistirDil();
-    degistirTema();
-  };
+  window.onload = () => { degistirDil(); degistirTema(); };
 
-  form.onsubmit = (e) => {
+  form.onsubmit = e => {
     e.preventDefault();
     const d = dsel.value;
-    const ad = document.getElementById("ad").value.trim();
-    const hizmet = document.getElementById("hizmet").value;
-    const tarih = document.getElementById("tarih").value;
-    const not = document.getElementById("not").value.trim();
+    const ad = document.getElementById('ad').value.trim();
+    const hizmet = document.getElementById('hizmet').value;
+    const tarih = document.getElementById('tarih').value;
+    const not = document.getElementById('not').value.trim();
 
     if (!ad || !hizmet || !tarih) {
       alert(diller[d].aler);
@@ -257,13 +270,11 @@
 
     const mesaj = `${diller[d].ad}: ${ad}\n${diller[d].hizmet}: ${hizmet}\n${diller[d].tarih}: ${tarih}\n${diller[d].not}: ${not || "-"}`;
     const waURL = `https://wa.me/${tel}?text=${encodeURIComponent(mesaj)}`;
-
-    // WhatsApp linkini yeni sekmede aç
-    window.open(waURL, "_blank");
+    window.location.href = waURL;
 
     msg.textContent = diller[d].suc;
-    msg.style.display = "block";
-    setTimeout(() => (msg.style.display = "none"), 4000);
+    msg.style.display = 'block';
+    setTimeout(() => msg.style.display = 'none', 4000);
     form.reset();
   };
 </script>

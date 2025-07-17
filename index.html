@@ -111,6 +111,7 @@
       border-radius: 5px;
       text-align: center;
     }
+
     /* Kayan yazı container */
     #reklam {
       background: var(--accent);
@@ -127,12 +128,14 @@
       margin-left: auto;
       margin-right: auto;
     }
+
     /* Kayan yazı içeriği */
     #reklam span {
       display: inline-block;
       padding-left: 100%;
       animation: kaydir 15s linear infinite;
     }
+
     @keyframes kaydir {
       0% {
         transform: translateX(0%);
@@ -141,134 +144,10 @@
         transform: translateX(-100%);
       }
     }
+
     #reklam a {
       color: #fff;
       text-decoration: underline;
-    }
-
-    /* --- İndirim Çarkı Stilleri --- */
-    #carkModal {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.7);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      transition: opacity 0.3s ease;
-    }
-    #carkModal.kapatildi {
-      display: none;
-      opacity: 0;
-    }
-    #carkContainer {
-      background: var(--acik-bg);
-      color: var(--acik-color);
-      border-radius: 20px;
-      padding: 20px;
-      width: 320px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(192,159,149,0.8);
-      position: relative;
-      font-family: Arial, sans-serif;
-      user-select: none;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    body.koyu #carkContainer {
-      background: var(--koyu-bg);
-      color: var(--koyu-color);
-      box-shadow: 0 0 20px rgba(216,167,159,0.8);
-    }
-    #cark {
-      margin: 20px auto;
-      width: 260px;
-      height: 260px;
-      border-radius: 50%;
-      border: 8px solid var(--accent);
-      position: relative;
-      overflow: hidden;
-      box-sizing: border-box;
-      background: conic-gradient(
-        #c09f95 0deg 60deg,
-        #d8a79f 60deg 120deg,
-        #c09f95 120deg 180deg,
-        #d8a79f 180deg 240deg,
-        #c09f95 240deg 300deg,
-        #d8a79f 300deg 360deg
-      );
-      cursor: pointer;
-      transition: transform 5s cubic-bezier(0.33, 1, 0.68, 1);
-    }
-    .dilim {
-      position: absolute;
-      width: 130px;
-      height: 130px;
-      top: 50%;
-      left: 50%;
-      transform-origin: 0% 100%;
-      text-align: right;
-      padding-right: 10px;
-      box-sizing: border-box;
-      font-weight: bold;
-      color: #fff;
-      text-shadow: 1px 1px 2px #0008;
-      font-size: 20px;
-      user-select: none;
-      pointer-events: none;
-    }
-    #ok {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0; 
-      height: 0; 
-      border-left: 15px solid transparent;
-      border-right: 15px solid transparent;
-      border-bottom: 30px solid var(--accent);
-      transform: translate(-50%, -100%);
-      z-index: 10;
-    }
-    #spinBtn {
-      background: var(--accent);
-      color: white;
-      border: none;
-      padding: 12px 30px;
-      border-radius: 30px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 15px;
-      user-select: none;
-      transition: background-color 0.3s;
-    }
-    #spinBtn:hover:not(:disabled) {
-      background: #a0706a;
-    }
-    #spinBtn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    #kazancMesaji {
-      margin-top: 20px;
-      font-weight: 700;
-      font-size: 18px;
-      min-height: 40px;
-      color: #155724;
-    }
-    #kapatBtn {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      background: transparent;
-      border: none;
-      font-size: 22px;
-      font-weight: bold;
-      color: var(--accent);
-      cursor: pointer;
-      user-select: none;
-      transition: color 0.3s;
-    }
-    #kapatBtn:hover {
-      color: #8b746d;
     }
   </style>
 </head>
@@ -363,96 +242,96 @@
     </ul>
   </section>
 
-  <!-- İndirim Çarkı Modal -->
-  <div id="carkModal" role="dialog" aria-modal="true" aria-labelledby="carkBaslik" tabindex="-1">
-    <div id="carkContainer">
-      <button id="kapatBtn" aria-label="Çarkı kapat">&times;</button>
-      <h2 id="carkBaslik">İndirim Çarkını Döndür!</h2>
-      <div id="cark" aria-label="İndirim çarkı"></div>
-      <div id="ok" aria-hidden="true"></div>
-      <button id="spinBtn">Çarkı Döndür</button>
-      <div id="kazancMesaji" aria-live="polite"></div>
-    </div>
-  </div>
-
   <script>
-    // Dil ve tema seçim elemanları
-    const dsel = document.getElementById("dil");
-    const tsel = document.getElementById("tema");
-
-    // Tema değişimi
-    tsel.addEventListener("change", () => {
-      if (tsel.value === "koyu") {
-        document.body.classList.add("koyu");
-      } else {
-        document.body.classList.remove("koyu");
-      }
-      carkDilTemaGuncelle();
-    });
-
-    // Dil değişimi (form etiketleri, çark metinleri)
-    const labels = {
-      lAd: document.getElementById("lAd"),
-      lHizmet: document.getElementById("lHizmet"),
-      lTarih: document.getElementById("lTarih"),
-      lNot: document.getElementById("lNot"),
-      btnSubmit: document.getElementById("btnSubmit"),
-    };
-
-    const dillerForm = {
+    const tel = "905551862487";
+    const diller = {
       tr: {
         ad: "Ad Soyad",
         hizmet: "Hizmet Seçimi",
+        sec: "Hizmet Seçin",
         tarih: "Tarih",
         not: "Ek Not",
         btn: "Randevu Al",
+        aler: "Lütfen tüm alanları doldurun",
+        suc: "🎉 Randevunuz başarıyla alındı!",
       },
       en: {
         ad: "Full Name",
         hizmet: "Service",
+        sec: "Select Service",
         tarih: "Date",
         not: "Note",
         btn: "Book Now",
+        aler: "Please fill all required fields",
+        suc: "🎉 Appointment booked successfully!",
       },
     };
 
-    function formDilGuncelle() {
+    const dsel = document.getElementById("dil"),
+      tsel = document.getElementById("tema"),
+      form = document.getElementById("rform"),
+      msg = document.getElementById("msg");
+
+    function degistirDil() {
       const d = dsel.value;
-      labels.lAd.textContent = dillerForm[d].ad;
-      labels.lHizmet.textContent = dillerForm[d].hizmet;
-      labels.lTarih.textContent = dillerForm[d].tarih;
-      labels.lNot.textContent = dillerForm[d].not;
-      labels.btnSubmit.textContent = dillerForm[d].btn;
-      carkDilTemaGuncelle();
+      document.getElementById("lAd").textContent = diller[d].ad;
+      document.getElementById("lHizmet").textContent = diller[d].hizmet;
+      document.getElementById("hizmet").options[0].text = diller[d].sec;
+      document.getElementById("lTarih").textContent = diller[d].tarih;
+      document.getElementById("lNot").textContent = diller[d].not;
+      document.getElementById("btnSubmit").textContent = diller[d].btn;
     }
 
-    dsel.addEventListener("change", formDilGuncelle);
+    function degistirTema() {
+      document.body.className = tsel.value === "koyu" ? "koyu" : "";
+    }
 
-    // Başlangıçta çalıştır
-    formDilGuncelle();
-
-    /* --- İndirim Çarkı --- */
-    // İndirim çarkı dil metinleri
-    const dillerCark = {
-      tr: {
-        carkBaslik: "İndirim Çarkını Döndür!",
-        spinBtn: "Çarkı Döndür",
-        kazandiniz: "🎉 Tebrikler! %s indirim kazandınız!",
-        carkKapat: "Çarkı Kapat",
-        zatenDonuldu: "Çarkı zaten döndürdünüz!",
-      },
-      en: {
-        carkBaslik: "Spin the Discount Wheel!",
-        spinBtn: "Spin the Wheel",
-        kazandiniz: "🎉 Congratulations! You won %s discount!",
-        carkKapat: "Close the Wheel",
-        zatenDonuldu: "You have already spun the wheel!",
-      },
+    dsel.onchange = degistirDil;
+    tsel.onchange = degistirTema;
+    window.onload = () => {
+      degistirDil();
+      degistirTema();
     };
 
-    const carkModal = document.getElementById("carkModal");
-    const cark = document.getElementById("cark");
-    const spinBtn = document.getElementById("spinBtn");
-    const kazancMesaji = document.getElementById("kazancMesaji");
-    const kapatBtn = document.getElementById("kapatBtn");
-    const carkBaslik = document.getElementById("
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const ad = document.getElementById("ad").value.trim();
+      const hizmet = document.getElementById("hizmet").value.trim();
+      const tarih = document.getElementById("tarih").value.trim();
+      const not = document.getElementById("not").value.trim();
+
+      if (!ad || !hizmet || !tarih) {
+        alert(diller[dsel.value].aler);
+        return;
+      }
+
+      // Mesaj metni (dil seçeneğine göre)
+      let mesaj = "";
+      if (dsel.value === "tr") {
+        mesaj =
+          `Merhaba,%0ARandevu talebi:%0AAd Soyad: ${encodeURIComponent(ad)}%0AHizmet: ${encodeURIComponent(hizmet)}%0ATarih: ${encodeURIComponent(tarih)}%0ANot: ${encodeURIComponent(not)}`;
+      } else {
+        mesaj =
+          `Hello,%0AAppointment request:%0AName: ${encodeURIComponent(ad)}%0AService: ${encodeURIComponent(hizmet)}%0ADate: ${encodeURIComponent(tarih)}%0ANote: ${encodeURIComponent(not)}`;
+      }
+
+      // Telefon numarasını uluslararası formata çevir (başında 90 yoksa ekle)
+      const telNo = tel.startsWith("90") ? tel : "90" + tel.replace(/^0+/, "");
+
+      // WhatsApp URL oluştur
+      const url = `https://wa.me/${telNo}?text=${mesaj}`;
+
+      // Başarı mesajını göster
+      msg.style.display = "block";
+      msg.textContent = diller[dsel.value].suc;
+
+      // Formu temizle
+      form.reset();
+
+      // WhatsApp linkini yeni sekmede aç
+      window.open(url, "_blank");
+    });
+  </script>
+</body>
+  </html>

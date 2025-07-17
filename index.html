@@ -20,12 +20,10 @@
       background: var(--acik-bg);
       color: var(--acik-color);
       transition: 0.3s;
-      animation: bgcolorchange 30s ease-in-out infinite alternate;
     }
     body.koyu {
       background: var(--koyu-bg);
       color: var(--koyu-color);
-      animation: none;
     }
     h1,
     h2 {
@@ -73,10 +71,9 @@
       border: none;
       cursor: pointer;
       font-weight: bold;
-      transition: background-color 0.3s ease;
     }
     button:hover {
-      background-color: #a7746a;
+      opacity: 0.9;
     }
     section {
       margin-top: 40px;
@@ -151,15 +148,6 @@
     #reklam a {
       color: #fff;
       text-decoration: underline;
-    }
-
-    /* Arka plan yumuşak geçiş animasyonu (nude tonları) */
-    @keyframes bgcolorchange {
-      0%   { background-color: #f9f6f3; }
-      25%  { background-color: #f3e8e0; }
-      50%  { background-color: #e8dad4; }
-      75%  { background-color: #f3e8e0; }
-      100% { background-color: #f9f6f3; }
     }
   </style>
 </head>
@@ -289,4 +277,61 @@
       document.getElementById("lAd").textContent = diller[d].ad;
       document.getElementById("lHizmet").textContent = diller[d].hizmet;
       document.getElementById("hizmet").options[0].text = diller[d].sec;
-      document
+      document.getElementById("lTarih").textContent = diller[d].tarih;
+      document.getElementById("lNot").textContent = diller[d].not;
+      document.getElementById("btnSubmit").textContent = diller[d].btn;
+    }
+
+    function degistirTema() {
+      document.body.className = tsel.value === "koyu" ? "koyu" : "";
+    }
+
+    dsel.onchange = degistirDil;
+    tsel.onchange = degistirTema;
+    window.onload = () => {
+      degistirDil();
+      degistirTema();
+    };
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const ad = document.getElementById("ad").value.trim();
+      const hizmet = document.getElementById("hizmet").value.trim();
+      const tarih = document.getElementById("tarih").value.trim();
+      const not = document.getElementById("not").value.trim();
+
+      if (!ad || !hizmet || !tarih) {
+        alert(diller[dsel.value].aler);
+        return;
+      }
+
+      // Mesaj metni (dil seçeneğine göre)
+      let mesaj = "";
+      if (dsel.value === "tr") {
+        mesaj =
+          `Merhaba,%0ARandevu talebi:%0AAd Soyad: ${encodeURIComponent(ad)}%0AHizmet: ${encodeURIComponent(hizmet)}%0ATarih: ${encodeURIComponent(tarih)}%0ANot: ${encodeURIComponent(not)}`;
+      } else {
+        mesaj =
+          `Hello,%0AAppointment request:%0AName: ${encodeURIComponent(ad)}%0AService: ${encodeURIComponent(hizmet)}%0ADate: ${encodeURIComponent(tarih)}%0ANote: ${encodeURIComponent(not)}`;
+      }
+
+      // Telefon numarasını uluslararası formata çevir (başında 90 yoksa ekle)
+      const telNo = tel.startsWith("90") ? tel : "90" + tel.replace(/^0+/, "");
+
+      // WhatsApp URL oluştur
+      const url = `https://wa.me/${telNo}?text=${mesaj}`;
+
+      // Başarı mesajını göster
+      msg.style.display = "block";
+      msg.textContent = diller[dsel.value].suc;
+
+      // Formu temizle
+      form.reset();
+
+      // WhatsApp linkini yeni sekmede aç
+      window.open(url, "_blank");
+    });
+  </script>
+</body>
+</html>

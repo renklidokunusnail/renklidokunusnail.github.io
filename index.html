@@ -111,7 +111,6 @@
       border-radius: 5px;
       text-align: center;
     }
-
     /* Kayan yazı container */
     #reklam {
       background: var(--accent);
@@ -128,14 +127,12 @@
       margin-left: auto;
       margin-right: auto;
     }
-
     /* Kayan yazı içeriği */
     #reklam span {
       display: inline-block;
       padding-left: 100%;
       animation: kaydir 15s linear infinite;
     }
-
     @keyframes kaydir {
       0% {
         transform: translateX(0%);
@@ -144,10 +141,110 @@
         transform: translateX(-100%);
       }
     }
-
     #reklam a {
       color: #fff;
       text-decoration: underline;
+    }
+
+    /* --- İndirim Çarkı Stilleri --- */
+    #carkModal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    #carkModal.kapatildi {
+      display: none;
+    }
+    #carkContainer {
+      background: var(--acik-bg);
+      color: var(--acik-color);
+      border-radius: 20px;
+      padding: 20px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(192,159,149,0.8);
+      position: relative;
+      font-family: Arial, sans-serif;
+      user-select: none;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.koyu #carkContainer {
+      background: var(--koyu-bg);
+      color: var(--koyu-color);
+      box-shadow: 0 0 20px rgba(216,167,159,0.8);
+    }
+    #cark {
+      margin: 20px auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      border: 8px solid var(--accent);
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      background: conic-gradient(
+        #c09f95 0deg 60deg,
+        #d8a79f 60deg 120deg,
+        #c09f95 120deg 180deg,
+        #d8a79f 180deg 240deg,
+        #c09f95 240deg 300deg,
+        #d8a79f 300deg 360deg
+      );
+      cursor: pointer;
+      transition: transform 5s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+    #ok {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0; 
+      height: 0; 
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 30px solid var(--accent);
+      transform: translate(-50%, -100%);
+      z-index: 10;
+    }
+    #spinBtn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+      user-select: none;
+      transition: background-color 0.3s;
+    }
+    #spinBtn:hover {
+      background: #a0706a;
+    }
+    #kazancMesaji {
+      margin-top: 20px;
+      font-weight: 700;
+      font-size: 18px;
+      min-height: 40px;
+    }
+    #kapatBtn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: transparent;
+      border: none;
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--accent);
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.3s;
+    }
+    #kapatBtn:hover {
+      color: #8b746d;
     }
   </style>
 </head>
@@ -242,6 +339,18 @@
     </ul>
   </section>
 
+  <!-- İndirim Çarkı Modal -->
+  <div id="carkModal" role="dialog" aria-modal="true" aria-labelledby="carkBaslik" tabindex="-1">
+    <div id="carkContainer">
+      <button id="kapatBtn" aria-label="Çarkı kapat">&times;</button>
+      <h2 id="carkBaslik">İndirim Çarkını Döndür!</h2>
+      <div id="cark"></div>
+      <div id="ok"></div>
+      <button id="spinBtn">Çarkı Döndür</button>
+      <div id="kazancMesaji"></div>
+    </div>
+  </div>
+
   <script>
     const tel = "905551862487";
     const diller = {
@@ -254,6 +363,10 @@
         btn: "Randevu Al",
         aler: "Lütfen tüm alanları doldurun",
         suc: "🎉 Randevunuz başarıyla alındı!",
+        carkBaslik: "İndirim Çarkını Döndür!",
+        spinBtn: "Çarkı Döndür",
+        kazandiniz: "Tebrikler! %s indirim kazandınız!",
+        carkKapat: "Çarkı Kapat",
       },
       en: {
         ad: "Full Name",
@@ -264,6 +377,10 @@
         btn: "Book Now",
         aler: "Please fill all required fields",
         suc: "🎉 Appointment booked successfully!",
+        carkBaslik: "Spin the Discount Wheel!",
+        spinBtn: "Spin the Wheel",
+        kazandiniz: "Congratulations! You won %s discount!",
+        carkKapat: "Close the Wheel",
       },
     };
 
@@ -272,66 +389,34 @@
       form = document.getElementById("rform"),
       msg = document.getElementById("msg");
 
-    function degistirDil() {
+    // İndirim çarkı elemanları
+    const carkModal = document.getElementById("carkModal");
+    const cark = document.getElementById("cark");
+    const spinBtn = document.getElementById("spinBtn");
+    const kazancMesaji = document.getElementById("kazancMesaji");
+    const kapatBtn = document.getElementById("kapatBtn");
+    const carkBaslik = document.getElementById("carkBaslik");
+    const ok = document.getElementById("ok");
+
+    // Çark dil & tema uyumu fonksiyonu
+    function carkDilTemaGuncelle() {
       const d = dsel.value;
-      document.getElementById("lAd").textContent = diller[d].ad;
-      document.getElementById("lHizmet").textContent = diller[d].hizmet;
-      document.getElementById("hizmet").options[0].text = diller[d].sec;
-      document.getElementById("lTarih").textContent = diller[d].tarih;
-      document.getElementById("lNot").textContent = diller[d].not;
-      document.getElementById("btnSubmit").textContent = diller[d].btn;
+      carkBaslik.textContent = diller[d].carkBaslik;
+      spinBtn.textContent = diller[d].spinBtn;
+      kapatBtn.setAttribute("aria-label", diller[d].carkKapat);
+      kazancMesaji.textContent = "";
+      kazancMesaji.style.color = dsel.value === "tr" ? "#155724" : "#155724";
     }
 
-    function degistirTema() {
-      document.body.className = tsel.value === "koyu" ? "koyu" : "";
-    }
+    // İndirim oranları ve açı aralıkları (6 dilim)
+    // Burada oranlar %5, %10, %15, %20, %25, %30 olarak belirlenmiştir.
+    const dilimler = [
+      {label: "%5", angleStart: 0, angleEnd: 60, discount: 5},
+      {label: "%10", angleStart: 60, angleEnd: 120, discount: 10},
+      {label: "%15", angleStart: 120, angleEnd: 180, discount: 15},
+      {label: "%20", angleStart: 180, angleEnd: 240, discount: 20},
+      {label: "%25", angleStart: 240, angleEnd: 300, discount: 25},
+      {label: "%30", angleStart: 300, angleEnd: 360, discount: 30},
+    ];
 
-    dsel.onchange = degistirDil;
-    tsel.onchange = degistirTema;
-    window.onload = () => {
-      degistirDil();
-      degistirTema();
-    };
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const ad = document.getElementById("ad").value.trim();
-      const hizmet = document.getElementById("hizmet").value.trim();
-      const tarih = document.getElementById("tarih").value.trim();
-      const not = document.getElementById("not").value.trim();
-
-      if (!ad || !hizmet || !tarih) {
-        alert(diller[dsel.value].aler);
-        return;
-      }
-
-      // Mesaj metni (dil seçeneğine göre)
-      let mesaj = "";
-      if (dsel.value === "tr") {
-        mesaj =
-          `Merhaba,%0ARandevu talebi:%0AAd Soyad: ${encodeURIComponent(ad)}%0AHizmet: ${encodeURIComponent(hizmet)}%0ATarih: ${encodeURIComponent(tarih)}%0ANot: ${encodeURIComponent(not)}`;
-      } else {
-        mesaj =
-          `Hello,%0AAppointment request:%0AName: ${encodeURIComponent(ad)}%0AService: ${encodeURIComponent(hizmet)}%0ADate: ${encodeURIComponent(tarih)}%0ANote: ${encodeURIComponent(not)}`;
-      }
-
-      // Telefon numarasını uluslararası formata çevir (başında 90 yoksa ekle)
-      const telNo = tel.startsWith("90") ? tel : "90" + tel.replace(/^0+/, "");
-
-      // WhatsApp URL oluştur
-      const url = `https://wa.me/${telNo}?text=${mesaj}`;
-
-      // Başarı mesajını göster
-      msg.style.display = "block";
-      msg.textContent = diller[dsel.value].suc;
-
-      // Formu temizle
-      form.reset();
-
-      // WhatsApp linkini yeni sekmede aç
-      window.open(url, "_blank");
-    });
-  </script>
-</body>
-</html>
+    // Çark dönüş açısı ve indirim tutarı global değişken

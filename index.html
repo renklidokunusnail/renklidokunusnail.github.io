@@ -1,157 +1,149 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Renkli Dokunuş</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      --acik-bg: #f9f6f3;
-      --acik-color: #4a4a4a;
-      --accent: #c09f95;
-      --koyu-bg: #1d1d1d;
-      --koyu-color: #eee;
-      --koyu-accent: #d8a79f;
+<meta charset="UTF-8" />
+<title>Renkli Dokunuş</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    --acik-bg: #f9f6f3;
+    --acik-color: #4a4a4a;
+    --accent: #c09f95;
+    --koyu-bg: #1d1d1d;
+    --koyu-color: #eee;
+    --koyu-accent: #d8a79f;
+  }
+  body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: var(--acik-bg);
+    color: var(--acik-color);
+    transition: 0.3s;
+  }
+  body.koyu {
+    background: var(--koyu-bg);
+    color: var(--koyu-color);
+  }
+  h1, h2 {
+    text-align: center;
+    color: var(--accent);
+  }
+  body.koyu h1, body.koyu h2 {
+    color: var(--koyu-accent);
+  }
+  nav {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--accent);
+  }
+  body.koyu nav a {
+    color: var(--koyu-accent);
+  }
+  .ayarlar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+  }
+  select, input, textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  button {
+    background: var(--accent);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  button:hover {
+    opacity: 0.9;
+  }
+  section {
+    margin-top: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  li {
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    font-weight: 500;
+  }
+  .kutu {
+    background: #fff8f5;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(192, 159, 149, 0.3);
+  }
+  body.koyu .kutu {
+    background: #2a2a2a;
+  }
+  #msg {
+    display: none;
+    margin-top: 15px;
+    padding: 10px;
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    text-align: center;
+  }
+  /* Kayan yazı container */
+  #reklam {
+    background: var(--accent);
+    color: white;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+    padding: 10px 0;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    position: relative;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  /* Kayan yazı içeriği */
+  #reklam span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: kaydir 15s linear infinite;
+  }
+  @keyframes kaydir {
+    0% {
+      transform: translateX(0%);
     }
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-      background: var(--acik-bg);
-      color: var(--acik-color);
-      transition: 0.3s;
+    100% {
+      transform: translateX(-100%);
     }
-    body.koyu {
-      background: var(--koyu-bg);
-      color: var(--koyu-color);
-    }
-    h1,
-    h2 {
-      text-align: center;
-      color: var(--accent);
-    }
-    body.koyu h1,
-    body.koyu h2 {
-      color: var(--koyu-accent);
-    }
-    nav {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      font-weight: bold;
-      color: var(--accent);
-    }
-    body.koyu nav a {
-      color: var(--koyu-accent);
-    }
-    .ayarlar {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      justify-content: center;
-    }
-    select,
-    input,
-    textarea,
-    button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-      font-size: 16px;
-    }
-    button {
-      background: var(--accent);
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    button:hover {
-      opacity: 0.9;
-    }
-    section {
-      margin-top: 40px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
-      padding: 8px 0;
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid #ddd;
-      font-weight: 500;
-    }
-    .kutu {
-      background: #fff8f5;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(192, 159, 149, 0.3);
-    }
-    body.koyu .kutu {
-      background: #2a2a2a;
-    }
-    #msg {
-      display: none;
-      margin-top: 15px;
-      padding: 10px;
-      background: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-      border-radius: 5px;
-      text-align: center;
-    }
-
-    /* Kayan yazı container */
-    #reklam {
-      background: var(--accent);
-      color: white;
-      font-weight: bold;
-      overflow: hidden;
-      white-space: nowrap;
-      box-sizing: border-box;
-      padding: 10px 0;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      position: relative;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* Kayan yazı içeriği */
-    #reklam span {
-      display: inline-block;
-      padding-left: 100%;
-      animation: kaydir 15s linear infinite;
-    }
-
-    @keyframes kaydir {
-      0% {
-        transform: translateX(0%);
-      }
-      100% {
-        transform: translateX(-100%);
-      }
-    }
-
-    #reklam a {
-      color: #fff;
-      text-decoration: underline;
-    }
-  </style>
+  }
+  #reklam a {
+    color: #fff;
+    text-decoration: underline;
+  }
+</style>
 </head>
 <body>
+
   <!-- Kayan reklam -->
   <div id="reklam" aria-label="Reklamlar">
     <span>
@@ -161,11 +153,11 @@
   </div>
 
   <div class="ayarlar">
-    <select id="dil" aria-label="Dil seçimi">
+    <select id="dil">
       <option value="tr">Türkçe</option>
       <option value="en">English</option>
     </select>
-    <select id="tema" aria-label="Tema seçimi">
+    <select id="tema">
       <option value="acik">Açık Tema</option>
       <option value="koyu">Koyu Tema</option>
     </select>
@@ -180,115 +172,108 @@
   <p style="text-align:center;">Güzelliğinize Renkli Dokunuş</p>
 
   <!-- Randevu Formu -->
-  <section id="randevu" class="kutu" aria-label="Randevu formu">
-    <form id="rform" novalidate>
-      <label for="ad" id="lAd">Ad Soyad</label>
-      <input id="ad" name="ad" required autocomplete="name" />
-      <label for="hizmet" id="lHizmet">Hizmet Seçimi</label>
-      <select id="hizmet" name="hizmet" required aria-required="true">
-        <!-- Seçenekler JS ile yüklenecek -->
-      </select>
-      <label for="tarih" id="lTarih">Tarih</label>
-      <input type="date" id="tarih" name="tarih" required />
-      <label for="not" id="lNot">Ek Not</label>
-      <textarea id="not" name="not" rows="3"></textarea>
+  <section id="randevu" class="kutu">
+    <form id="rform">
+      <label id="lAd">Ad Soyad</label>
+      <input id="ad" required />
+      <label id="lHizmet">Hizmet Seçimi</label>
+      <select id="hizmet" required></select>
+      <label id="lTarih">Tarih</label>
+      <input type="date" id="tarih" required />
+      <label id="lNot">Ek Not</label>
+      <textarea id="not" rows="3"></textarea>
       <button type="submit" id="btnSubmit">Randevu Al</button>
     </form>
     <div id="msg" role="alert"></div>
   </section>
 
   <!-- Fiyatlar -->
-  <section id="fiyatlar" class="kutu" aria-label="Fiyat listesi">
+  <section id="fiyatlar" class="kutu">
     <h2>💅 Fiyat Listesi</h2>
-    <ul id="fiyatListesi">
-      <!-- Fiyatlar JS ile yüklenecek -->
-    </ul>
+    <ul id="fiyatListesi"></ul>
   </section>
 
-  <script>
-    const tel = "905551862487";
+<script>
+  const tel = "905551862487";
 
-    const diller = {
-      tr: {
-        labels: {
-          ad: "Ad Soyad",
-          hizmet: "Hizmet Seçimi",
-          tarih: "Tarih",
-          not: "Ek Not",
-          btn: "Randevu Al",
-          hizmetSecin: "Hizmet Seçin",
-          reklamText: "Kampanyalardan haberdar olmak için bizi Instagram'da takip edin: ",
-          reklamLinkText: "@renklidokunusnail",
-          randevuBasarili: "🎉 Randevunuz başarıyla alındı!",
-          tumAlanlarDolu: "Lütfen tüm alanları doldurun",
-          fiyatBaslik: "💅 Fiyat Listesi",
-        },
-        hizmetler: [
-          "Protez Tırnak (Şablon) + Kalıcı Oje",
-          "Protez Tırnak (Şablon)",
-          "Protez Tırnak (Tips) + Kalıcı Oje",
-          "Protez Tırnak (Tips)",
-          "Protez Tırnak (Kapsül Sistem) + Kalıcı Oje",
-          "Jel Güçlendirme + Kalıcı Oje",
-          "Jel Güçlendirme",
-          "Kalıcı Oje",
-          "Islak Manikür",
-          "Kuru Manikür + Çıkarma",
-          "Kuru Pedikür + Kalıcı Oje",
-          "Islak Pedikür",
-          "Protez / Kalıcı Oje Çıkarma",
-          "Tek Tırnak Onarımı",
-          "İnci Tozu / Krom Efekt",
-          "French",
-          "Mini Nail Art",
-          "Büyük Charm",
-          "Küçük Charm"
-        ],
-        fiyatlar: [
-          ["Protez Tırnak (Şablon) + Kalıcı Oje", "1000 TL"],
-          ["Protez Tırnak (Şablon)", "900 TL"],
-          ["Protez Tırnak (Tips) + Kalıcı Oje", "650 TL"],
-          ["Protez Tırnak (Tips)", "600 TL"],
-          ["Protez Tırnak (Kapsül Sistem) + Kalıcı Oje", "500 TL"],
-          ["Jel Güçlendirme + Kalıcı Oje", "550 TL"],
-          ["Jel Güçlendirme", "500 TL"],
-          ["Kalıcı Oje", "250 TL"],
-          ["Islak Manikür", "250 TL"],
-          ["Kuru Manikür + Çıkarma", "350 TL"],
-          ["Kuru Pedikür + Kalıcı Oje", "500 TL"],
-          ["Islak Pedikür", "400 TL"],
-          ["Protez / Kalıcı Oje Çıkarma", "200 TL"],
-          ["Tek Tırnak Onarımı", "75 TL"],
-          ["İnci Tozu / Krom Efekt", "100 TL"],
-          ["French", "100 TL"],
-          ["Mini Nail Art", "20 TL"],
-          ["Büyük Charm", "40 TL"],
-          ["Küçük Charm", "20 TL"]
-        ]
-      },
-      en: {
-        labels: {
-          ad: "Full Name",
-          hizmet: "Service",
-          tarih: "Date",
-          not: "Note",
-          btn: "Book Now",
-          hizmetSecin: "Select Service",
-          reklamText: "Follow us on Instagram for campaign updates: ",
-          reklamLinkText: "@renklidokunusnail",
-          randevuBasarili: "🎉 Appointment booked successfully!",
-          tumAlanlarDolu: "Please fill all required fields",
-          fiyatBaslik: "💅 Price List",
-        },
-        hizmetler: [
-          "Acrylic Nails (Form) + Gel Polish",
-          "Acrylic Nails (Form)",
-          "Acrylic Nails (Tips) + Gel Polish",
-          "Acrylic Nails (Tips)",
-          "Acrylic Nails (Capsule System) + Gel Polish",
-          "Gel Strengthening + Gel Polish",
-          "Gel Strengthening",
-          "Gel Polish",
-          "Wet Manicure",
-          "Dry Manicure + Removal",
-          "Dry Pedicure + Gel
+  const veriler = {
+    tr: {
+      ad: "Ad Soyad",
+      hizmet: "Hizmet Seçimi",
+      sec: "Hizmet Seçin",
+      tarih: "Tarih",
+      not: "Ek Not",
+      btn: "Randevu Al",
+      aler: "Lütfen tüm alanları doldurun",
+      suc: "🎉 Randevunuz başarıyla alındı!",
+      reklam: "Kampanyalardan haberdar olmak için bizi Instagram'da takip edin:",
+      reklamLinkText: "@renklidokunusnail",
+      reklamLinkURL: "https://www.instagram.com/renklidokunusnail",
+      hizmetler: [
+        "Protez Tırnak (Şablon) + Kalıcı Oje",
+        "Protez Tırnak (Şablon)",
+        "Protez Tırnak (Tips) + Kalıcı Oje",
+        "Protez Tırnak (Tips)",
+        "Protez Tırnak (Kapsül Sistem) + Kalıcı Oje",
+        "Jel Güçlendirme + Kalıcı Oje",
+        "Jel Güçlendirme",
+        "Kalıcı Oje",
+        "Islak Manikür",
+        "Kuru Manikür + Çıkarma",
+        "Kuru Pedikür + Kalıcı Oje",
+        "Islak Pedikür",
+        "Protez / Kalıcı Oje Çıkarma",
+        "Tek Tırnak Onarımı",
+        "İnci Tozu / Krom Efekt",
+        "French",
+        "Mini Nail Art",
+        "Büyük Charm",
+        "Küçük Charm"
+      ],
+      fiyatlar: [
+        ["Protez Tırnak (Şablon) + Kalıcı Oje", "1000 TL"],
+        ["Protez Tırnak (Şablon)", "900 TL"],
+        ["Protez Tırnak (Tips) + Kalıcı Oje", "650 TL"],
+        ["Protez Tırnak (Tips)", "600 TL"],
+        ["Protez Tırnak (Kapsül Sistem) + Kalıcı Oje", "500 TL"],
+        ["Jel Güçlendirme + Kalıcı Oje", "550 TL"],
+        ["Jel Güçlendirme", "500 TL"],
+        ["Kalıcı Oje", "250 TL"],
+        ["Islak Manikür", "250 TL"],
+        ["Kuru Manikür + Çıkarma", "350 TL"],
+        ["Kuru Pedikür + Kalıcı Oje", "500 TL"],
+        ["Islak Pedikür", "400 TL"],
+        ["Protez / Kalıcı Oje Çıkarma", "200 TL"],
+        ["Tek Tırnak Onarımı", "75 TL"],
+        ["İnci Tozu / Krom Efekt", "100 TL"],
+        ["French", "100 TL"],
+        ["Mini Nail Art", "20 TL"],
+        ["Büyük Charm", "40 TL"],
+        ["Küçük Charm", "20 TL"]
+      ]
+    },
+    en: {
+      ad: "Full Name",
+      hizmet: "Service",
+      sec: "Select Service",
+      tarih: "Date",
+      not: "Note",
+      btn: "Book Now",
+      aler: "Please fill all required fields",
+      suc: "🎉 Appointment booked successfully!",
+      reklam: "Follow us on Instagram to get updates on campaigns:",
+      reklamLinkText: "@renklidokunusnail",
+      reklamLinkURL: "https://www.instagram.com/renklidokunusnail",
+      hizmetler: [
+        "Acrylic Nails (Template) + Permanent Polish",
+        "Acrylic Nails (Template)",
+        "Acrylic Nails (Tips) + Permanent Polish",
+        "Acrylic Nails (Tips)",
+        "Acrylic Nails (Capsule System) + Permanent Polish",
+        "Gel Strengthening + Permanent Polish",
+        "Gel Strengthening",
+        "Permanent Polish",
+        "Wet Manicure",
+        "Dry Manicure + Removal",
+        "Dry Pedicure + Permanent Polish",
+        "

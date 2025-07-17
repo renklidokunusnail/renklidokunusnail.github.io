@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head><!DOCTYPE html>
-<html lang="tr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Renkli Dokunuş</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
       --acik-bg: #f9f6f3;
@@ -16,7 +14,8 @@
       --koyu-accent: #d8a79f;
     }
     body {
-      margin: 0; padding: 20px;
+      margin: 0;
+      padding: 20px;
       font-family: Arial, sans-serif;
       background: var(--acik-bg);
       color: var(--acik-color);
@@ -26,23 +25,37 @@
       background: var(--koyu-bg);
       color: var(--koyu-color);
     }
-    h1, h2 { text-align: center; color: var(--accent); }
-    body.koyu h1, body.koyu h2 { color: var(--koyu-accent); }
-    nav { text-align: center; margin-bottom: 20px; }
+    h1,
+    h2 {
+      text-align: center;
+      color: var(--accent);
+    }
+    body.koyu h1,
+    body.koyu h2 {
+      color: var(--koyu-accent);
+    }
+    nav {
+      text-align: center;
+      margin-bottom: 20px;
+    }
     nav a {
       margin: 0 10px;
       text-decoration: none;
       font-weight: bold;
       color: var(--accent);
     }
-    body.koyu nav a { color: var(--koyu-accent); }
-
+    body.koyu nav a {
+      color: var(--koyu-accent);
+    }
     .ayarlar {
       display: flex;
       gap: 10px;
       margin-bottom: 20px;
     }
-    select, input, textarea, button {
+    select,
+    input,
+    textarea,
+    button {
       width: 100%;
       padding: 10px;
       margin-top: 10px;
@@ -94,306 +107,166 @@
   </style>
 </head>
 <body>
-
-<script>
-  const tel = "905551862487";
-  const diller = {
-    tr: {
-      ad: "Ad Soyad", hizmet: "Hizmet Seçimi", sec: "Hizmet Seçin", tarih: "Tarih", not: "Ek Not",
-      btn: "Randevu Al", aler: "Lütfen tüm alanları doldurun", suc: "🎉 Randevunuz başarıyla alındı!"
-    },
-    en: {
-      ad: "Full Name", hizmet: "Service", sec: "Select Service", tarih: "Date", not: "Note",
-      btn: "Book Now", aler: "Please fill all required fields", suc: "🎉 Appointment booked successfully!"
-    }
-  };
-
-  const dsel = document.getElementById('dil'),
-        tsel = document.getElementById('tema'),
-        form = document.getElementById('rform'),
-        msg = document.getElementById('msg');
-
-  function degistirDil() {
-    const d = dsel.value;
-    document.getElementById('lAd').textContent = diller[d].ad;
-    document.getElementById('lHizmet').textContent = diller[d].hizmet;
-    document.getElementById('hizmet').options[0].text = diller[d].sec;
-    document.getElementById('lTarih').textContent = diller[d].tarih;
-    document.getElementById('lNot').textContent = diller[d].not;
-    document.getElementById('btnSubmit').textContent = diller[d].btn;
-  }
-
-  function degistirTema() {
-    document.body.className = tsel.value === "koyu" ? "koyu" : "";
-  }
-
-  dsel.onchange = degistirDil;
-  tsel.onchange = degistirTema;
-  window.onload = () => { degistirDil(); degistirTema(); };
-
-  form.onsubmit = e => {
-    e.preventDefault();
-    const d = dsel.value;
-    const ad = document.getElementById('ad').value.trim();
-    const hizmet = document.getElementById('hizmet').value;
-    const tarih = document.getElementById('tarih').value;
-    const not = document.getElementById('not').value.trim();
-
-    if (!ad || !hizmet || !tarih) {
-      alert(diller[d].aler);
-      return;
-    }
-
-    const mesaj = `${diller[d].ad}: ${ad}\n${diller[d].hizmet}: ${hizmet}\n${diller[d].tarih}: ${tarih}\n${diller[d].not}: ${not || "-"}`;
-    window.open(`https://wa.me/${tel}?text=${encodeURIComponent(mesaj)}`, "_blank");
-    msg.textContent = diller[d].suc;
-    msg.style.display = 'block';
-    setTimeout(() => msg.style.display = 'none', 4000);
-    form.reset();
-  };
-</script>
-
-</body>
-  </html>
-
-  <meta charset="UTF-8">
-  <title>Renkli Dokunuş</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    :root {
-      --acik-bg: #f9f6f3;
-      --acik-color: #4a4a4a;
-      --accent: #c09f95;
-      --koyu-bg: #1d1d1d;
-      --koyu-color: #eee;
-      --koyu-accent: #d8a79f;
-    }
-    body {
-      margin: 0; padding: 20px;
-      font-family: Arial, sans-serif;
-      background: var(--acik-bg);
-      color: var(--acik-color);
-      transition: 0.3s;
-    }
-    body.koyu {
-      background: var(--koyu-bg);
-      color: var(--koyu-color);
-    }
-    h1, h2 { text-align: center; color: var(--accent); }
-    body.koyu h1, body.koyu h2 { color: var(--koyu-accent); }
-    nav { text-align: center; margin-bottom: 20px; }
-    nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      font-weight: bold;
-      color: var(--accent);
-    }
-    body.koyu nav a { color: var(--koyu-accent); }
-
-    .ayarlar {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    select, input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-      font-size: 16px;
-    }
-    button {
-      background: var(--accent);
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      opacity: 0.9;
-    }
-    section {
-      margin-top: 40px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
-      padding: 8px 0;
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid #ddd;
-    }
-    .kutu {
-      background: #fff8f5;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(192, 159, 149, 0.3);
-    }
-    body.koyu .kutu {
-      background: #2a2a2a;
-    }
-    #msg {
-      display: none;
-      margin-top: 15px;
-      padding: 10px;
-      background: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-      border-radius: 5px;
-    }
-  </style>
-</head>
-<body>
-
-<div class="ayarlar">
-  <select id="dil">
-    <option value="tr">Türkçe</option>
-    <option value="en">English</option>
-  </select>
-  <select id="tema">
-    <option value="acik">Açık Tema</option>
-    <option value="koyu">Koyu Tema</option>
-  </select>
-</div>
-
-<nav>
-  <a href="#randevu">📅 Randevu</a>
-  <a href="#fiyatlar">💅 Fiyatlar</a>
-  <a href="#kampanya">🏷️ Kampanya</a>
-</nav>
-
-<h1 id="baslik">Renkli Dokunuş</h1>
-<p id="slogan" style="text-align:center;">Güzelliğinize Renkli Dokunuş</p>
-
-<!-- Randevu Formu -->
-<section id="randevu" class="kutu">
-  <form id="rform">
-    <label id="lAd">Ad Soyad</label>
-    <input id="ad" required>
-    <label id="lHizmet">Hizmet Seçimi</label>
-    <select id="hizmet" required>
-      <option value="">Hizmet Seçin</option>
-      <option>Protez Tırnak (Şablon) + Kalıcı Oje</option>
-      <option>Protez Tırnak (Şablon)</option>
-      <option>Protez Tırnak (Tips) + Kalıcı Oje</option>
-      <option>Protez Tırnak (Tips)</option>
-      <option>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</option>
-      <option>Jel Güçlendirme + Kalıcı Oje</option>
-      <option>Jel Güçlendirme</option>
-      <option>Kalıcı Oje</option>
-      <option>Manikür</option>
-      <option>Manikür + Çıkarma</option>
-      <option>Pedikür + Kalıcı Oje</option>
-      <option>Pedikür</option>
-      <option>Protez / Kalıcı Oje Çıkarma</option>
-      <option>Tek Tırnak Onarımı</option>
-      <option>İnci Tozu / Krom Efekt</option>
-      <option>French</option>
-      <option>Mini Nail Art</option>
-      <option>Büyük Charm</option>
-      <option>Küçük Charm</option>
+  <div class="ayarlar">
+    <select id="dil">
+      <option value="tr">Türkçe</option>
+      <option value="en">English</option>
     </select>
-    <label id="lTarih">Tarih</label>
-    <input type="date" id="tarih" required>
-    <label id="lNot">Ek Not</label>
-    <textarea id="not" rows="3"></textarea>
-    <button type="submit" id="btnSubmit">Randevu Al</button>
-  </form>
-  <div id="msg"></div>
-</section>
+    <select id="tema">
+      <option value="acik">Açık Tema</option>
+      <option value="koyu">Koyu Tema</option>
+    </select>
+  </div>
 
-<!-- Fiyatlar -->
-<section id="fiyatlar" class="kutu">
-  <h2>💅 Fiyat Listesi</h2>
-  <ul>
-    <li><span>Protez Tırnak (Şablon) + Kalıcı Oje</span><span>1000 TL</span></li>
-    <li><span>Protez Tırnak (Şablon)</span><span>900 TL</span></li>
-    <li><span>Protez Tırnak (Tips) + Kalıcı Oje</span><span>650 TL</span></li>
-    <li><span>Protez Tırnak (Tips)</span><span>600 TL</span></li>
-    <li><span>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</span><span>500 TL</span></li>
-    <li><span>Jel Güçlendirme + Kalıcı Oje</span><span>550 TL</span></li>
-    <li><span>Jel Güçlendirme</span><span>500 TL</span></li>
-    <li><span>Kalıcı Oje</span><span>250 TL</span></li>
-    <li><span>Islak Manikür</span><span>250 TL</span></li>
-    <li><span>Kuru Manikür + Çıkarma</span><span>350 TL</span></li>
-    <li><span>Kuru Pedikür + Kalıcı Oje</span><span>500 TL</span></li>
-    <li><span>Islak Pedikür</span><span>400 TL</span></li>
-    <li><span>Protez / Kalıcı Oje Çıkarma</span><span>200 TL</span></li>
-    <li><span>Tek Tırnak Onarımı</span><span>75 TL</span></li>
-  </ul>
-</section>
+  <nav>
+    <a href="#randevu">📅 Randevu</a>
+    <a href="#fiyatlar">💅 Fiyatlar</a>
+    <a href="#kampanya">🏷️ Kampanya</a>
+  </nav>
 
-<!-- Kampanya -->
-<section id="kampanya" class="kutu">
-  <h2>🎉 Temmuz Kampanyaları</h2>
-  <ul>
-    <li><span>Kalıcı Oje + Manikür</span><span>450 TL</span></li>
-    <li><span>2 Arkadaşla Gelenlere</span><span>%10 İndirim</span></li>
-    <li><span>İlk Randevuya</span><span>Mini Nail Art Hediye</span></li>
-    <li><span>French Uygulaması</span><span>%20 İndirim</span></li>
-  </ul>
-</section>
+  <h1>Renkli Dokunuş</h1>
+  <p style="text-align:center;">Güzelliğinize Renkli Dokunuş</p>
 
-<script>
-  const tel = "905551862487";
-  const diller = {
-    tr: {
-      ad: "Ad Soyad", hizmet: "Hizmet Seçimi", sec: "Hizmet Seçin", tarih: "Tarih", not: "Ek Not",
-      btn: "Randevu Al", aler: "Lütfen tüm alanları doldurun", suc: "🎉 Randevunuz başarıyla alındı!"
-    },
-    en: {
-      ad: "Full Name", hizmet: "Service", sec: "Select Service", tarih: "Date", not: "Note",
-      btn: "Book Now", aler: "Please fill all required fields", suc: "🎉 Appointment booked successfully!"
+  <!-- Randevu Formu -->
+  <section id="randevu" class="kutu">
+    <form id="rform">
+      <label id="lAd">Ad Soyad</label>
+      <input id="ad" required />
+      <label id="lHizmet">Hizmet Seçimi</label>
+      <select id="hizmet" required>
+        <option value="">Hizmet Seçin</option>
+        <option>Protez Tırnak (Şablon) + Kalıcı Oje</option>
+        <option>Protez Tırnak (Şablon)</option>
+        <option>Protez Tırnak (Tips) + Kalıcı Oje</option>
+        <option>Protez Tırnak (Tips)</option>
+        <option>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</option>
+        <option>Jel Güçlendirme + Kalıcı Oje</option>
+        <option>Jel Güçlendirme</option>
+        <option>Kalıcı Oje</option>
+        <option>Manikür</option>
+        <option>Manikür + Çıkarma</option>
+        <option>Pedikür + Kalıcı Oje</option>
+        <option>Pedikür</option>
+        <option>Protez / Kalıcı Oje Çıkarma</option>
+        <option>Tek Tırnak Onarımı</option>
+        <option>İnci Tozu / Krom Efekt</option>
+        <option>French</option>
+        <option>Mini Nail Art</option>
+        <option>Büyük Charm</option>
+        <option>Küçük Charm</option>
+      </select>
+      <label id="lTarih">Tarih</label>
+      <input type="date" id="tarih" required />
+      <label id="lNot">Ek Not</label>
+      <textarea id="not" rows="3"></textarea>
+      <button type="submit" id="btnSubmit">Randevu Al</button>
+    </form>
+    <div id="msg"></div>
+  </section>
+
+  <!-- Fiyatlar -->
+  <section id="fiyatlar" class="kutu">
+    <h2>💅 Fiyat Listesi</h2>
+    <ul>
+      <li><span>Protez Tırnak (Şablon) + Kalıcı Oje</span><span>1000 TL</span></li>
+      <li><span>Protez Tırnak (Şablon)</span><span>900 TL</span></li>
+      <li><span>Protez Tırnak (Tips) + Kalıcı Oje</span><span>800 TL</span></li>
+      <li><span>Protez Tırnak (Tips)</span><span>700 TL</span></li>
+      <li><span>Protez Tırnak (Kapsül Sistem) + Kalıcı Oje</span><span>500 TL</span></li>
+      <li><span>Jel Güçlendirme + Kalıcı Oje</span><span>650 TL</span></li>
+      <li><span>Jel Güçlendirme</span><span>500 TL</span></li>
+      <li><span>Kalıcı Oje</span><span>300 TL</span></li>
+      <li><span>Manikür</span><span>300 TL</span></li>
+      <li><span>Manikür + Çıkarma</span><span>400 TL</span></li>
+      <li><span>Pedikür + Kalıcı Oje</span><span>700 TL</span></li>
+      <li><span>Pedikür</span><span>450 TL</span></li>
+      <li><span>Islak Manikür</span><span>250 TL</span></li>
+      <li><span>Kuru Manikür + Çıkarma</span><span>350 TL</span></li>
+      <li><span>Kuru Pedikür + Kalıcı Oje</span><span>500 TL</span></li>
+      <li><span>Islak Pedikür</span><span>400 TL</span></li>
+      <li><span>Protez / Kalıcı Oje Çıkarma</span><span>200 TL</span></li>
+      <li><span>Tek Tırnak Onarımı</span><span>75 TL</span></li>
+      <li><span>İnci Tozu / Krom Efekt</span><span>100 TL</span></li>
+      <li><span>French</span><span>100 TL</span></li>
+      <li><span>Mini Nail Art</span><span>20 TL</span></li>
+      <li><span>Büyük Charm</span><span>40 TL</span></li>
+      <li><span>Küçük Charm</span><span>20 TL</span></li>
+    </ul>
+  </section>
+
+  <!-- Kampanya -->
+  <section id="kampanya" class="kutu">
+    <h2>🎉 Temmuz Kampanyaları</h2>
+    <ul>
+      <li><span>Kalıcı Oje + Manikür</span><span>450 TL</span></li>
+      <li><span>2 Arkadaşla Gelenlere</span><span>%10 İndirim</span></li>
+      <li><span>İlk Randevuya</span><span>Mini Nail Art Hediye</span></li>
+      <li><span>French Uygulaması</span><span>%20 İndirim</span></li>
+    </ul>
+  </section>
+
+  <script>
+    const tel = "905551862487";
+    const diller = {
+      tr: {
+        ad: "Ad Soyad",
+        hizmet: "Hizmet Seçimi",
+        sec: "Hizmet Seçin",
+        tarih: "Tarih",
+        not: "Ek Not",
+        btn: "Randevu Al",
+        aler: "Lütfen tüm alanları doldurun",
+        suc: "🎉 Randevunuz başarıyla alındı!",
+      },
+      en: {
+        ad: "Full Name",
+        hizmet: "Service",
+        sec: "Select Service",
+        tarih: "Date",
+        not: "Note",
+        btn: "Book Now",
+        aler: "Please fill all required fields",
+        suc: "🎉 Appointment booked successfully!",
+      },
+    };
+
+    const dsel = document.getElementById("dil"),
+      tsel = document.getElementById("tema"),
+      form = document.getElementById("rform"),
+      msg = document.getElementById("msg");
+
+    function degistirDil() {
+      const d = dsel.value;
+      document.getElementById("lAd").textContent = diller[d].ad;
+      document.getElementById("lHizmet").textContent = diller[d].hizmet;
+      document.getElementById("hizmet").options[0].text = diller[d].sec;
+      document.getElementById("lTarih").textContent = diller[d].tarih;
+      document.getElementById("lNot").textContent = diller[d].not;
+      document.getElementById("btnSubmit").textContent = diller[d].btn;
     }
-  };
 
-  const dsel = document.getElementById('dil'),
-        tsel = document.getElementById('tema'),
-        form = document.getElementById('rform'),
-        msg = document.getElementById('msg');
-
-  function degistirDil() {
-    const d = dsel.value;
-    document.getElementById('lAd').textContent = diller[d].ad;
-    document.getElementById('lHizmet').textContent = diller[d].hizmet;
-    document.getElementById('hizmet').options[0].text = diller[d].sec;
-    document.getElementById('lTarih').textContent = diller[d].tarih;
-    document.getElementById('lNot').textContent = diller[d].not;
-    document.getElementById('btnSubmit').textContent = diller[d].btn;
-  }
-
-  function degistirTema() {
-    document.body.className = tsel.value === "koyu" ? "koyu" : "";
-  }
-
-  dsel.onchange = degistirDil;
-  tsel.onchange = degistirTema;
-  window.onload = () => { degistirDil(); degistirTema(); };
-
-  form.onsubmit = e => {
-    e.preventDefault();
-    const d = dsel.value;
-    const ad = document.getElementById('ad').value.trim();
-    const hizmet = document.getElementById('hizmet').value;
-    const tarih = document.getElementById('tarih').value;
-    const not = document.getElementById('not').value.trim();
-
-    if (!ad || !hizmet || !tarih) {
-      alert(diller[d].aler);
-      return;
+    function degistirTema() {
+      document.body.className = tsel.value === "koyu" ? "koyu" : "";
     }
 
-    const mesaj = `${diller[d].ad}: ${ad}\n${diller[d].hizmet}: ${hizmet}\n${diller[d].tarih}: ${tarih}\n${diller[d].not}: ${not || "-"}`;
-    window.open(`https://wa.me/${tel}?text=${encodeURIComponent(mesaj)}`, "_blank");
-    msg.textContent = diller[d].suc;
-    msg.style.display = 'block';
-    setTimeout(() => msg.style.display = 'none', 4000);
-    form.reset();
-  };
-</script>
+    dsel.onchange = degistirDil;
+    tsel.onchange = degistirTema;
+    window.onload = () => {
+      degistirDil();
+      degistirTema();
+    };
 
-</body>
-  </html>
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const d = dsel.value;
+      const ad = document.getElementById("ad").value.trim();
+      const hizmet = document.getElementById("hizmet").value;
+      const tarih = document.getElementById("tarih").value;
+      const not = document.getElementById("not").value.trim();
+
+      if (!ad || !hizmet || !tarih) {
+        alert(diller[d].aler);
+        return;
+      }
+
+      const mesaj = `${diller[d].ad}: ${ad}\n${diller[d].hizmet}: ${hizmet}\n${diller[d].tarih}: ${tarih}\n
